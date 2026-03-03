@@ -544,7 +544,7 @@ export class PanelLayoutManager implements AppModule {
       this.ctx.panels[panelKey] = panel;
     }
 
-    if (SITE_VARIANT === 'full' || SITE_VARIANT === 'magen') {
+    if (SITE_VARIANT === 'full') {
       const gdeltIntelPanel = new GdeltIntelPanel();
       this.ctx.panels['gdelt-intel'] = gdeltIntelPanel;
 
@@ -578,12 +578,6 @@ export class PanelLayoutManager implements AppModule {
       const satelliteFiresPanel = new SatelliteFiresPanel();
       this.ctx.panels['satellite-fires'] = satelliteFiresPanel;
 
-      const strategicRiskPanel = new StrategicRiskPanel();
-      strategicRiskPanel.setLocationClickHandler((lat, lon) => {
-        this.ctx.map?.setCenter(lat, lon, 4);
-      });
-      this.ctx.panels['strategic-risk'] = strategicRiskPanel;
-
       const strategicPosturePanel = new StrategicPosturePanel(() => this.ctx.allNews);
       strategicPosturePanel.setLocationClickHandler((lat, lon) => {
         console.log('[App] StrategicPosture handler called:', { lat, lon, hasMap: !!this.ctx.map });
@@ -612,6 +606,18 @@ export class PanelLayoutManager implements AppModule {
       const populationExposurePanel = new PopulationExposurePanel();
       this.ctx.panels['population-exposure'] = populationExposurePanel;
 
+      const telegramIntelPanel = new TelegramIntelPanel();
+      this.ctx.panels['telegram-intel'] = telegramIntelPanel;
+    }
+
+    // Magen + Full: shared defense panels (isolated so a single failure can't kill the grid)
+    if (SITE_VARIANT === 'full' || SITE_VARIANT === 'magen') {
+      const strategicRiskPanel = new StrategicRiskPanel();
+      strategicRiskPanel.setLocationClickHandler((lat, lon) => {
+        this.ctx.map?.setCenter(lat, lon, 4);
+      });
+      this.ctx.panels['strategic-risk'] = strategicRiskPanel;
+
       const securityAdvisoriesPanel = new SecurityAdvisoriesPanel();
       securityAdvisoriesPanel.setRefreshHandler(() => {
         void this.callbacks.loadSecurityAdvisories?.();
@@ -620,9 +626,6 @@ export class PanelLayoutManager implements AppModule {
 
       const orefSirensPanel = new OrefSirensPanel();
       this.ctx.panels['oref-sirens'] = orefSirensPanel;
-
-      const telegramIntelPanel = new TelegramIntelPanel();
-      this.ctx.panels['telegram-intel'] = telegramIntelPanel;
     }
 
     if (SITE_VARIANT === 'finance') {
