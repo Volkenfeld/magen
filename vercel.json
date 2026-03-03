@@ -5,19 +5,7 @@
     }
   },
   "crons": [],
-  "rewrites": [
-    { "source": "/api/:path*", "destination": "https://worldmonitor.app/api/:path*" },
-    { "source": "/rss/:path*", "destination": "https://worldmonitor.app/rss/:path*" }
-  ],
   "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization, X-Magen-Key" }
-      ]
-    },
     {
       "source": "/(.*)",
       "headers": [
