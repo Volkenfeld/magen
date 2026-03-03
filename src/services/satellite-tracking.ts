@@ -26,10 +26,10 @@ export interface TrackedSatellite {
   orbitPath?: [number, number][]; // ground track points [lon, lat]
 }
 
-// CelesTrak GP data categories (free, no auth)
+// Proxy through our Vercel edge function to avoid CORS issues with CelesTrak
 const TLE_URLS: Record<string, string> = {
-  stations: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=stations&FORMAT=tle',
-  military: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=military&FORMAT=tle',
+  stations: '/api/satellites?group=stations',
+  military: '/api/satellites?group=military',
 };
 
 // Only fetch a subset to keep performance sane
