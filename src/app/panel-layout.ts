@@ -235,9 +235,47 @@ export class PanelLayoutManager implements AppModule {
 
     this.createPanels();
 
+    if (SITE_VARIANT === 'magen') {
+      this.setupPanelCollapse();
+    }
+
     if (this.ctx.isMobile) {
       this.setupMobileMapToggle();
     }
+  }
+
+  /** Magen: click panel headers to collapse/expand. Adds chevron indicators. */
+  private setupPanelCollapse(): void {
+    const panelsGrid = document.getElementById('panelsGrid');
+    if (!panelsGrid) return;
+
+    // Use MutationObserver to add chevrons to dynamically created panels
+    const addChevrons = () => {
+      panelsGrid.querySelectorAll('.panel-header').forEach(header => {
+        if (header.querySelector('.panel-collapse-chevron')) return;
+        const chevron = document.createElement('span');
+        chevron.className = 'panel-collapse-chevron';
+        chevron.textContent = '\u25BC'; // down arrow
+        const titleEl = header.querySelector('.panel-title');
+        if (titleEl) titleEl.appendChild(chevron);
+      });
+    };
+
+    // Add chevrons to existing panels and observe for new ones
+    addChevrons();
+    const observer = new MutationObserver(addChevrons);
+    observer.observe(panelsGrid, { childList: true, subtree: true });
+
+    // Event delegation: click on panel-header toggles collapse
+    panelsGrid.addEventListener('click', (e) => {
+      const header = (e.target as HTMLElement).closest('.panel-header');
+      if (!header) return;
+      // Don't collapse if clicking a button or link inside the header
+      const clickedEl = e.target as HTMLElement;
+      if (clickedEl.closest('button, a, select, input, .panel-btn')) return;
+      const panel = header.closest('.panel');
+      if (panel) panel.classList.toggle('panel-collapsed');
+    });
   }
 
   private setupMobileMapToggle(): void {
