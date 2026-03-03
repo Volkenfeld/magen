@@ -2408,15 +2408,50 @@ html[data-variant="magen"] {
   scroll-snap-align: start;
 }
 
-/* ---- Panel Loading Radar: hide confusing sparkles ---- */
+/* ---- Panel Loading Radar: simpler, less confusing ---- */
 [data-variant="magen"] .panel-loading-radar {
-  width: 40px;
-  height: 40px;
-  border-color: rgba(0, 166, 255, 0.2);
+  width: 28px;
+  height: 28px;
+  border-color: rgba(0, 166, 255, 0.3);
+  border-width: 1px;
 }
 
 [data-variant="magen"] .panel-radar-sweep {
   background: linear-gradient(90deg, transparent, var(--magen-accent));
+  height: 1px;
+}
+
+[data-variant="magen"] .panel-radar-dot {
+  width: 4px;
+  height: 4px;
+  margin: -2px;
+}
+
+[data-variant="magen"] .panel-loading-text {
+  font-size: 9px;
+  opacity: 0.7;
+}
+
+/* ---- Panel count badge: clearer label ---- */
+[data-variant="magen"] .panel-count {
+  font-size: 9px;
+  font-weight: 600;
+  border-radius: 2px;
+  padding: 1px 5px;
+  background: rgba(0, 166, 255, 0.15);
+  color: #8ab4d8;
+  border: 1px solid rgba(0, 166, 255, 0.1);
+}
+
+[data-variant="magen"] .panel-count::before {
+  content: 'items: ';
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+[data-variant="magen"] .panel-count.bump {
+  background: rgba(0, 166, 255, 0.25);
+  color: #b0d4f0;
 }
 
 /* ---- All buttons globally: clear white bold ---- */
@@ -2564,4 +2599,234 @@ html[data-variant="magen"] {
 [data-variant="magen"] .location-selector .loc-icon {
   font-size: 11px;
   flex-shrink: 0;
+}
+
+/* =================================================================
+   PRESENTATION POLISH (S68)
+   Premium visual refinements for demo/presentation quality
+   ================================================================= */
+
+/* ---- Panels: premium glassmorphism cards ---- */
+[data-variant="magen"] .panel {
+  background: linear-gradient(135deg, rgba(12, 18, 30, 0.95), rgba(8, 14, 24, 0.9));
+  border: 1px solid rgba(100, 140, 200, 0.12);
+  border-radius: 6px;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(100, 140, 200, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+
+[data-variant="magen"] .panel:hover {
+  border-color: rgba(100, 140, 200, 0.2);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(100, 140, 200, 0.08);
+}
+
+/* ---- Panel headers: refined separator ---- */
+[data-variant="magen"] .panel-header {
+  background: linear-gradient(180deg, rgba(0, 166, 255, 0.06) 0%, transparent 100%);
+  border-bottom: 1px solid rgba(0, 166, 255, 0.08);
+  padding: 8px 12px;
+}
+
+/* ---- Panel content: better readability ---- */
+[data-variant="magen"] .panel-content {
+  padding: 8px 10px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* ---- CII panel: clearer component labels ---- */
+[data-variant="magen"] .cii-country {
+  background: rgba(15, 22, 35, 0.6);
+  border: 1px solid rgba(100, 140, 200, 0.08);
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin-bottom: 4px;
+}
+
+[data-variant="magen"] .cii-name {
+  font-weight: 600;
+  color: #d0dae8;
+  font-size: 11px;
+}
+
+[data-variant="magen"] .cii-score {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+[data-variant="magen"] .cii-header .trend-up {
+  color: #ff5555;
+}
+
+[data-variant="magen"] .cii-header .trend-down {
+  color: #55ff55;
+}
+
+/* ---- GDELT articles: cleaner cards ---- */
+[data-variant="magen"] .hotspot-gdelt-article {
+  background: rgba(15, 22, 35, 0.5);
+  border: 1px solid rgba(100, 140, 200, 0.06);
+  border-radius: 4px;
+  padding: 8px 10px;
+}
+
+[data-variant="magen"] .hotspot-gdelt-article:hover {
+  background: rgba(20, 28, 42, 0.7);
+  border-color: rgba(100, 140, 200, 0.12);
+}
+
+[data-variant="magen"] .hotspot-gdelt-article .article-title {
+  font-size: 11px;
+  font-weight: 500;
+  color: #d0dae8;
+  line-height: 1.4;
+}
+
+[data-variant="magen"] .hotspot-gdelt-article .article-meta {
+  font-size: 9px;
+  color: #6b85a8;
+}
+
+/* ---- GDELT tone indicators: color-coded ---- */
+[data-variant="magen"] .tone-positive {
+  border-left: 2px solid #55ff55;
+}
+
+[data-variant="magen"] .tone-negative {
+  border-left: 2px solid #ff5555;
+}
+
+/* ---- Telegram intel items: cleaner ---- */
+[data-variant="magen"] .telegram-intel-item,
+[data-variant="magen"] .intel-item {
+  background: rgba(15, 22, 35, 0.4);
+  border: 1px solid rgba(100, 140, 200, 0.06);
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin-bottom: 4px;
+}
+
+[data-variant="magen"] .telegram-intel-item:hover,
+[data-variant="magen"] .intel-item:hover {
+  background: rgba(20, 28, 42, 0.6);
+  border-color: rgba(100, 140, 200, 0.12);
+}
+
+/* ---- OREF siren alerts: high-contrast ---- */
+[data-variant="magen"] .siren-alert {
+  border-left: 3px solid #ff3333;
+  background: rgba(255, 0, 0, 0.06);
+  padding: 6px 10px;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 4px;
+}
+
+[data-variant="magen"] .siren-alert.recent {
+  background: rgba(255, 0, 0, 0.12);
+  border-left-color: #ff0000;
+}
+
+/* ---- Strategic risk: bold bars ---- */
+[data-variant="magen"] .risk-bar {
+  height: 10px;
+  border-radius: 2px;
+  background: rgba(0, 166, 255, 0.1);
+}
+
+/* ---- Tab buttons in panels: refined ---- */
+[data-variant="magen"] .panel-tab-btn,
+[data-variant="magen"] .tab-btn {
+  font-size: 9px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 3px;
+  color: #8ab4d8;
+  background: transparent;
+  border: 1px solid transparent;
+  min-height: 0;
+  min-width: 0;
+}
+
+[data-variant="magen"] .panel-tab-btn.active,
+[data-variant="magen"] .tab-btn.active {
+  background: rgba(0, 166, 255, 0.15);
+  border-color: rgba(0, 166, 255, 0.2);
+  color: #e8edf5;
+}
+
+/* ---- Map section: premium border ---- */
+[data-variant="magen"] .map-section {
+  border: 1px solid rgba(100, 140, 200, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* ---- Panels grid: tighter gaps ---- */
+[data-variant="magen"] .panels-grid {
+  gap: 6px;
+  padding: 6px;
+}
+
+/* ---- Panel resize handle: subtle ---- */
+[data-variant="magen"] .panel-resize-handle {
+  opacity: 0.3;
+}
+
+[data-variant="magen"] .panel-resize-handle:hover {
+  opacity: 0.6;
+}
+
+/* ---- Empty state / offline: clean ---- */
+[data-variant="magen"] .live-offline,
+[data-variant="magen"] .panel-empty {
+  text-align: center;
+  padding: 24px 16px;
+  color: #6b85a8;
+  font-size: 11px;
+}
+
+/* ---- Scrollbar: thin, subtle ---- */
+[data-variant="magen"] .panel-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+[data-variant="magen"] .panel-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 166, 255, 0.12);
+  border-radius: 2px;
+}
+
+[data-variant="magen"] .panel-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 166, 255, 0.25);
+}
+
+/* ---- Status badges: refined ---- */
+[data-variant="magen"] .panel-data-badge {
+  font-size: 8px;
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+/* ---- Smooth transitions everywhere ---- */
+[data-variant="magen"] .panel,
+[data-variant="magen"] .panel-header,
+[data-variant="magen"] button {
+  transition: all 0.2s ease;
+}
+
+/* ---- First load: graceful skeleton ---- */
+[data-variant="magen"] .panel-content:empty::after {
+  content: 'Loading...';
+  display: block;
+  text-align: center;
+  padding: 20px;
+  color: #4a6585;
+  font-size: 10px;
+  letter-spacing: 1px;
 }
