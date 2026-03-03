@@ -116,7 +116,7 @@ export class PanelLayoutManager implements AppModule {
     this.ctx.container.innerHTML = `
       <div class="header">
         <div class="header-left">
-          <div class="variant-switcher">${(() => {
+          ${SITE_VARIANT !== 'magen' ? `<div class="variant-switcher">${(() => {
         const local = this.ctx.isDesktopApp || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
         const vHref = (v: string, prod: string) => local || SITE_VARIANT === v ? '#' : prod;
         const vTarget = (_v: string) => '';
@@ -156,8 +156,8 @@ export class PanelLayoutManager implements AppModule {
               <span class="variant-icon">☀️</span>
               <span class="variant-label">Good News</span>
             </a>` : ''}`;
-      })()}</div>
-          <span class="logo">${SITE_VARIANT === 'magen' ? 'MAGEN' : 'MONITOR'}</span><span class="version">v${__APP_VERSION__}</span>${BETA_MODE ? '<span class="beta-badge">BETA</span>' : ''}
+      })()}</div>` : ''}
+          <span class="logo">${SITE_VARIANT === 'magen' ? 'MAGEN' : 'MONITOR'}</span>${SITE_VARIANT !== 'magen' ? `<span class="version">v${__APP_VERSION__}</span>${BETA_MODE ? '<span class="beta-badge">BETA</span>' : ''}` : ''}
           ${SITE_VARIANT !== 'magen' ? `<a href="https://x.com/eliehabib" target="_blank" rel="noopener" class="credit-link">
             <svg class="x-logo" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             <span class="credit-text">@eliehabib</span>
@@ -187,15 +187,15 @@ export class PanelLayoutManager implements AppModule {
           </div>
         </div>
         <div class="header-right">
-          ${this.ctx.isDesktopApp ? '' : `<div class="download-wrapper" id="downloadWrapper">
+          ${this.ctx.isDesktopApp || SITE_VARIANT === 'magen' ? '' : `<div class="download-wrapper" id="downloadWrapper">
             <button class="download-btn" id="downloadBtn" title="${t('header.downloadApp')}">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               <span id="downloadBtnLabel">${t('header.downloadApp')}</span>
             </button>
             <div class="download-dropdown" id="downloadDropdown"></div>
           </div>`}
-          <button class="search-btn" id="searchBtn"><kbd>⌘K</kbd> ${t('header.search')}</button>
-          ${this.ctx.isDesktopApp ? '' : `<button class="copy-link-btn" id="copyLinkBtn">${t('header.copyLink')}</button>`}
+          ${SITE_VARIANT !== 'magen' ? `<button class="search-btn" id="searchBtn"><kbd>⌘K</kbd> ${t('header.search')}</button>` : ''}
+          ${this.ctx.isDesktopApp || SITE_VARIANT === 'magen' ? '' : `<button class="copy-link-btn" id="copyLinkBtn">${t('header.copyLink')}</button>`}
           <button class="theme-toggle-btn" id="headerThemeToggle" title="${t('header.toggleTheme')}">
             ${getCurrentTheme() === 'dark'
         ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>'
