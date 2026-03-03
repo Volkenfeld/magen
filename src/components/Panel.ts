@@ -251,6 +251,7 @@ export class Panel {
     if (options.showCount) {
       this.countEl = document.createElement('span');
       this.countEl.className = 'panel-count';
+      this.countEl.title = 'Number of data items';
       this.countEl.textContent = '0';
       this.header.appendChild(this.countEl);
     }
