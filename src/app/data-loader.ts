@@ -346,7 +346,7 @@ export class DataLoaderManager implements AppModule {
       }),
     });
 
-    if (SITE_VARIANT === 'full') {
+    if (SITE_VARIANT === 'full' || SITE_VARIANT === 'magen') {
       tasks.push({ name: 'intelligence', task: runGuarded('intelligence', () => this.loadIntelligenceSignals()) });
     }
 
@@ -811,7 +811,7 @@ export class DataLoaderManager implements AppModule {
       }
     });
 
-    if (SITE_VARIANT === 'full') {
+    if (SITE_VARIANT === 'full' || SITE_VARIANT === 'magen') {
       const enabledIntelSources = INTEL_SOURCES.filter(f => !this.ctx.disabledSources.has(f.name));
       const enabledIntelNames = new Set(enabledIntelSources.map(f => f.name));
       const intelPanel = this.ctx.newsPanels['intel'];

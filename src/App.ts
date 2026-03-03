@@ -620,8 +620,8 @@ export class App {
       () => !!this.state.panels['telegram-intel']
     );
 
-    // Refresh intelligence signals for CII (geopolitical variant only)
-    if (SITE_VARIANT === 'full') {
+    // Refresh intelligence signals for CII / magen defense panels
+    if (SITE_VARIANT === 'full' || SITE_VARIANT === 'magen') {
       this.refreshScheduler.scheduleRefresh('intelligence', () => {
         const { military, iranEvents } = this.state.intelligenceCache;
         this.state.intelligenceCache = {};
