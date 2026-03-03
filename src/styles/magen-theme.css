@@ -945,6 +945,28 @@ html[data-variant="magen"] {
   min-height: var(--magen-touch-min);
 }
 
+/* ---- Critical Banner: Solid opaque for magen (no transparency) ---- */
+[data-variant="magen"] .critical-posture-banner {
+  background: linear-gradient(90deg, #1a0a0a, #2a1010) !important;
+  border: 1px solid rgba(255, 51, 68, 0.3);
+  border-radius: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+[data-variant="magen"] .critical-posture-banner.severity-elevated {
+  background: linear-gradient(90deg, #1a1500, #2a2000) !important;
+  border-color: rgba(255, 170, 0, 0.3);
+}
+
+/* ---- Toast notification: Solid opaque for magen ---- */
+[data-variant="magen"] .toast-notification {
+  background: rgba(10, 14, 20, 0.98) !important;
+  border: 1px solid rgba(0, 166, 255, 0.3);
+  border-radius: 8px;
+  color: var(--magen-text);
+}
+
 
 /* ==========================================================
    20. Reduced Motion Support
