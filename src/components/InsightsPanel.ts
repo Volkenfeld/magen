@@ -304,7 +304,7 @@ export class InsightsPanel extends Panel {
       let signalSummary: ReturnType<typeof signalAggregator.getSummary>;
       let focalSummary: ReturnType<typeof focalPointDetector.analyze>;
 
-      if (SITE_VARIANT === 'full') {
+      if (SITE_VARIANT === 'full' || SITE_VARIANT === 'magen') {
         // Feed theater-level posture into signal aggregator so target nations
         // (Iran, Taiwan, etc.) get credited for military activity in their theater,
         // even when aircraft/vessels are physically over neighboring airspace/waters.
@@ -375,8 +375,8 @@ export class InsightsPanel extends Panel {
 
         // Pass focal point context + theater posture to AI for correlation-aware summarization
         // Tech variant: no geopolitical context, just tech news summarization
-        const theaterContext = SITE_VARIANT === 'full' ? this.getTheaterPostureContext() : '';
-        const geoContext = SITE_VARIANT === 'full'
+        const theaterContext = (SITE_VARIANT === 'full' || SITE_VARIANT === 'magen') ? this.getTheaterPostureContext() : '';
+        const geoContext = (SITE_VARIANT === 'full' || SITE_VARIANT === 'magen')
           ? (focalSummary.aiContext || signalSummary.aiContext) + theaterContext
           : '';
         const result = await generateSummary(titles, (_step, _total, msg) => {
