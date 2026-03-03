@@ -1214,3 +1214,135 @@ html[data-variant="magen"] {
   font-weight: 600;
   box-shadow: 0 0 6px rgba(0, 166, 255, 0.3);
 }
+
+
+/* ==========================================================
+   27. Layout Overlap Fixes
+   Fix z-index conflicts between map controls, layer toggles,
+   time slider, and header. Fix mobile cramping.
+   ========================================================== */
+
+/* Header: ensure it stays above map content */
+[data-variant="magen"] .header {
+  position: sticky;
+  top: 0;
+  z-index: 150;
+  background: var(--magen-bg);
+  border-bottom: 1px solid var(--magen-border);
+}
+
+/* Map controls: reduce z-index so they don't hide layer toggles */
+[data-variant="magen"] .map-controls {
+  z-index: 110;
+}
+
+/* Layer toggles: ensure visible above map markers */
+[data-variant="magen"] .deckgl-layer-toggles {
+  z-index: 115;
+}
+
+/* Time slider: visible above markers */
+[data-variant="magen"] .time-slider {
+  z-index: 112;
+}
+
+/* Map popups: above controls but below modals */
+[data-variant="magen"] .map-popup {
+  z-index: 200;
+}
+
+/* Signal modal: proper stacking */
+[data-variant="magen"] .signal-modal-overlay {
+  z-index: 1000;
+}
+
+/* Mobile: better map/panel balance */
+@media (max-width: 768px) {
+  /* Map takes less space so panels are usable */
+  [data-variant="magen"] .map-section {
+    height: 35vh !important;
+    min-height: 200px !important;
+    max-height: 40vh !important;
+  }
+
+  /* Layer toggles: compact and scrollable on mobile */
+  [data-variant="magen"] .deckgl-layer-toggles {
+    max-width: 200px;
+    max-height: 30vh;
+    font-size: 9px;
+  }
+
+  [data-variant="magen"] .deckgl-layer-toggles .toggle-label {
+    font-size: 9px;
+  }
+
+  [data-variant="magen"] .deckgl-layer-toggles .layer-toggle {
+    padding: 4px 6px;
+  }
+
+  [data-variant="magen"] .deckgl-layer-toggles .layer-toggle input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+  }
+
+  /* Header: tighter but still readable */
+  [data-variant="magen"] .header {
+    height: auto;
+    min-height: 40px;
+    padding: 4px 8px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  /* Panels: reasonable height with scroll */
+  [data-variant="magen"] .panels-grid {
+    padding: 4px;
+    gap: 6px;
+  }
+
+  [data-variant="magen"] .panel {
+    max-height: none;
+  }
+}
+
+/* Small phones: even more compact */
+@media (max-width: 480px) {
+  [data-variant="magen"] .map-section {
+    height: 30vh !important;
+    min-height: 180px !important;
+  }
+
+  [data-variant="magen"] .deckgl-layer-toggles {
+    max-width: 160px;
+    bottom: 4px;
+    left: 4px;
+  }
+
+  [data-variant="magen"] .map-controls {
+    top: 4px;
+    right: 4px;
+    gap: 4px;
+  }
+
+  [data-variant="magen"] .map-controls .map-control-btn {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+}
+
+
+/* ==========================================================
+   28. Globe Atmosphere Effect
+   Visual glow around the 3D globe edges.
+   ========================================================== */
+
+[data-variant="magen"] .maplibregl-canvas-container {
+  background: radial-gradient(
+    ellipse at center,
+    var(--magen-bg) 0%,
+    #040810 100%
+  );
+}

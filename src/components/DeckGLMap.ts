@@ -483,6 +483,13 @@ export class DeckGLMap {
         : {}),
     });
 
+    // Enable 3D globe projection (MapLibre 5.x) for immersive globe view
+    try {
+      (this.maplibreMap as any).setProjection({ type: 'globe' });
+    } catch {
+      // Fallback: older MapLibre versions or unsupported browsers stay on Mercator
+    }
+
     const canvas = this.maplibreMap.getCanvas();
     canvas.addEventListener('webglcontextlost', (e) => {
       e.preventDefault();
