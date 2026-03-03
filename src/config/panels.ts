@@ -568,20 +568,13 @@ const MAGEN_PANELS: Record<string, PanelConfig> = {
   map: { name: 'Situation Map', enabled: true, priority: 1 },
   'oref-sirens': { name: 'OREF Sirens', enabled: true, priority: 1 },
   'live-news': { name: 'Live News', enabled: true, priority: 1 },
-  insights: { name: 'AI Insights', enabled: true, priority: 1 },
-  'telegram-intel': { name: 'Telegram Intel', enabled: true, priority: 1 },
   'strategic-risk': { name: 'Strategic Risk Overview', enabled: true, priority: 1 },
   middleeast: { name: 'Middle East', enabled: true, priority: 1 },
   intel: { name: 'Intel Feed', enabled: true, priority: 1 },
-  'gdelt-intel': { name: 'Live Intelligence', enabled: true, priority: 1 },
-  'strategic-posture': { name: 'AI Strategic Posture', enabled: true, priority: 1 },
-  cii: { name: 'Country Instability', enabled: true, priority: 1 },
   markets: { name: 'Markets', enabled: true, priority: 2 },
   energy: { name: 'Energy & Resources', enabled: true, priority: 2 },
   'security-advisories': { name: 'Security Advisories', enabled: true, priority: 2 },
-  cascade: { name: 'Infrastructure Cascade', enabled: true, priority: 2 },
   'world-clock': { name: 'World Clock', enabled: true, priority: 2 },
-  monitors: { name: 'My Monitors', enabled: true, priority: 2 },
 };
 
 const MAGEN_MAP_LAYERS: MapLayers = {
@@ -628,7 +621,7 @@ const MAGEN_MAP_LAYERS: MapLayers = {
   speciesRecovery: false,
   renewableInstallations: false,
   tradeRoutes: false,
-  dayNight: false,
+  dayNight: true,
 };
 
 const MAGEN_MOBILE_MAP_LAYERS: MapLayers = {
@@ -675,7 +668,7 @@ const MAGEN_MOBILE_MAP_LAYERS: MapLayers = {
   speciesRecovery: false,
   renewableInstallations: false,
   tradeRoutes: false,
-  dayNight: false,
+  dayNight: true,
 };
 
 // ============================================

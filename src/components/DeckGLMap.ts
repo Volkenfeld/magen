@@ -133,10 +133,10 @@ interface TechEventMarker {
 }
 
 // View presets with longitude, latitude, zoom
-const VIEW_PRESETS: Record<DeckMapView, { longitude: number; latitude: number; zoom: number }> = {
+const VIEW_PRESETS: Record<DeckMapView, { longitude: number; latitude: number; zoom: number; pitch?: number; bearing?: number }> = {
   global: { longitude: 0, latitude: 20, zoom: 1.5 },
   america: { longitude: -95, latitude: 38, zoom: 3 },
-  mena: { longitude: 45, latitude: 28, zoom: 3.5 },
+  mena: { longitude: 45, latitude: 28, zoom: 3.5, pitch: 45, bearing: -15 },
   eu: { longitude: 15, latitude: 50, zoom: 3.5 },
   asia: { longitude: 105, latitude: 35, zoom: 3 },
   latam: { longitude: -60, latitude: -15, zoom: 3 },
@@ -468,6 +468,8 @@ export class DeckGLMap {
       style: initialTheme === 'light' ? LIGHT_STYLE : DARK_STYLE,
       center: [preset.longitude, preset.latitude],
       zoom: preset.zoom,
+      pitch: preset.pitch ?? 0,
+      bearing: preset.bearing ?? 0,
       renderWorldCopies: false,
       attributionControl: false,
       interactive: true,
@@ -3630,6 +3632,8 @@ export class DeckGLMap {
       this.maplibreMap.flyTo({
         center: [preset.longitude, preset.latitude],
         zoom: preset.zoom,
+        pitch: preset.pitch ?? 0,
+        bearing: preset.bearing ?? 0,
         duration: 1000,
       });
     }
