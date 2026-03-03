@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { SITE_VARIANT } from '@/config/variant';
 
 // English is always needed as fallback — bundle it eagerly.
 import enTranslation from '../locales/en.json';
@@ -80,13 +81,17 @@ export async function initI18n(): Promise<void> {
       },
       supportedLngs: [...SUPPORTED_LANGUAGES],
       nonExplicitSupportedLngs: true,
-      fallbackLng: 'en',
+      fallbackLng: SITE_VARIANT === 'magen' ? 'he' : 'en',
       debug: import.meta.env.DEV,
       interpolation: {
         escapeValue: false, // not needed for these simple strings
       },
       detection: {
-        order: ['localStorage', 'navigator'],
+        // Magen variant: only honor explicit user choice (localStorage).
+        // If no choice stored, fallbackLng ('he') kicks in, giving Hebrew by default.
+        order: SITE_VARIANT === 'magen'
+          ? ['localStorage']
+          : ['localStorage', 'navigator'],
         caches: ['localStorage'],
       },
     });
