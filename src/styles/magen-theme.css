@@ -171,9 +171,16 @@
 }
 
 /* Prevent horizontal scroll from RTL layout overflow */
-[data-variant="magen"] .main-content,
-[data-variant="magen"] .panels-grid {
+html[data-variant="magen"] {
   overflow-x: hidden;
+}
+
+[data-variant="magen"] .main-content,
+[data-variant="magen"] .panels-grid,
+[data-variant="magen"] .map-section,
+[data-variant="magen"] .header {
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 
@@ -409,10 +416,6 @@
   text-align: right;
 }
 
-[data-variant="magen"][dir="rtl"] .panel-header {
-  flex-direction: row-reverse;
-}
-
 [data-variant="magen"][dir="rtl"] .panel-title {
   text-align: right;
 }
@@ -450,6 +453,64 @@
 [data-variant="magen"][dir="rtl"] .panel-info-tooltip ul {
   padding-left: 0;
   padding-right: 18px;
+}
+
+/* RTL: flip layer toggles from left to right */
+[data-variant="magen"][dir="rtl"] .deckgl-layer-toggles {
+  left: auto;
+  right: 10px;
+}
+
+/* RTL: flip map controls from right to left */
+[data-variant="magen"][dir="rtl"] .map-controls {
+  right: auto;
+  left: 10px;
+}
+
+/* RTL: flip time slider positioning */
+[data-variant="magen"][dir="rtl"] .time-slider {
+  left: auto;
+  right: 8px;
+}
+
+/* RTL: map collapse button margin flip */
+[data-variant="magen"][dir="rtl"] .map-collapse-btn {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* RTL: version label margin flip */
+[data-variant="magen"][dir="rtl"] .version {
+  margin-left: 0;
+  margin-right: 6px;
+}
+
+/* RTL: variant-switcher margin flip */
+[data-variant="magen"][dir="rtl"] .variant-switcher {
+  margin-right: 0;
+  margin-left: 6px;
+}
+
+/* RTL: layer toggle text alignment */
+[data-variant="magen"][dir="rtl"] .deckgl-layer-toggles .toggle-label {
+  text-align: right;
+}
+
+/* RTL: focus-label margin flip */
+[data-variant="magen"][dir="rtl"] .focus-label {
+  margin-right: 0;
+  margin-left: 6px;
+}
+
+/* RTL: focus-select arrow position */
+[data-variant="magen"][dir="rtl"] .focus-select {
+  padding: 4px 10px 4px 24px;
+  background-position: left 8px center;
+}
+
+/* RTL: prevent any absolute-positioned element from causing overflow */
+[data-variant="magen"][dir="rtl"] .map-section {
+  overflow: hidden;
 }
 
 
