@@ -258,8 +258,12 @@ export const VARIANT_FEEDS: Record<string, Record<string, ServerFeed[]>> = {
       { name: 'Haaretz', url: gn('site:haaretz.com when:7d') },
       { name: 'Ynet News', url: gn('site:ynetnews.com when:1d') },
       { name: 'i24NEWS', url: gn('site:i24news.tv when:1d') },
-      { name: 'Kan News', url: gn('"Kan News" OR site:kan.org.il when:2d') },
+      { name: 'Kan News', url: gn('"Kan News" OR "Kan 11" Israel when:7d') },
       { name: 'Israel Hayom', url: gn('site:israelhayom.com when:1d') },
+      // Hebrew direct RSS feeds (high volume, no Google proxy needed)
+      { name: 'Ynet Hebrew', url: 'https://www.ynet.co.il/Integration/StoryRss2.xml', lang: 'he' },
+      { name: 'Walla Hebrew', url: 'https://rss.walla.co.il/feed/1', lang: 'he' },
+      { name: 'Israel Hayom Hebrew', url: 'https://www.israelhayom.co.il/rss.xml', lang: 'he' },
       { name: 'BBC Middle East', url: 'https://feeds.bbci.co.uk/news/world/middle_east/rss.xml' },
       { name: 'Al Jazeera', url: 'https://www.aljazeera.com/xml/rss/all.xml' },
       { name: 'Al Arabiya', url: gn('site:english.alarabiya.net when:2d') },
