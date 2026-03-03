@@ -167,6 +167,13 @@
 [data-variant="magen"] body {
   font-size: var(--magen-font-size-base);
   line-height: var(--magen-line-height);
+  overflow-x: hidden;
+}
+
+/* Prevent horizontal scroll from RTL layout overflow */
+[data-variant="magen"] .main-content,
+[data-variant="magen"] .panels-grid {
+  overflow-x: hidden;
 }
 
 
