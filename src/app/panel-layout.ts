@@ -242,7 +242,9 @@ export class PanelLayoutManager implements AppModule {
     if (!mapSection || !headerLeft) return;
 
     const stored = localStorage.getItem('mobile-map-collapsed');
-    const collapsed = stored === null || stored === 'true';
+    // Magen variant: show map by default on first visit (map is core to the product)
+    const defaultCollapsed = SITE_VARIANT === 'magen' ? false : true;
+    const collapsed = stored === null ? defaultCollapsed : stored === 'true';
     if (collapsed) mapSection.classList.add('collapsed');
 
     const updateBtn = (btn: HTMLButtonElement, isCollapsed: boolean) => {
