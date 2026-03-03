@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>מגן - מודיעין הגנה אזרחית בזמן אמת</title>
+  <meta name="description" content="לוח מחוונים מודיעיני בזמן אמת לאזרחי ישראל. התראות פיקוד העורף, חדשות, מעקב צבאי ותובנות AI.">
+  <meta property="og:title" content="מגן - מודיעין הגנה אזרחית">
+  <meta property="og:description" content="מצב ביטחוני בזמן אמת עם התראות, חדשות, מודיעין ו-AI">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://magen.live">
+  <meta name="theme-color" content="#0a0e14">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #0a0e14;
+      color: #e8edf5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .landing {
+      max-width: 640px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .shield-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, #00a6ff 0%, #0066cc 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      box-shadow: 0 8px 32px rgba(0, 166, 255, 0.3);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #e8edf5 0%, #00a6ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #8899aa;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .description {
+      font-size: 1.05rem;
+      color: #b0bec5;
+      line-height: 1.8;
+      margin-bottom: 40px;
+      text-align: start;
+      padding: 0 16px;
+    }
+
+    .description p {
+      margin-bottom: 12px;
+    }
+
+    .enter-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #00a6ff 0%, #0077cc 100%);
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: 600;
+      padding: 18px 48px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      min-height: 56px;
+      min-width: 200px;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 20px rgba(0, 166, 255, 0.3);
+    }
+
+    .enter-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0, 166, 255, 0.4);
+    }
+
+    .enter-btn:active {
+      transform: translateY(0);
+    }
+
+    .lang-switch {
+      margin-top: 16px;
+    }
+
+    .lang-switch a {
+      color: #00a6ff;
+      text-decoration: none;
+      font-size: 1rem;
+      padding: 8px 16px;
+    }
+
+    .lang-switch a:hover {
+      text-decoration: underline;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 40px 0;
+      text-align: start;
+    }
+
+    .feature {
+      background: #131a24;
+      border: 1px solid #2a3544;
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .feature-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e8edf5;
+      margin-bottom: 4px;
+    }
+
+    .feature-desc {
+      font-size: 0.85rem;
+      color: #8899aa;
+      line-height: 1.4;
+    }
+
+    .install-note {
+      margin-top: 40px;
+      padding: 20px;
+      background: #131a24;
+      border: 1px solid #2a3544;
+      border-radius: 12px;
+      text-align: start;
+    }
+
+    .install-note h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: #e8edf5;
+    }
+
+    .install-note p {
+      font-size: 0.9rem;
+      color: #8899aa;
+      line-height: 1.6;
+    }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid #2a3544;
+      text-align: center;
+      width: 100%;
+    }
+
+    footer p {
+      font-size: 0.85rem;
+      color: #667788;
+      line-height: 1.8;
+    }
+
+    footer a {
+      color: #00a6ff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 2rem; }
+      .features { grid-template-columns: 1fr; }
+      .enter-btn { width: 100%; font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="landing">
+    <div class="shield-icon" aria-hidden="true">&#x1F6E1;</div>
+
+    <h1>מגן</h1>
+    <p class="subtitle">מודיעין הגנה אזרחית בזמן אמת</p>
+
+    <div class="description">
+      <p>מגן הוא כלי קהילתי חינמי שמרכז את כל המידע הביטחוני במקום אחד: התראות פיקוד העורף, חדשות ישראליות ובינלאומיות, מעקב צבאי, מודיעין טלגרם ותובנות AI.</p>
+      <p>הכלי פותח עבור כל אזרחי ישראל, כולל קשישים, עם דגש על נגישות ופשטות.</p>
+    </div>
+
+    <a href="/" class="enter-btn">כניסה למגן</a>
+
+    <div class="lang-switch">
+      <a href="/" onclick="localStorage.setItem('i18nextLng','en')">English</a>
+      <a href="/" onclick="localStorage.setItem('i18nextLng','he')">עברית</a>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-title">התראות בזמן אמת</div>
+        <div class="feature-desc">צפירות פיקוד העורף מוצגות ברגע שהן מתרחשות</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">חדשות ומודיעין</div>
+        <div class="feature-desc">עשרות מקורות ישראליים ובינלאומיים במקום אחד</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">תובנות AI</div>
+        <div class="feature-desc">ניתוח אוטומטי של המצב הביטחוני בעברית ואנגלית</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">מפה אינטראקטיבית</div>
+        <div class="feature-desc">מפת מצב עם שכבות צבאיות, גרעיניות ואזורי סכסוך</div>
+      </div>
+    </div>
+
+    <div class="install-note">
+      <h3>התקנה על הטלפון</h3>
+      <p>
+        <strong>iPhone:</strong> פתחו ב-Safari, לחצו על כפתור השיתוף ובחרו "הוסף למסך הבית".<br>
+        <strong>Android:</strong> פתחו ב-Chrome, לחצו על שלוש הנקודות ובחרו "הוסף למסך הבית".
+      </p>
+    </div>
+
+    <footer>
+      <p>
+        מגן הוא פרויקט קוד פתוח (AGPL v3) המבוסס על
+        <a href="https://github.com/koala73/worldmonitor" target="_blank" rel="noopener">World Monitor</a>
+        מאת Elie Habib.
+      </p>
+      <p>
+        השראה ויזואלית:
+        <a href="https://github.com/kevtoe/worldview" target="_blank" rel="noopener">WorldView</a>
+        מאת kevtoe.
+      </p>
+      <p>נבנה באהבה עבור אזרחי ישראל.</p>
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,926 @@
+/* ============================================================
+   Magen Variant Theme -- Israeli Civil Defense Intelligence
+   Accessibility-first, elderly-friendly, high-contrast dark theme.
+
+   Design principles:
+   - WCAG AAA contrast (7:1 text, 4.5:1 large text)
+   - Minimum 18px base font, 16px floor for small text
+   - Touch targets: 48x48px minimum
+   - RTL (Hebrew) support via [dir="rtl"] selectors
+   - Emergency mode for maximum readability under stress
+
+   Unlayered CSS -- wins over main.css which is wrapped in
+   @layer base by base-layer.css (@import ... layer(base)).
+   ============================================================ */
+
+
+/* ==========================================================
+   1. Custom Properties -- --magen-* namespace
+   Toggleable via .magen-variant or [data-variant="magen"]
+   ========================================================== */
+
+:root[data-variant="magen"],
+:root[data-variant="magen"][data-theme="dark"] {
+  /* ---- Core palette ---- */
+  --magen-bg: #0a0e14;
+  --magen-surface: #131a24;
+  --magen-card: #1a2332;
+  --magen-text: #e8edf5;
+  --magen-text-secondary: #8899aa;
+  --magen-accent: #00a6ff;
+  --magen-alert: #ff3344;
+  --magen-warning: #ffaa00;
+  --magen-success: #00cc66;
+  --magen-border: #2a3544;
+
+  /* ---- Derived tokens ---- */
+  --magen-text-dim: #778899;
+  --magen-accent-hover: #33b8ff;
+  --magen-accent-muted: rgba(0, 166, 255, 0.15);
+  --magen-alert-muted: rgba(255, 51, 68, 0.12);
+  --magen-warning-muted: rgba(255, 170, 0, 0.12);
+  --magen-success-muted: rgba(0, 204, 102, 0.12);
+  --magen-card-hover: #1f2b3d;
+  --magen-card-active: #243348;
+  --magen-focus-ring: 0 0 0 3px rgba(0, 166, 255, 0.5);
+
+  /* ---- Typography ---- */
+  --magen-font-size-base: 18px;
+  --magen-font-size-sm: 16px;
+  --magen-font-size-xs: 16px; /* Floor: never below 16px */
+  --magen-font-size-lg: 22px;
+  --magen-font-size-xl: 28px;
+  --magen-font-size-h1: 32px;
+  --magen-line-height: 1.6;
+  --magen-letter-spacing: 0.02em;
+
+  /* ---- Touch targets ---- */
+  --magen-touch-min: 48px;
+  --magen-touch-comfortable: 56px;
+
+  /* ---- Scrollbar ---- */
+  --magen-scrollbar-width: 14px;
+  --magen-scrollbar-thumb: #3a4a5e;
+  --magen-scrollbar-thumb-hover: #4d6078;
+  --magen-scrollbar-track: #0f1520;
+
+  /* ---- Emergency mode ---- */
+  --magen-emergency-bg: #000000;
+  --magen-emergency-text: #ffffff;
+  --magen-emergency-alert: #ff0000;
+  --magen-emergency-font-size: 24px;
+  --magen-emergency-button-size: 64px;
+
+  /* ---- Map base overrides for main.css variables ---- */
+  --bg: var(--magen-bg);
+  --bg-secondary: #0e1319;
+  --surface: var(--magen-surface);
+  --surface-hover: var(--magen-card-hover);
+  --surface-active: var(--magen-card-active);
+
+  --border: var(--magen-border);
+  --border-strong: #3d4f63;
+  --border-subtle: #1e2a38;
+
+  --text: var(--magen-text);
+  --text-secondary: #b0bcc8;
+  --text-dim: var(--magen-text-secondary);
+  --text-muted: var(--magen-text-dim);
+  --text-faint: #5a6a7a;
+  --text-ghost: #3d4d5d;
+  --accent: var(--magen-text);
+
+  --overlay-subtle: rgba(255, 255, 255, 0.02);
+  --overlay-light: rgba(255, 255, 255, 0.04);
+  --overlay-medium: rgba(255, 255, 255, 0.08);
+  --overlay-heavy: rgba(255, 255, 255, 0.15);
+  --shadow-color: rgba(0, 0, 0, 0.6);
+  --darken-light: rgba(0, 0, 0, 0.2);
+  --darken-medium: rgba(0, 0, 0, 0.3);
+  --darken-heavy: rgba(0, 0, 0, 0.4);
+
+  --scrollbar-thumb: var(--magen-scrollbar-thumb);
+  --scrollbar-thumb-hover: var(--magen-scrollbar-thumb-hover);
+
+  --input-bg: #111822;
+
+  --panel-bg: var(--magen-card);
+  --panel-border: var(--magen-border);
+  --panel-radius: 8px;
+
+  --map-bg: #060a10;
+  --map-grid: #0f1f30;
+  --map-country: #0c1820;
+  --map-stroke: #1a3548;
+
+  /* ---- Semantic / severity ---- */
+  --semantic-critical: var(--magen-alert);
+  --semantic-high: #ff8800;
+  --semantic-elevated: var(--magen-warning);
+  --semantic-normal: var(--magen-success);
+  --semantic-low: var(--magen-accent);
+  --semantic-info: #5599dd;
+  --semantic-positive: #44ee88;
+
+  --threat-critical: var(--magen-alert);
+  --threat-high: #ff6622;
+  --threat-medium: #eebb00;
+  --threat-low: var(--magen-success);
+  --threat-info: var(--magen-accent);
+
+  --defcon-1: #ff0040;
+  --defcon-2: #ff4400;
+  --defcon-3: var(--magen-warning);
+  --defcon-4: var(--magen-accent);
+  --defcon-5: #2d8a6e;
+
+  --status-live: var(--magen-success);
+  --status-cached: var(--magen-warning);
+  --status-unavailable: var(--magen-alert);
+
+  --red: var(--magen-alert);
+  --green: var(--magen-success);
+  --yellow: var(--magen-warning);
+
+  /* ---- Typography overrides ---- */
+  --font-body: 'Heebo', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* ---- Hebrew font for RTL ---- */
+[data-variant="magen"][dir="rtl"] {
+  --font-body: 'Heebo', 'Noto Sans Hebrew', 'Segoe UI', system-ui, sans-serif;
+}
+
+
+/* ==========================================================
+   2. Base Typography & Sizing
+   ========================================================== */
+
+[data-variant="magen"] {
+  font-size: var(--magen-font-size-base);
+  line-height: var(--magen-line-height);
+  letter-spacing: var(--magen-letter-spacing);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[data-variant="magen"] body {
+  font-size: var(--magen-font-size-base);
+  line-height: var(--magen-line-height);
+}
+
+
+/* ==========================================================
+   3. Focus States -- Visible & Accessible
+   ========================================================== */
+
+[data-variant="magen"] *:focus-visible {
+  outline: 3px solid var(--magen-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+[data-variant="magen"] *:focus:not(:focus-visible) {
+  outline: none;
+}
+
+
+/* ==========================================================
+   4. Panel Overrides -- Larger Text & Touch Targets
+   ========================================================== */
+
+/* Panel content: larger base font */
+[data-variant="magen"] .panel {
+  border-radius: var(--panel-radius, 8px);
+  border: 1px solid var(--magen-border);
+  background: var(--magen-card);
+}
+
+[data-variant="magen"] .panel-content {
+  font-size: var(--magen-font-size-base);
+  line-height: var(--magen-line-height);
+}
+
+[data-variant="magen"] .panel-title {
+  font-size: var(--magen-font-size-lg);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+[data-variant="magen"] .panel-count {
+  font-size: var(--magen-font-size-sm);
+  padding: 4px 10px;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Panel header buttons: 48px touch target */
+[data-variant="magen"] .panel-header button,
+[data-variant="magen"] .panel-header .panel-btn {
+  min-width: var(--magen-touch-min);
+  min-height: var(--magen-touch-min);
+  font-size: var(--magen-font-size-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+}
+
+/* Panel data items: readable sizes */
+[data-variant="magen"] .panel-data-badge {
+  font-size: var(--magen-font-size-sm);
+  padding: 6px 12px;
+}
+
+/* Table cells */
+[data-variant="magen"] .panel td,
+[data-variant="magen"] .panel th {
+  font-size: var(--magen-font-size-sm);
+  padding: 10px 12px;
+}
+
+/* Small text floor */
+[data-variant="magen"] .panel small,
+[data-variant="magen"] .panel .text-xs,
+[data-variant="magen"] .panel .text-small,
+[data-variant="magen"] .panel caption,
+[data-variant="magen"] .panel figcaption {
+  font-size: var(--magen-font-size-xs);
+}
+
+/* Card-specific styles */
+[data-variant="magen"] .news-card,
+[data-variant="magen"] .intel-item,
+[data-variant="magen"] .signal-item {
+  padding: 14px 16px;
+  font-size: var(--magen-font-size-base);
+  line-height: var(--magen-line-height);
+  border-width: 3px;
+}
+
+[data-variant="magen"] .news-card .news-title,
+[data-variant="magen"] .intel-item .intel-title {
+  font-size: var(--magen-font-size-base);
+  line-height: 1.5;
+}
+
+[data-variant="magen"] .news-card .news-source,
+[data-variant="magen"] .intel-item .intel-source,
+[data-variant="magen"] .news-card .news-time,
+[data-variant="magen"] .intel-item .intel-time {
+  font-size: var(--magen-font-size-sm);
+}
+
+
+/* ==========================================================
+   5. Button & Input Overrides -- Large Touch Targets
+   ========================================================== */
+
+[data-variant="magen"] button,
+[data-variant="magen"] [role="button"],
+[data-variant="magen"] .btn,
+[data-variant="magen"] a.btn {
+  min-height: var(--magen-touch-min);
+  min-width: var(--magen-touch-min);
+  font-size: var(--magen-font-size-sm);
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+/* Primary action button */
+[data-variant="magen"] .btn-primary,
+[data-variant="magen"] button.primary {
+  background: var(--magen-accent);
+  color: #000;
+  border: 2px solid var(--magen-accent);
+  font-weight: 700;
+}
+
+[data-variant="magen"] .btn-primary:hover,
+[data-variant="magen"] button.primary:hover {
+  background: var(--magen-accent-hover);
+  border-color: var(--magen-accent-hover);
+}
+
+/* Danger/alert button */
+[data-variant="magen"] .btn-danger,
+[data-variant="magen"] button.danger {
+  background: var(--magen-alert);
+  color: #fff;
+  border: 2px solid var(--magen-alert);
+  font-weight: 700;
+}
+
+/* Inputs */
+[data-variant="magen"] input,
+[data-variant="magen"] select,
+[data-variant="magen"] textarea {
+  min-height: var(--magen-touch-min);
+  font-size: var(--magen-font-size-base);
+  padding: 10px 14px;
+  background: var(--input-bg);
+  border: 2px solid var(--magen-border);
+  border-radius: 6px;
+  color: var(--magen-text);
+  line-height: var(--magen-line-height);
+}
+
+[data-variant="magen"] input:focus,
+[data-variant="magen"] select:focus,
+[data-variant="magen"] textarea:focus {
+  border-color: var(--magen-accent);
+  box-shadow: var(--magen-focus-ring);
+}
+
+/* Select dropdown arrow: bigger for easier tapping */
+[data-variant="magen"] select {
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%238899aa' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Checkboxes & radio buttons: larger */
+[data-variant="magen"] input[type="checkbox"],
+[data-variant="magen"] input[type="radio"] {
+  width: 24px;
+  height: 24px;
+  min-height: 24px;
+  cursor: pointer;
+  accent-color: var(--magen-accent);
+}
+
+
+/* ==========================================================
+   6. Scrollbar Overrides -- Wider & Easier to Grip
+   ========================================================== */
+
+[data-variant="magen"] ::-webkit-scrollbar {
+  width: var(--magen-scrollbar-width);
+  height: var(--magen-scrollbar-width);
+}
+
+[data-variant="magen"] ::-webkit-scrollbar-track {
+  background: var(--magen-scrollbar-track);
+  border-radius: 7px;
+}
+
+[data-variant="magen"] ::-webkit-scrollbar-thumb {
+  background: var(--magen-scrollbar-thumb);
+  border-radius: 7px;
+  border: 3px solid var(--magen-scrollbar-track);
+  min-height: 48px;
+}
+
+[data-variant="magen"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--magen-scrollbar-thumb-hover);
+}
+
+/* Firefox scrollbar */
+[data-variant="magen"] * {
+  scrollbar-width: auto;
+  scrollbar-color: var(--magen-scrollbar-thumb) var(--magen-scrollbar-track);
+}
+
+
+/* ==========================================================
+   7. RTL (Hebrew) Direction Overrides
+   ========================================================== */
+
+[data-variant="magen"][dir="rtl"] {
+  text-align: right;
+}
+
+[data-variant="magen"][dir="rtl"] .panel-header {
+  flex-direction: row-reverse;
+}
+
+[data-variant="magen"][dir="rtl"] .panel-title {
+  text-align: right;
+}
+
+/* Flip select arrow for RTL */
+[data-variant="magen"][dir="rtl"] select {
+  padding-right: 14px;
+  padding-left: 40px;
+  background-position: left 12px center;
+}
+
+/* RTL border accents: left becomes right */
+[data-variant="magen"][dir="rtl"] .news-card,
+[data-variant="magen"][dir="rtl"] .intel-item,
+[data-variant="magen"][dir="rtl"] .signal-item {
+  border-left: none;
+  border-right-width: 3px;
+  border-right-style: solid;
+}
+
+/* RTL margin/padding flips for icon+text patterns */
+[data-variant="magen"][dir="rtl"] button svg,
+[data-variant="magen"][dir="rtl"] .btn svg {
+  margin-left: 8px;
+  margin-right: 0;
+}
+
+/* RTL: auto-margin pushes flip */
+[data-variant="magen"][dir="rtl"] .panel-header-actions {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* RTL: padding-left content flips */
+[data-variant="magen"][dir="rtl"] .panel-info-tooltip ul {
+  padding-left: 0;
+  padding-right: 18px;
+}
+
+
+/* ==========================================================
+   8. Emergency Mode (.emergency-mode)
+   Maximum contrast, maximum readability, large touch targets.
+   Applied to <html> or <body> alongside data-variant="magen".
+   ========================================================== */
+
+[data-variant="magen"].emergency-mode,
+.emergency-mode[data-variant="magen"] {
+  /* Override all colors to maximum contrast */
+  --magen-bg: #000000;
+  --magen-surface: #0a0a0a;
+  --magen-card: #111111;
+  --magen-text: #ffffff;
+  --magen-text-secondary: #cccccc;
+  --magen-text-dim: #aaaaaa;
+  --magen-border: #444444;
+  --magen-accent: #44aaff;
+  --magen-alert: #ff0000;
+  --magen-warning: #ffcc00;
+  --magen-success: #00ff66;
+
+  /* Override base variables too */
+  --bg: #000000;
+  --surface: #0a0a0a;
+  --panel-bg: #111111;
+  --text: #ffffff;
+  --text-secondary: #cccccc;
+  --text-dim: #aaaaaa;
+  --accent: #ffffff;
+
+  /* Emergency font size */
+  font-size: var(--magen-emergency-font-size) !important;
+}
+
+/* Emergency: all text becomes large and bold */
+[data-variant="magen"].emergency-mode body,
+.emergency-mode[data-variant="magen"] body {
+  font-size: var(--magen-emergency-font-size);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Emergency: panel titles even larger */
+[data-variant="magen"].emergency-mode .panel-title,
+.emergency-mode[data-variant="magen"] .panel-title {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+/* Emergency: panel content text */
+[data-variant="magen"].emergency-mode .panel-content,
+.emergency-mode[data-variant="magen"] .panel-content {
+  font-size: var(--magen-emergency-font-size);
+  line-height: 1.5;
+}
+
+/* Emergency: large buttons for phone numbers and actions */
+[data-variant="magen"].emergency-mode button,
+.emergency-mode[data-variant="magen"] button,
+[data-variant="magen"].emergency-mode .btn,
+.emergency-mode[data-variant="magen"] .btn {
+  min-height: var(--magen-emergency-button-size);
+  min-width: var(--magen-emergency-button-size);
+  font-size: 22px;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-width: 3px;
+}
+
+/* Emergency phone number buttons: extra prominent */
+[data-variant="magen"].emergency-mode .emergency-phone,
+.emergency-mode[data-variant="magen"] .emergency-phone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 72px;
+  font-size: 28px;
+  font-weight: 800;
+  background: var(--magen-alert);
+  color: #ffffff;
+  border: 3px solid #ff4444;
+  border-radius: 12px;
+  width: 100%;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+}
+
+[data-variant="magen"].emergency-mode .emergency-phone:hover,
+.emergency-mode[data-variant="magen"] .emergency-phone:hover {
+  background: #cc0000;
+  border-color: #ff0000;
+}
+
+[data-variant="magen"].emergency-mode .emergency-phone:active,
+.emergency-mode[data-variant="magen"] .emergency-phone:active {
+  background: #aa0000;
+  transform: scale(0.98);
+}
+
+/* Emergency: alert cards highlighted with strong borders */
+[data-variant="magen"].emergency-mode .news-card,
+.emergency-mode[data-variant="magen"] .news-card,
+[data-variant="magen"].emergency-mode .intel-item,
+.emergency-mode[data-variant="magen"] .intel-item {
+  border-width: 4px;
+  padding: 18px 20px;
+  font-size: var(--magen-emergency-font-size);
+}
+
+/* Emergency: hide decorative elements, keep functional */
+[data-variant="magen"].emergency-mode .panel-loading-radar,
+.emergency-mode[data-variant="magen"] .panel-loading-radar,
+[data-variant="magen"].emergency-mode .panel-radar-sweep,
+.emergency-mode[data-variant="magen"] .panel-radar-sweep {
+  display: none;
+}
+
+/* Emergency: inputs larger */
+[data-variant="magen"].emergency-mode input,
+.emergency-mode[data-variant="magen"] input,
+[data-variant="magen"].emergency-mode select,
+.emergency-mode[data-variant="magen"] select {
+  min-height: 56px;
+  font-size: 22px;
+  border-width: 3px;
+}
+
+/* Emergency: siren/alert banner */
+[data-variant="magen"].emergency-mode .oref-siren-active,
+.emergency-mode[data-variant="magen"] .oref-siren-active {
+  background: var(--magen-alert);
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 800;
+  padding: 20px;
+  text-align: center;
+  animation: magen-emergency-pulse 1s ease-in-out infinite;
+}
+
+@keyframes magen-emergency-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+
+/* ==========================================================
+   9. Magen-Specific Component Styles
+   ========================================================== */
+
+/* ---- Siren panel: prominent alert styling ---- */
+[data-variant="magen"] .oref-siren-item {
+  padding: 14px 16px;
+  font-size: var(--magen-font-size-base);
+  border-left: 4px solid var(--magen-alert);
+  background: var(--magen-alert-muted);
+  margin-bottom: 4px;
+}
+
+[data-variant="magen"][dir="rtl"] .oref-siren-item {
+  border-left: none;
+  border-right: 4px solid var(--magen-alert);
+}
+
+[data-variant="magen"] .oref-siren-location {
+  font-size: var(--magen-font-size-lg);
+  font-weight: 700;
+  color: var(--magen-text);
+}
+
+[data-variant="magen"] .oref-siren-time {
+  font-size: var(--magen-font-size-sm);
+  color: var(--magen-text-secondary);
+}
+
+/* ---- Strategic risk bars: thicker for readability ---- */
+[data-variant="magen"] .risk-bar {
+  height: 12px;
+  border-radius: 6px;
+}
+
+[data-variant="magen"] .risk-label {
+  font-size: var(--magen-font-size-sm);
+  font-weight: 600;
+}
+
+[data-variant="magen"] .risk-value {
+  font-size: var(--magen-font-size-base);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* ==========================================================
+   10. Map Controls -- Larger Buttons
+   ========================================================== */
+
+[data-variant="magen"] .map-control-btn {
+  min-width: var(--magen-touch-min);
+  min-height: var(--magen-touch-min);
+  font-size: var(--magen-font-size-sm);
+  border-radius: 8px;
+}
+
+[data-variant="magen"] .map-controls {
+  gap: 8px;
+}
+
+/* Map legend: readable text */
+[data-variant="magen"] .map-legend {
+  font-size: var(--magen-font-size-sm);
+}
+
+[data-variant="magen"] .map-legend-item {
+  padding: 6px 10px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+/* ==========================================================
+   11. Tabs & Filters -- Touch-Friendly
+   ========================================================== */
+
+[data-variant="magen"] .disp-tab,
+[data-variant="magen"] .ucdp-tab,
+[data-variant="magen"] .filter-tab,
+[data-variant="magen"] [role="tab"] {
+  min-height: var(--magen-touch-min);
+  min-width: var(--magen-touch-min);
+  font-size: var(--magen-font-size-sm);
+  padding: 10px 16px;
+  border-radius: 6px;
+}
+
+[data-variant="magen"] .disp-tab-active,
+[data-variant="magen"] .ucdp-tab-active,
+[data-variant="magen"] [role="tab"][aria-selected="true"] {
+  background: var(--magen-accent-muted);
+  border-color: var(--magen-accent);
+  color: var(--magen-accent);
+  font-weight: 700;
+}
+
+
+/* ==========================================================
+   12. Severity Badges -- High Contrast
+   ========================================================== */
+
+[data-variant="magen"] .severity-extreme,
+[data-variant="magen"] .severity-critical {
+  background: var(--magen-alert-muted);
+  color: var(--magen-alert);
+  font-size: var(--magen-font-size-sm);
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+[data-variant="magen"] .severity-high {
+  background: rgba(255, 136, 0, 0.15);
+  color: #ff8800;
+  font-size: var(--magen-font-size-sm);
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+[data-variant="magen"] .severity-moderate,
+[data-variant="magen"] .severity-medium {
+  background: var(--magen-warning-muted);
+  color: var(--magen-warning);
+  font-size: var(--magen-font-size-sm);
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+[data-variant="magen"] .severity-low {
+  background: var(--magen-success-muted);
+  color: var(--magen-success);
+  font-size: var(--magen-font-size-sm);
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+
+/* ==========================================================
+   13. Links -- Clear & Distinguishable
+   ========================================================== */
+
+[data-variant="magen"] a {
+  color: var(--magen-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+[data-variant="magen"] a:hover {
+  color: var(--magen-accent-hover);
+}
+
+[data-variant="magen"] a:visited {
+  color: #9988cc;
+}
+
+/* Links inside cards: inherit card behavior */
+[data-variant="magen"] .news-card a,
+[data-variant="magen"] .intel-item a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* ==========================================================
+   14. Status Indicators -- Larger Dots
+   ========================================================== */
+
+[data-variant="magen"] .status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+[data-variant="magen"] .status-text {
+  font-size: var(--magen-font-size-sm);
+  font-weight: 600;
+}
+
+
+/* ==========================================================
+   15. Loading States
+   ========================================================== */
+
+[data-variant="magen"] .panel-loading-text {
+  font-size: var(--magen-font-size-base);
+  letter-spacing: 0.05em;
+}
+
+
+/* ==========================================================
+   16. Header & Navigation Overrides
+   ========================================================== */
+
+[data-variant="magen"] .header-bar button,
+[data-variant="magen"] .header-bar select,
+[data-variant="magen"] .header-bar .settings-btn,
+[data-variant="magen"] .header-bar .sources-btn,
+[data-variant="magen"] .header-bar .search-btn {
+  min-height: var(--magen-touch-min);
+  min-width: var(--magen-touch-min);
+  font-size: var(--magen-font-size-sm);
+}
+
+[data-variant="magen"] .region-select,
+[data-variant="magen"] .lang-select {
+  min-height: var(--magen-touch-min);
+  font-size: var(--magen-font-size-sm);
+  padding: 8px 36px 8px 12px;
+}
+
+[data-variant="magen"][dir="rtl"] .region-select,
+[data-variant="magen"][dir="rtl"] .lang-select {
+  padding: 8px 12px 8px 36px;
+}
+
+
+/* ==========================================================
+   17. Tooltip & Popup Overrides
+   ========================================================== */
+
+[data-variant="magen"] .tooltip,
+[data-variant="magen"] .panel-info-tooltip {
+  font-size: var(--magen-font-size-sm);
+  padding: 12px 16px;
+  border-radius: 8px;
+  max-width: 400px;
+  line-height: var(--magen-line-height);
+}
+
+
+/* ==========================================================
+   18. Table Styles -- Readable
+   ========================================================== */
+
+[data-variant="magen"] table {
+  font-size: var(--magen-font-size-sm);
+}
+
+[data-variant="magen"] th {
+  font-size: var(--magen-font-size-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 12px;
+  color: var(--magen-text-secondary);
+  border-bottom: 2px solid var(--magen-border);
+}
+
+[data-variant="magen"] td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--magen-border);
+  color: var(--magen-text);
+}
+
+[data-variant="magen"] tr:hover td {
+  background: var(--magen-card-hover);
+}
+
+
+/* ==========================================================
+   19. Download & Notification Banners
+   ========================================================== */
+
+[data-variant="magen"] .wm-dl-panel {
+  font-size: var(--magen-font-size-base);
+  padding: 14px 20px;
+}
+
+[data-variant="magen"] .update-toast {
+  font-size: var(--magen-font-size-sm);
+  padding: 14px 20px;
+  min-height: var(--magen-touch-min);
+}
+
+
+/* ==========================================================
+   20. Reduced Motion Support
+   ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-variant="magen"] *,
+  [data-variant="magen"] *::before,
+  [data-variant="magen"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  [data-variant="magen"].emergency-mode .oref-siren-active,
+  .emergency-mode[data-variant="magen"] .oref-siren-active {
+    animation: none;
+  }
+}
+
+
+/* ==========================================================
+   21. Print Styles -- High Contrast for Paper
+   ========================================================== */
+
+@media print {
+  [data-variant="magen"] {
+    --magen-bg: #ffffff;
+    --magen-surface: #ffffff;
+    --magen-card: #ffffff;
+    --magen-text: #000000;
+    --magen-text-secondary: #333333;
+    --magen-border: #cccccc;
+    --magen-accent: #0066cc;
+    --magen-alert: #cc0000;
+    font-size: 14pt;
+  }
+
+  [data-variant="magen"] .panel {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  [data-variant="magen"] button,
+  [data-variant="magen"] .map-controls,
+  [data-variant="magen"] .header-bar {
+    display: none !important;
+  }
+}

@@ -1,0 +1,2153 @@
+{
+  "app": {
+    "title": "מגן",
+    "description": "מודיעין הגנה אזרחית בזמן אמת"
+  },
+  "countryBrief": {
+    "identifying": "מזהה מדינה...",
+    "locating": "מאתר אזור...",
+    "limitedCoverage": "כיסוי מוגבל",
+    "instabilityIndex": "מדד אי-יציבות",
+    "notTracked": "לא במעקב, {{country}} לא נמצאת ברשימת CII דרג-1",
+    "intelBrief": "תדריך מודיעיני",
+    "generatingBrief": "מייצר תדריך מודיעיני...",
+    "topNews": "חדשות מובילות",
+    "activeSignals": "אותות פעילים",
+    "timeline": "ציר זמן 7 ימים",
+    "predictionMarkets": "שוקי חיזוי",
+    "loadingMarkets": "טוען שוקי חיזוי...",
+    "infrastructure": "חשיפת תשתיות",
+    "briefUnavailable": "תדריך AI לא זמין, הגדר GROQ_API_KEY בהגדרות.",
+    "cached": "מהמטמון",
+    "fresh": "עדכני",
+    "noMarkets": "אין שוקי חיזוי פעילים למדינה זו.",
+    "loadingIndex": "טוען מדד...",
+    "components": {
+      "unrest": "אי-שקט",
+      "conflict": "סכסוך",
+      "security": "ביטחון",
+      "information": "מידע"
+    },
+    "signals": {
+      "protests": "הפגנות",
+      "militaryAir": "מטוסים צבאיים",
+      "militarySea": "כלי שיט צבאיים",
+      "outages": "תקלות",
+      "earthquakes": "רעידות אדמה",
+      "displaced": "עקורים",
+      "climate": "לחץ אקלימי",
+      "conflictEvents": "אירועי סכסוך",
+      "activeStrikes": "תקיפות פעילות",
+      "aviationDisruptions": "שיבושי תעופה",
+      "gpsJammingZones": "אזורי שיבוש GPS"
+    },
+    "timeAgo": {
+      "m": "לפני {{count}} דק'",
+      "h": "לפני {{count}} שע'",
+      "d": "לפני {{count}} ימים"
+    },
+    "infra": {
+      "pipeline": "צינורות",
+      "cable": "כבלים תת-ימיים",
+      "datacenter": "מרכזי נתונים",
+      "base": "בסיסים צבאיים",
+      "nuclear": "מתקנים גרעיניים",
+      "port": "נמלים"
+    },
+    "levels": {
+      "critical": "קריטי",
+      "high": "גבוה",
+      "elevated": "מוגבר",
+      "moderate": "מתון",
+      "normal": "רגיל",
+      "low": "נמוך"
+    },
+    "trends": {
+      "rising": "עולה",
+      "falling": "יורד",
+      "stable": "יציב"
+    },
+    "militaryActivity": "פעילות צבאית",
+    "economicIndicators": "מדדים כלכליים",
+    "ownFlights": "טיסות עצמיות",
+    "foreignFlights": "טיסות זרות",
+    "navalVessels": "כלי שיט צבאיים",
+    "foreignPresence": "נוכחות זרה",
+    "nearestBases": "בסיסים צבאיים קרובים",
+    "noBasesNearby": "אין בסיסים קרובים ברדיוס 600 ק\"מ.",
+    "noInfrastructure": "לא נמצאו תשתיות קריטיות ברדיוס 600 ק\"מ.",
+    "noGeometry": "אין נתונים גיאומטריים לניתוח תשתיות.",
+    "noSignals": "אין אותות חמורים אחרונים.",
+    "assessmentUnavailable": "הערכה לא זמינה.",
+    "noNews": "אין כיסוי תקשורתי עדכני למדינה זו.",
+    "noIndicators": "אין מדדים כלכליים זמינים למדינה זו.",
+    "nearbyPorts": "נמלים קרובים",
+    "detected": "זוהה",
+    "notDetected": "לא",
+    "ciiUnavailable": "ציון CII לא זמין למדינה זו.",
+    "chips": {
+      "criticalNews": "חדשות קריטיות",
+      "protests": "הפגנות",
+      "militaryAir": "תעופה צבאית",
+      "navalVessels": "כלי שיט צבאיים",
+      "outages": "תקלות",
+      "aisDisruptions": "שיבושי AIS",
+      "satelliteFires": "שריפות לווין",
+      "temporalAnomalies": "חריגות זמניות",
+      "cyberThreats": "איומי סייבר",
+      "earthquakes": "רעידות אדמה",
+      "displaced": "עקורים",
+      "climateStress": "לחץ אקלימי",
+      "conflictEvents": "אירועי סכסוך",
+      "activeStrikes": "תקיפות פעילות",
+      "doNotTravel": "איסור נסיעה",
+      "reconsiderTravel": "שקלו מחדש נסיעה",
+      "exerciseCaution": "נקטו זהירות",
+      "advisory": "אזהרה",
+      "activeSirens": "צפירות פעילות",
+      "sirens24h": "צפירות / 24 שע'",
+      "aviationDisruptions": "שיבושי תעופה",
+      "gpsJammingZones": "אזורי שיבוש GPS"
+    },
+    "fallback": {
+      "instabilityIndex": "**מדד אי-יציבות: {{score}}/100** ({{level}}, {{trend}})",
+      "protestsDetected": "{{count}} הפגנות פעילות זוהו",
+      "aircraftTracked": "{{count}} מטוסים צבאיים במעקב",
+      "vesselsTracked": "{{count}} כלי שיט צבאיים במעקב",
+      "internetOutages": "{{count}} תקלות אינטרנט",
+      "recentEarthquakes": "{{count}} רעידות אדמה אחרונות",
+      "stockIndex": "מדד מניות: {{value}}",
+      "recentHeadlines": "**כותרות אחרונות:**",
+      "activeStrikes": "{{count}} תקיפות פעילות זוהו"
+    }
+  },
+  "header": {
+    "world": "עולם",
+    "tech": "טכנולוגיה",
+    "live": "שידור חי",
+    "search": "חיפוש",
+    "settings": "הגדרות",
+    "sources": "מקורות",
+    "copyLink": "קישור",
+    "downloadApp": "הורד אפליקציה",
+    "fullscreen": "מסך מלא",
+    "pinMap": "הצמד מפה למעלה",
+    "viewOnGitHub": "צפה ב-GitHub",
+    "filterSources": "סנן מקורות...",
+    "sourcesEnabled": "{{enabled}}/{{total}} פעילים",
+    "finance": "פיננסים",
+    "toggleTheme": "החלף ערכת נושא כהה/בהיר",
+    "panelDisplayCaption": "בחרו אילו פאנלים יוצגו בלוח המחוונים",
+    "tabGeneral": "כללי",
+    "tabPanels": "פאנלים",
+    "tabSources": "מקורות",
+    "languageLabel": "שפה",
+    "sourceRegionAll": "הכל",
+    "sourceRegionWorldwide": "עולמי",
+    "sourceRegionUS": "ארצות הברית",
+    "sourceRegionMiddleEast": "המזרח התיכון",
+    "sourceRegionAfrica": "אפריקה",
+    "sourceRegionLatAm": "אמריקה הלטינית",
+    "sourceRegionAsiaPacific": "אסיה-פסיפיק",
+    "sourceRegionEurope": "אירופה",
+    "sourceRegionTopical": "נושאי",
+    "sourceRegionIntel": "מודיעין",
+    "sourceRegionTechNews": "חדשות טכנולוגיה",
+    "sourceRegionAiMl": "AI ולמידת מכונה",
+    "sourceRegionStartupsVc": "סטארטאפים והון סיכון",
+    "sourceRegionRegionalTech": "מערכות אקולוגיות אזוריות",
+    "sourceRegionDeveloper": "מפתחים",
+    "sourceRegionCybersecurity": "אבטחת סייבר",
+    "sourceRegionTechPolicy": "מדיניות ומחקר",
+    "sourceRegionTechMedia": "מדיה ופודקאסטים",
+    "sourceRegionMarkets": "שווקים וניתוח",
+    "sourceRegionFixedIncomeFx": "אג\"ח ומט\"ח",
+    "sourceRegionCommodities": "סחורות",
+    "sourceRegionCryptoDigital": "קריפטו ודיגיטל",
+    "sourceRegionCentralBanks": "בנקים מרכזיים וכלכלה",
+    "sourceRegionDeals": "עסקאות ותאגידים",
+    "sourceRegionFinRegulation": "רגולציה פיננסית",
+    "sourceRegionGulfMena": "מפרץ ומזה\"ת",
+    "filterPanels": "סנן פאנלים...",
+    "resetLayout": "אפס פריסה",
+    "panelCatCore": "ליבה",
+    "panelCatIntelligence": "מודיעין",
+    "panelCatRegionalNews": "חדשות אזוריות",
+    "panelCatMarketsFinance": "שווקים ופיננסים",
+    "panelCatTopical": "נושאי",
+    "panelCatDataTracking": "נתונים ומעקב",
+    "panelCatTechAi": "טכנולוגיה ו-AI",
+    "panelCatStartupsVc": "סטארטאפים והון סיכון",
+    "panelCatSecurityPolicy": "ביטחון ומדיניות",
+    "panelCatMarkets": "שווקים",
+    "panelCatFixedIncomeFx": "אג\"ח ומט\"ח",
+    "panelCatCommodities": "סחורות",
+    "panelCatCryptoDigital": "קריפטו ודיגיטל",
+    "panelCatCentralBanks": "בנקים מרכזיים וכלכלה",
+    "panelCatDeals": "עסקאות ומוסדיים",
+    "panelCatGulfMena": "מפרץ ומזה\"ת",
+    "panelCatTradePolicy": "מדיניות סחר"
+  },
+  "panels": {
+    "liveNews": "חדשות בזמן אמת",
+    "markets": "שווקים",
+    "map": "מצב גלובלי",
+    "techMap": "טכנולוגיה גלובלית",
+    "techHubs": "מרכזי טכנולוגיה חמים",
+    "status": "סטטוס מערכת",
+    "insights": "תובנות AI",
+    "strategicPosture": "עמדה אסטרטגית AI",
+    "cii": "אי-יציבות מדינתית",
+    "strategicRisk": "סקירת סיכונים אסטרטגיים",
+    "intel": "פיד מודיעין",
+    "gdeltIntel": "מודיעין חי",
+    "cascade": "מפל תשתיות",
+    "politics": "חדשות העולם",
+    "us": "ארצות הברית",
+    "europe": "אירופה",
+    "middleeast": "המזרח התיכון",
+    "africa": "אפריקה",
+    "latam": "אמריקה הלטינית",
+    "asia": "אסיה-פסיפיק",
+    "energy": "אנרגיה ומשאבים",
+    "gov": "ממשל",
+    "thinktanks": "מכוני מחקר",
+    "polymarket": "חיזויים",
+    "commodities": "סחורות",
+    "economic": "מדדים כלכליים",
+    "tradePolicy": "מדיניות סחר",
+    "supplyChain": "שרשרת אספקה",
+    "finance": "פיננסים",
+    "tech": "טכנולוגיה",
+    "crypto": "קריפטו",
+    "heatmap": "מפת חום מגזרית",
+    "ai": "AI/ML",
+    "layoffs": "מעקב פיטורים",
+    "monitors": "המוניטורים שלי",
+    "satelliteFires": "שריפות",
+    "macroSignals": "רדאר שווקים",
+    "etfFlows": "מעקב BTC ETF",
+    "stablecoins": "מטבעות יציבים",
+    "deduction": "הסק מצב",
+    "ucdpEvents": "אירועי סכסוך מזוין",
+    "giving": "תרומות גלובליות",
+    "displacement": "עקירה UNHCR",
+    "climate": "חריגות אקלים",
+    "populationExposure": "חשיפת אוכלוסייה",
+    "securityAdvisories": "התראות ביטחון",
+    "orefSirens": "צפירות פיקוד העורף",
+    "telegramIntel": "מודיעין טלגרם",
+    "startups": "סטארטאפים והון סיכון",
+    "vcblogs": "תובנות הון סיכון",
+    "regionalStartups": "חדשות סטארטאפים גלובליות",
+    "unicorns": "מעקב יוניקורנים",
+    "accelerators": "מאיצים ויום הדגמות",
+    "security": "אבטחת סייבר",
+    "policy": "מדיניות ורגולציית AI",
+    "regulation": "לוח רגולציית AI",
+    "hardware": "מוליכים למחצה וחומרה",
+    "cloud": "ענן ותשתיות",
+    "dev": "קהילת מפתחים",
+    "github": "GitHub Trending",
+    "ipo": "IPO ו-SPAC",
+    "funding": "מימון והון סיכון",
+    "producthunt": "Product Hunt",
+    "events": "אירועי טכנולוגיה",
+    "serviceStatus": "סטטוס שירותים",
+    "techReadiness": "מדד מוכנות טכנולוגית",
+    "gccInvestments": "השקעות GCC",
+    "geoHubs": "מוקדים גיאופוליטיים",
+    "liveWebcams": "מצלמות רשת חיות",
+    "gulfEconomies": "כלכלות המפרץ",
+    "gulfIndices": "מדדי המפרץ",
+    "gulfCurrencies": "מטבעות המפרץ",
+    "gulfOil": "נפט המפרץ",
+    "credits": "קרדיטים"
+  },
+  "commands": {
+    "prefixes": {
+      "map": "מפה",
+      "panel": "פאנל",
+      "brief": "תדריך"
+    },
+    "categories": {
+      "navigate": "ניווט",
+      "layers": "שכבות",
+      "panels": "פאנלים",
+      "view": "תצוגה",
+      "actions": "פעולות",
+      "country": "מדינה"
+    },
+    "regions": {
+      "global": "תצוגה גלובלית",
+      "mena": "מזרח תיכון וצפון אפריקה",
+      "eu": "אירופה",
+      "asia": "אסיה-פסיפיק",
+      "america": "אמריקה",
+      "africa": "אפריקה",
+      "latam": "אמריקה הלטינית",
+      "oceania": "אוקיאניה"
+    },
+    "tips": {
+      "map": "הקלידו שם מדינה כדי לעוף אליה על המפה",
+      "panel": "הקלידו שם פאנל כדי לגלול אליו",
+      "brief": "הקלידו שם מדינה לתדריך מודיעיני",
+      "layers": "הקלידו \"military\" או \"finance\" לשכבות מוגדרות",
+      "time": "הקלידו \"1h\", \"24h\", או \"7d\" לסינון לפי זמן",
+      "settings": "הקלידו \"dark mode\", \"settings\", או \"fullscreen\""
+    }
+  },
+  "modals": {
+    "search": {
+      "placeholder": "חפשו או הקלידו פקודה...",
+      "hint": "חיפוש, מדינות, שכבות, פאנלים, ניווט, הגדרות",
+      "placeholderTech": "חפשו או הקלידו פקודה...",
+      "hintTech": "חיפוש, חברות, מעבדות AI, שכבות, ניווט, הגדרות",
+      "placeholderFinance": "חפשו או הקלידו פקודה...",
+      "hintFinance": "חיפוש, בורסות, שווקים, שכבות, ניווט, הגדרות",
+      "recent": "חיפושים אחרונים",
+      "empty": "חפשו נתונים או הריצו פקודות",
+      "noResults": "אין תוצאות",
+      "navigate": "ניווט",
+      "select": "בחירה",
+      "close": "סגירה",
+      "types": {
+        "country": "מדינה",
+        "news": "חדשות",
+        "hotspot": "מוקד",
+        "market": "שוק",
+        "prediction": "חיזוי",
+        "conflict": "סכסוך",
+        "base": "בסיס צבאי",
+        "pipeline": "צינור",
+        "cable": "כבל תת-ימי",
+        "datacenter": "מרכז נתונים",
+        "earthquake": "רעידת אדמה",
+        "outage": "תקלה",
+        "nuclear": "אתר גרעיני",
+        "irradiator": "מקרין",
+        "techcompany": "חברת טכנולוגיה",
+        "ailab": "מעבדת AI",
+        "startup": "סטארטאפ",
+        "techevent": "אירוע טכנולוגי",
+        "techhq": "מטה טכנולוגי",
+        "accelerator": "מאיץ"
+      }
+    },
+    "signal": {
+      "title": "ממצא מודיעיני",
+      "soundAlerts": "התראות קוליות",
+      "dismiss": "סגור",
+      "confidence": "רמת ביטחון",
+      "country": "מדינה:",
+      "scoreChange": "שינוי ציון:",
+      "instabilityLevel": "רמת אי-יציבות:",
+      "primaryDriver": "גורם מניע:",
+      "location": "מיקום:",
+      "eventTypes": "סוגי אירועים:",
+      "eventCount": "מספר אירועים:",
+      "eventCountValue": "{{count}} אירועים ב-24 שע'",
+      "source": "מקור:",
+      "countriesAffected": "מדינות מושפעות:",
+      "impactLevel": "רמת השפעה:",
+      "focalPoints": "נקודות מיקוד מתואמות",
+      "newsCorrelation": "מתאם חדשותי",
+      "viewOnMap": "הצג על המפה",
+      "whyItMatters": "למה זה חשוב:",
+      "action": "פעולה:",
+      "note": "הערה:",
+      "suppress": "השתק מונח זה",
+      "suppressed": "הושתק",
+      "predictionLeading": "חיזוי מוביל",
+      "newsLeading": "חדשות מובילות",
+      "silentDivergence": "סטייה שקטה",
+      "velocitySpike": "קפיצת מהירות",
+      "keywordSpike": "קפיצת מילות מפתח",
+      "convergence": "התכנסות",
+      "triangulation": "טריאנגולציה",
+      "flowDrop": "ירידת זרימה",
+      "flowPriceDivergence": "סטיית זרימה/מחיר",
+      "geoConvergence": "התכנסות גיאוגרפית",
+      "marketMove": "תנועת שוק מוסברת",
+      "sectorCascade": "מפל מגזרי",
+      "militarySurge": "עלייה צבאית"
+    },
+    "story": {
+      "generating": "מייצר סיפור...",
+      "close": "סגור",
+      "shareTitle": "שתף סיפור",
+      "save": "שמור",
+      "whatsapp": "WhatsApp",
+      "twitter": "X",
+      "linkedin": "LinkedIn",
+      "copyLink": "קישור",
+      "saved": "נשמר!",
+      "copied": "הועתק!",
+      "opening": "פותח...",
+      "error": "יצירת הסיפור נכשלה."
+    },
+    "mobileWarning": {
+      "title": "תצוגת מובייל",
+      "description": "אתם צופים בגרסה מובנית למובייל המתמקדת באזור המזרח התיכון עם שכבות חיוניות.",
+      "tip": "טיפ: השתמשו בכפתורי התצוגה (גלובלי/ארה\"ב/מזה\"ת) למעבר בין אזורים. לחצו על סמנים לפרטים.",
+      "dontShowAgain": "אל תציג שוב",
+      "gotIt": "הבנתי"
+    },
+    "downloadBanner": {
+      "title": "אפליקציית שולחן עבודה זמינה",
+      "description": "ביצועים מקומיים, אחסון מפתחות מאובטח, אריחי מפה לא מקוונים.",
+      "macSilicon": "macOS (Apple Silicon)",
+      "macIntel": "macOS (Intel)",
+      "windows": "Windows (.exe)",
+      "linux": "Linux (.AppImage)",
+      "showAllPlatforms": "הצג את כל הפלטפורמות",
+      "showLess": "הצג פחות",
+      "dismiss": "סגור"
+    },
+    "runtimeConfig": {
+      "title": "Desktop Configuration",
+      "alertTitle": {
+        "configured": "Desktop settings configured",
+        "needsKeys": "Configure API keys to unlock features",
+        "some": "Some features need API keys"
+      },
+      "openSettings": "Open Settings",
+      "skipSetup": "Skip the setup — a single World Monitor license unlocks everything. Join the waitlist for early access.",
+      "summary": {
+        "desktop": "Desktop mode",
+        "web": "Web mode (read-only, server-managed credentials)",
+        "secrets": "local secrets configured",
+        "available": "features available"
+      },
+      "status": {
+        "ready": "Ready",
+        "staged": "Staged",
+        "needsKeys": "Needs Keys",
+        "invalid": "Invalid",
+        "missing": "Missing",
+        "valid": "Valid",
+        "looksInvalid": "Looks invalid"
+      },
+      "placeholder": {
+        "setSecret": "Set secret",
+        "staged": "Staged (save with OK)"
+      },
+      "help": {
+        "URLHAUS_AUTH_KEY": "Used for both URLhaus and ThreatFox APIs.",
+        "OTX_API_KEY": "Optional enrichment source for the cyber threat layer.",
+        "ABUSEIPDB_API_KEY": "Optional enrichment source for malicious IP reputation.",
+        "FINNHUB_API_KEY": "Real-time stock quotes and market data.",
+        "NASA_FIRMS_API_KEY": "Fire Information for Resource Management System.",
+        "OLLAMA_API_URL": "e.g. http://127.0.0.1:11434 (Ollama) or http://127.0.0.1:1234/v1 (LM Studio) — OpenAI-compatible endpoint.",
+        "OLLAMA_MODEL": "e.g. llama3.1:8b — model tag to use for summarization."
+      }
+    },
+    "settingsWindow": {
+      "validating": "Validating API keys...",
+      "saved": "Settings saved",
+      "failed": "Save failed: {{error}}",
+      "verifyFailed": "Saved verified keys. Failed: {{errors}}",
+      "verboseOn": "Verbose sidecar logging ON (saved)",
+      "verboseOff": "Verbose sidecar logging OFF (saved)",
+      "invokeFail": "Failed to run {{command}}. Check desktop log.",
+      "openLogs": "Opened logs folder",
+      "openApiLog": "Opened API log",
+      "sidecarError": "Could not reach sidecar to toggle verbose mode",
+      "noTraffic": "No traffic recorded yet.",
+      "sidecarUnreachable": "Sidecar not reachable.",
+      "logCleared": "Log cleared.",
+      "worldMonitor": {
+        "tabLabel": "World Monitor",
+        "heroTitle": "One key. Everything included.",
+        "heroDescription": "A single World Monitor license replaces every API key and LLM provider you'd otherwise configure yourself. AI summaries, real-time intelligence, market data, conflict tracking, fire detection, satellite imagery — all powered, all managed, zero setup.",
+        "apiKey": {
+          "title": "License Key",
+          "placeholder": "wm_xxxxxxxxxxxxxxxxxxxxxxxx",
+          "description": "Paste your license to unlock every data source and AI feature instantly.",
+          "statusValid": "LICENSED",
+          "statusMissing": "NO LICENSE"
+        },
+        "dividerOr": "OR",
+        "register": {
+          "title": "Reserve Your Spot",
+          "description": "We're preparing to launch World Monitor licenses. Sign up now and be first in line — early members get priority access and founding-member pricing.",
+          "emailPlaceholder": "your@email.com",
+          "submitBtn": "Join Waitlist",
+          "submitting": "Submitting...",
+          "success": "You're on the list! We'll notify you first.",
+          "alreadyRegistered": "You're already on the waitlist.",
+          "error": "Registration failed. Please try again.",
+          "invalidEmail": "Please enter a valid email address."
+        },
+        "byokTitle": "Or bring your own keys",
+        "byokDescription": "Prefer full control? Head to the API Keys and LLMs tabs to configure each data source and AI provider individually."
+      },
+      "table": {
+        "time": "Time",
+        "method": "Method",
+        "path": "Path",
+        "status": "Status",
+        "duration": "Duration"
+      }
+    },
+    "countryIntel": {
+      "identifying": "Identifying country...",
+      "locating": "Locating region...",
+      "instabilityIndex": "Instability Index",
+      "protests": "protests",
+      "militaryAircraft": "mil. aircraft",
+      "militaryVessels": "mil. vessels",
+      "outages": "outages",
+      "earthquakes": "earthquakes",
+      "loadingIndex": "Loading index...",
+      "loadingMarkets": "Loading prediction markets...",
+      "generatingBrief": "Generating intelligence brief...",
+      "cached": "Cached",
+      "fresh": "Fresh",
+      "noMarkets": "No prediction markets found",
+      "predictionMarkets": "Prediction Markets",
+      "unavailable": "AI brief unavailable — configure GROQ_API_KEY in Settings."
+    },
+    "countryBrief": {
+      "identifying": "Identifying country...",
+      "locating": "Locating region...",
+      "limitedCoverage": "Limited coverage",
+      "instabilityIndex": "Instability Index",
+      "notTracked": "Not tracked — {{country}} is not in the CII tier-1 list",
+      "intelBrief": "Intelligence Brief",
+      "generatingBrief": "Generating intelligence brief...",
+      "topNews": "Top News",
+      "activeSignals": "Active Signals",
+      "timeline": "7-Day Timeline",
+      "predictionMarkets": "Prediction Markets",
+      "loadingMarkets": "Loading prediction markets...",
+      "infrastructure": "Infrastructure Exposure",
+      "briefUnavailable": "AI brief unavailable — configure GROQ_API_KEY in Settings.",
+      "cached": "Cached",
+      "fresh": "Fresh",
+      "noMarkets": "No prediction markets found",
+      "loadingIndex": "Loading index...",
+      "components": {
+        "unrest": "Unrest",
+        "conflict": "Conflict",
+        "security": "Security",
+        "information": "Information"
+      },
+      "signals": {
+        "protests": "protests",
+        "militaryAir": "mil. aircraft",
+        "militarySea": "mil. vessels",
+        "outages": "outages",
+        "earthquakes": "earthquakes",
+        "displaced": "displaced",
+        "climate": "Climate stress",
+        "conflictEvents": "conflict events",
+        "activeStrikes": "active strikes",
+        "aviationDisruptions": "airport disruptions",
+        "gpsJammingZones": "GPS Jamming Zones"
+      },
+      "timeAgo": {
+        "m": "{{count}}m ago",
+        "h": "{{count}}h ago",
+        "d": "{{count}}d ago"
+      },
+      "infra": {
+        "pipeline": "Pipelines",
+        "cable": "Undersea Cables",
+        "datacenter": "Data Centers",
+        "base": "Military Bases",
+        "nuclear": "Nuclear Facilities",
+        "port": "Ports"
+      },
+      "levels": {
+        "critical": "Critical",
+        "high": "High",
+        "elevated": "Elevated",
+        "moderate": "Moderate",
+        "normal": "Normal",
+        "low": "Low"
+      },
+      "trends": {
+        "rising": "Rising",
+        "falling": "Falling",
+        "stable": "Stable"
+      },
+      "fallback": {
+        "instabilityIndex": "**Instability Index: {{score}}/100** ({{level}}, {{trend}})",
+        "protestsDetected": "{{count}} active protests detected",
+        "aircraftTracked": "{{count}} military aircraft tracked",
+        "vesselsTracked": "{{count}} military vessels tracked",
+        "activeStrikes": "{{count}} active strikes detected",
+        "internetOutages": "{{count}} internet outages",
+        "recentEarthquakes": "{{count}} recent earthquakes",
+        "stockIndex": "Stock index: {{value}}",
+        "recentHeadlines": "**Recent headlines:**"
+      }
+    }
+  },
+  "components": {
+    "webcams": {
+      "expand": "הרחב",
+      "paused": "מצלמות מושהות",
+      "pausedIdle": "מצלמות מושהות, הזיזו את העכבר לחידוש",
+      "regions": {
+        "iran": "תקיפות איראן",
+        "all": "הכל",
+        "mideast": "מזה\"ת",
+        "europe": "אירופה",
+        "americas": "אמריקה",
+        "asia": "אסיה"
+      }
+    },
+    "positiveNewsFeed": {
+      "noStories": "No stories in this category yet"
+    },
+    "goodThingsDigest": {
+      "noStories": "No stories available",
+      "summarizing": "Summarizing…"
+    },
+    "progressCharts": {
+      "noData": "No progress data available"
+    },
+    "monitor": {
+      "placeholder": "מילות מפתח (מופרדות בפסיקים)",
+      "add": "+ הוסף מוניטור",
+      "addKeywords": "הוסיפו מילות מפתח למעקב אחר חדשות",
+      "noMatches": "אין התאמות ב-{{count}} כתבות",
+      "showingMatches": "מציג {{count}} מתוך {{total}} התאמות",
+      "match": "התאמה",
+      "matches": "התאמות"
+    },
+    "regulation": {
+      "dashboard": "AI Regulation Dashboard",
+      "timeline": "Timeline",
+      "deadlines": "Deadlines",
+      "regulations": "Regulations",
+      "countries": "Countries",
+      "recentActions": "Recent Regulatory Actions (Last 12 Months)",
+      "upcomingDeadlines": "Upcoming Compliance Deadlines",
+      "activeRegulations": "Active Regulations",
+      "proposedRegulations": "Proposed Regulations",
+      "globalLandscape": "Global Regulatory Landscape",
+      "emptyActions": "No recent regulatory actions",
+      "emptyDeadlines": "No upcoming compliance deadlines in the next 12 months",
+      "keyProvisions": "Key Provisions",
+      "learnMore": "Learn More",
+      "active": "Active",
+      "proposed": "Proposed",
+      "updated": "Updated",
+      "actionsCount": "{{count}} actions",
+      "deadlinesCount": "{{count}} deadlines",
+      "days": "days",
+      "activeCount": "Active Regulations ({{count}})",
+      "proposedCount": "Proposed Regulations ({{count}})",
+      "moreProvisions": "+{{count}} more...",
+      "source": "Source",
+      "stances": {
+        "strict": "Strict",
+        "moderate": "Moderate",
+        "permissive": "Permissive",
+        "undefined": "Undefined"
+      }
+    },
+    "economic": {
+      "indicators": "מדדים",
+      "oil": "נפט",
+      "gov": "ממשל",
+      "noData": "אין נתונים כלכליים זמינים",
+      "noOilData": "נתוני נפט לא זמינים",
+      "noOilMetrics": "אין מדדי נפט זמינים. הוסיפו EIA_API_KEY להפעלה.",
+      "noSpending": "אין הוצאות ממשלתיות אחרונות",
+      "awards": "חוזים",
+      "noIndicatorData": "אין נתוני מדדים עדיין, FRED עשוי להיטען",
+      "fredKeyMissing": "נדרש מפתח FRED API, הוסיפו אותו בהגדרות להפעלת מדדים כלכליים",
+      "noOilDataRetry": "נתוני נפט לא זמינים זמנית, ינסה שוב",
+      "vsPreviousWeek": "לעומת השבוע הקודם",
+      "in": "ב-",
+      "centralBanks": "בנקים מרכזיים",
+      "noBisData": "נתוני BIS לא זמינים זמנית, ינסה שוב",
+      "policyRate": "ריבית מדיניות",
+      "exchangeRate": "שער חליפין",
+      "creditToGdp": "אשראי / תמ\"ג",
+      "realEer": "שער חליפין אפקטיבי ריאלי",
+      "change": "שינוי",
+      "cut": "הורדה",
+      "hike": "העלאה",
+      "hold": "ללא שינוי"
+    },
+    "supplyChain": {
+      "chokepoints": "Chokepoints",
+      "shipping": "Shipping",
+      "minerals": "Minerals",
+      "noChokepoints": "Chokepoint data loading...",
+      "noShipping": "Shipping rate data not available",
+      "noMinerals": "Mineral data loading...",
+      "fredKeyMissing": "FRED API key required for shipping rates — add it in Settings. Chokepoints and minerals available without key.",
+      "upstreamUnavailable": "Supply chain data temporarily unavailable — showing cached data",
+      "spikeAlert": "Spike detected — rate significantly above 52-week average (weekly)",
+      "warnings": "warning(s)",
+      "mineral": "Mineral",
+      "topProducers": "Top Producers",
+      "risk": "Risk",
+      "sources": "FRED / NGA / USGS"
+    },
+    "tradePolicy": {
+      "restrictions": "Restrictions",
+      "tariffs": "Tariffs",
+      "flows": "Trade Flows",
+      "barriers": "Barriers",
+      "noRestrictions": "No active trade restrictions",
+      "noTariffData": "No tariff data available",
+      "noFlowData": "No trade flow data available",
+      "noBarriers": "No trade barriers reported",
+      "apiKeyMissing": "WTO API key required — add it in Settings",
+      "upstreamUnavailable": "WTO data temporarily unavailable — showing cached data",
+      "appliedRate": "Applied Rate",
+      "boundRate": "Bound Rate",
+      "exports": "Exports",
+      "imports": "Imports",
+      "yoyChange": "YoY Change",
+      "highTariff": "High",
+      "moderateTariff": "Moderate",
+      "lowTariff": "Low"
+    },
+    "gdelt": {
+      "empty": "No recent articles for this topic"
+    },
+    "geoHubs": {
+      "tooltip": "<strong>Geopolitical Activity Hubs</strong><br>Shows regions with the most news activity.<br><br><em>Hub types:</em><br>• 🏛️ Capitals — World capitals and government centers<br>• ⚔️ Conflict Zones — Active conflict areas<br>• ⚓ Strategic — Chokepoints and key regions<br>• 🏢 Organizations — UN, NATO, IAEA, etc.<br><br><em>Activity levels:</em><br>• <span style=\"color: #ff4444\">High</span> — Breaking news or 70+ score<br>• <span style=\"color: #ff8844\">Elevated</span> — Score 40-69<br>• <span style=\"color: #888\">Low</span> — Score below 40<br><br>Click a hub to zoom to its location.",
+      "noActive": "No active geopolitical hubs",
+      "story": "story",
+      "stories": "stories",
+      "infoTooltip": "<strong>Geopolitical Activity Hubs</strong><br>Shows regions with the most news activity.<br><br><em>Hub types:</em><br>• 🏛️ Capitals — World capitals and government centers<br>• ⚔️ Conflict Zones — Active conflict areas<br>• ⚓ Strategic — Chokepoints and key regions<br>• 🏢 Organizations — UN, NATO, IAEA, etc.<br><br><em>Activity levels:</em><br>• <span style=\"color: {{highColor}}\">High</span> — Breaking news or 70+ score<br>• <span style=\"color: {{elevatedColor}}\">Elevated</span> — Score 40-69<br>• <span style=\"color: {{lowColor}}\">Low</span> — Score below 40<br><br>Click a hub to zoom to its location."
+    },
+    "techHubs": {
+      "tooltip": "<strong>Tech Hub Activity</strong><br>Shows tech hubs with the most news activity.<br><br><em>Activity levels:</em><br>• <span style=\"color: #00ff88\">High</span> — Breaking news or 50+ score<br>• <span style=\"color: #ffc800\">Elevated</span> — Score 20-49<br>• <span style=\"color: #888\">Low</span> — Score below 20<br><br>Click a hub to zoom to its location.",
+      "noActive": "No active tech hubs",
+      "infoTooltip": "<strong>Tech Hub Activity</strong><br>Shows tech hubs with the most news activity.<br><br><em>Activity levels:</em><br>• <span style=\"color: {{highColor}}\">High</span> — Breaking news or 50+ score<br>• <span style=\"color: {{elevatedColor}}\">Elevated</span> — Score 20-49<br>• <span style=\"color: {{lowColor}}\">Low</span> — Score below 20<br><br>Click a hub to zoom to its location."
+    },
+    "predictions": {
+      "tooltip": "<strong>Prediction Markets</strong><br>Real-money forecasting markets:<br><ul><li>Prices reflect crowd probability estimates</li><li>Higher volume = more reliable signal</li><li>Geopolitical and current events focus</li></ul>Source: Polymarket (polymarket.com)",
+      "error": "טעינת חיזויים נכשלה",
+      "yes": "כן",
+      "no": "לא",
+      "vol": "נפח",
+      "closes": "נסגר"
+    },
+    "stablecoins": {
+      "pegHealth": "Peg Health",
+      "supplyVolume": "Supply & Volume",
+      "unavailable": "Stablecoin data temporarily unavailable",
+      "token": "Token",
+      "mcap": "MCap",
+      "vol24h": "24h Vol",
+      "chg24h": "24h Chg"
+    },
+    "status": {
+      "dataFeeds": "Data Feeds",
+      "apiStatus": "API Status",
+      "storage": "Storage",
+      "systemStatus": "System Status",
+      "updatedJustNow": "Updated just now",
+      "updatedAt": "Updated {{time}}",
+      "storageUnavailable": "Storage info unavailable"
+    },
+    "playback": {
+      "toggleMode": "החלף מצב ניגון",
+      "live": "שידור חי",
+      "historicalPlayback": "ניגון היסטורי",
+      "close": "סגור",
+      "skipToStart": "דלג להתחלה",
+      "previous": "הקודם",
+      "next": "הבא",
+      "skipToEnd": "דלג לסוף"
+    },
+    "pizzint": {
+      "title": "Pentagon Pizza Index",
+      "defcon": "DEFCON {{level}}",
+      "updated": "Updated {{timeAgo}}",
+      "tensionsTitle": "Geopolitical Tensions",
+      "source": "Source:",
+      "statusClosed": "CLOSED",
+      "statusSpike": "SPIKE",
+      "statusHigh": "HIGH",
+      "statusElevated": "ELEVATED",
+      "statusNominal": "NOMINAL",
+      "statusQuiet": "QUIET",
+      "justNow": "just now",
+      "minutesAgo": "{{m}}m ago",
+      "hoursAgo": "{{h}}h ago",
+      "defconLabels": {
+        "1": "COCKED PISTOL - MAXIMUM READINESS",
+        "2": "FAST PACE - ARMED FORCES READY",
+        "3": "ROUND HOUSE - INCREASE FORCE READINESS",
+        "4": "DOUBLE TAKE - INCREASED INTELLIGENCE WATCH",
+        "5": "FADE OUT - LOWEST READINESS"
+      }
+    },
+    "strategicPosture": {
+      "elapsed": "חלפו: {{elapsed}} שנ'",
+      "clickToView": "לחצו לצפייה ב-{{name}} על המפה",
+      "clickToViewMap": "לחצו לצפייה על המפה",
+      "refresh": "רענן",
+      "units": {
+        "fighters": "מטוסי קרב",
+        "tankers": "מטוסי תדלוק",
+        "awacs": "AWACS",
+        "recon": "סיור",
+        "transport": "תובלה",
+        "bombers": "מפציצים",
+        "drones": "כטב\"מ",
+        "aircraft": "מטוסים",
+        "carriers": "נושאות מטוסים",
+        "destroyers": "משחתות",
+        "frigates": "פריגטות",
+        "submarines": "צוללות",
+        "patrol": "סיור",
+        "auxiliary": "עזר",
+        "navalVessels": "כלי שיט צבאיים"
+      },
+      "infoTooltip": "<strong>Methodology</strong><p>Aggregates military aircraft and naval vessels by theater.</p><ul><li><strong>Normal:</strong> Baseline activity</li><li><strong>Elevated:</strong> Above threshold (50+ aircraft)</li><li><strong>Critical:</strong> High concentration (100+ aircraft)</li></ul><p><strong>Strike Capable:</strong> Tankers + AWACS + Fighters present in sufficient numbers for sustained operations.</p>",
+      "scanningTheaters": "סורק זירות",
+      "positions": "מיקומי מטוסים",
+      "navalVesselsLoading": "כלי שיט צבאיים",
+      "theaterAnalysis": "ניתוח זירה",
+      "connectingStreams": "מתחבר לזרמי ADS-B ו-AIS חיים...",
+      "initialLoadNote": "טעינה ראשונית לוקחת 30-60 שניות בזמן שנתוני מעקב מצטברים",
+      "acquiringData": "רוכש נתונים",
+      "acquiringDesc": "מתחבר לרשת ADS-B לנתוני טיסות צבאיות. עשוי לקחת 30-60 שניות בטעינה ראשונה.",
+      "openSkyAdsb": "OpenSky ADS-B",
+      "aisVesselStream": "AIS Vessel Stream",
+      "retryNow": "נסה שוב עכשיו",
+      "feedRateLimited": "פיד מוגבל קצב",
+      "rateLimitedDesc": "ל-OpenSky API יש מגבלות בקשות. הפאנל ינסה שוב אוטומטית בעוד מספר דקות.",
+      "rateLimitedTip": "Tip: Peak hours (UTC 12:00-20:00) often see higher limits.",
+      "tryAgain": "נסה שוב",
+      "badges": {
+        "critical": "קריטי",
+        "elevated": "מוגבר",
+        "normal": "רגיל"
+      },
+      "trendStable": "יציב",
+      "domains": {
+        "air": "אוויר",
+        "sea": "ים"
+      },
+      "strike": "תקיפה",
+      "staleWarning": "משתמש בנתונים מהמטמון, פיד חי לא זמין זמנית",
+      "updated": "עודכן:",
+      "theaters": {
+        "iran-theater": "זירת איראן",
+        "taiwan-theater": "מיצר טייוואן",
+        "baltic-theater": "זירת הבלטיק",
+        "blacksea-theater": "הים השחור",
+        "korea-theater": "חצי האי הקוריאני",
+        "south-china-sea": "ים סין הדרומי",
+        "east-med-theater": "מזרח הים התיכון",
+        "israel-gaza-theater": "ישראל/עזה",
+        "yemen-redsea-theater": "תימן/ים סוף"
+      }
+    },
+    "countryBrief": {
+      "shareLink": "Share link",
+      "shareStory": "Share story",
+      "printPdf": "Print / PDF",
+      "exportData": "Export data",
+      "sourceRef": "Source [{{n}}]"
+    },
+    "relatedAssets": {
+      "pipeline": "Pipeline",
+      "cable": "Cable",
+      "datacenter": "Datacenter",
+      "base": "Base",
+      "nuclear": "Nuclear"
+    },
+    "community": {
+      "joinDiscussion": "הצטרפו לדיון",
+      "openDiscussion": "פתח דיון",
+      "dontShowAgain": "אל תציג שוב"
+    },
+    "threatLabels": {
+      "critical": "קריטי",
+      "high": "גבוה",
+      "medium": "בינוני",
+      "low": "נמוך",
+      "info": "מידע"
+    },
+    "deckgl": {
+      "zoomIn": "הגדל",
+      "zoomOut": "הקטן",
+      "resetView": "אפס תצוגה",
+      "legend": {
+        "title": "מקרא",
+        "startupHub": "מרכז סטארטאפים",
+        "techHQ": "מטה טכנולוגי",
+        "accelerator": "מאיץ",
+        "cloudRegion": "אזור ענן",
+        "datacenter": "מרכז נתונים",
+        "stockExchange": "בורסה",
+        "financialCenter": "מרכז פיננסי",
+        "centralBank": "בנק מרכזי",
+        "commodityHub": "מרכז סחורות",
+        "waterway": "מסלול מים",
+        "highAlert": "התראה גבוהה",
+        "elevated": "מוגבר",
+        "monitoring": "ניטור",
+        "base": "בסיס",
+        "nuclear": "גרעיני"
+      },
+      "layerGuide": "מדריך שכבות",
+      "layersTitle": "שכבות",
+      "timeAll": "הכל",
+      "views": {
+        "global": "גלובלי",
+        "americas": "אמריקה",
+        "mena": "מזה\"ת",
+        "europe": "אירופה",
+        "asia": "אסיה",
+        "latam": "אמריקה הלטינית",
+        "africa": "אפריקה",
+        "oceania": "אוקיאניה"
+      },
+      "layers": {
+        "startupHubs": "מרכזי סטארטאפים",
+        "techHQs": "מטות טכנולוגיים",
+        "accelerators": "מאיצים",
+        "cloudRegions": "אזורי ענן",
+        "aiDataCenters": "מרכזי נתונים AI",
+        "underseaCables": "כבלים תת-ימיים",
+        "internetOutages": "תקלות אינטרנט",
+        "cyberThreats": "איומי סייבר",
+        "techEvents": "אירועי טכנולוגיה",
+        "naturalEvents": "אירועי טבע",
+        "fires": "שריפות",
+        "intelHotspots": "מוקדי מודיעין",
+        "conflictZones": "אזורי סכסוך",
+        "militaryBases": "בסיסים צבאיים",
+        "nuclearSites": "אתרים גרעיניים",
+        "gammaIrradiators": "מקריני גמא",
+        "spaceports": "נמלי חלל",
+        "pipelines": "צינורות",
+        "militaryActivity": "פעילות צבאית",
+        "shipTraffic": "תנועת ספינות",
+        "flightDelays": "עיכובי טיסות",
+        "protests": "הפגנות",
+        "ucdpEvents": "אירועי סכסוך מזוין",
+        "displacementFlows": "תנועות עקירה",
+        "climateAnomalies": "חריגות אקלים",
+        "weatherAlerts": "התראות מזג אוויר",
+        "strategicWaterways": "מסלולי מים אסטרטגיים",
+        "economicCenters": "מרכזים כלכליים",
+        "criticalMinerals": "מינרלים קריטיים",
+        "stockExchanges": "בורסות",
+        "financialCenters": "מרכזים פיננסיים",
+        "centralBanks": "בנקים מרכזיים",
+        "commodityHubs": "מרכזי סחורות",
+        "gulfInvestments": "השקעות GCC",
+        "tradeRoutes": "מסלולי סחר",
+        "iranAttacks": "תקיפות איראן",
+        "gpsJamming": "שיבוש GPS",
+        "dayNight": "יום/לילה"
+      },
+      "tooltip": {
+        "earthquake": "רעידת אדמה",
+        "militaryAircraft": "מטוס צבאי",
+        "vesselCluster": "קבוצת כלי שיט",
+        "vessels": "כלי שיט",
+        "flightCluster": "קבוצת טיסות",
+        "aircraft": "מטוסים",
+        "protest": "הפגנה",
+        "protestsCount": "{{count}} הפגנות",
+        "techHQsCount": "{{count}} מטות טכנולוגיים",
+        "techEventsCount": "{{count}} אירועי טכנולוגיה",
+        "dataCentersCount": "{{count}} מרכזי נתונים",
+        "underseaCable": "כבל תת-ימי",
+        "pipeline": "צינור",
+        "conflictZone": "אזור סכסוך",
+        "naturalEvent": "אירוע טבע",
+        "financialCenter": "מרכז פיננסי",
+        "port": "נמל",
+        "disruption": "שיבוש",
+        "advisory": "אזהרה",
+        "repairShip": "ספינת תיקון",
+        "internetOutage": "תקלת אינטרנט",
+        "medium": "בינוני",
+        "news": "חדשות",
+        "undisclosed": "לא פורסם",
+        "stake": "אחזקה"
+      }
+    },
+    "cii": {
+      "shareStory": "שתף סיפור",
+      "noSignals": "לא זוהו אותות אי-יציבות",
+      "infoTooltip": "<strong>Methodology</strong><ul><li><strong>U</strong>nrest: civil disorder & protests</li><li><strong>C</strong>onflict: armed conflict intensity</li><li><strong>S</strong>ecurity: military flights/vessels over territory</li><li><strong>I</strong>nformation: news velocity and focal point correlation</li><li>Hotspot proximity boost (strategic locations)</li></ul><em>U:C:S:I values show component scores.</em> Focal Point Detection correlates news entities with map signals for accurate scoring."
+    },
+    "insights": {
+      "noStories": "אין עדיין סיפורים דחופים או רב-מקוריים",
+      "step": "שלב {{step}}/{{total}}",
+      "waitingForData": "ממתין לנתוני חדשות...",
+      "rankingStories": "מדרג סיפורים חשובים...",
+      "analyzingSentiment": "מנתח סנטימנט...",
+      "generatingBrief": "מייצר תדריך עולמי...",
+      "infoTooltip": "<strong>AI-Powered Analysis</strong><br>• <strong>World Brief</strong>: AI summary (Groq/OpenRouter)<br>• <strong>Sentiment</strong>: News tone analysis<br>• <strong>Velocity</strong>: Fast-moving stories<br>• <strong>Focal Points</strong>: Correlates news entities with map signals (military, protests, outages)<br><em>Desktop only • Powered by Llama 3.3 + Focal Point Detection</em>",
+      "settingsTitle": "הגדרות",
+      "sectionMap": "מפה",
+      "sectionAi": "ניתוח AI",
+      "sectionStreaming": "שידור",
+      "streamQualityLabel": "איכות וידאו",
+      "streamQualityDesc": "הגדירו איכות לכל השידורים החיים (נמוך יותר חוסך רוחב פס)",
+      "mapFlashLabel": "פולס אירוע חי",
+      "mapFlashDesc": "הבהב מיקומים על המפה כשמגיעות חדשות דחופות",
+      "aiFlowTitle": "הגדרות",
+      "aiFlowCloudLabel": "AI ענן (Groq ו-OpenRouter)",
+      "aiFlowCloudDesc": "שלחו כותרות לענן לסיכום AI (מומלץ)",
+      "aiFlowBrowserLabel": "מודל מקומי בדפדפן",
+      "aiFlowBrowserDesc": "הריצו AI מקומית בדפדפן",
+      "aiFlowBrowserWarn": "מוריד כ-250 MB של נתוני מודל לדפדפן",
+      "aiFlowOllamaCta": "רוצים AI מקומי לחלוטין?",
+      "aiFlowOllamaCtaDesc": "הורידו את אפליקציית השולחן עבודה לתמיכה ב-Ollama",
+      "aiFlowDownloadDesktop": "הורד אפליקציית שולחן עבודה",
+      "aiFlowStatusActive": "AI ענן פעיל",
+      "aiFlowStatusCloudAndBrowser": "AI ענן + מודל דפדפן פעילים",
+      "aiFlowStatusBrowserOnly": "מודל דפדפן בלבד",
+      "aiFlowStatusDisabled": "אין ספקי AI פעילים",
+      "insightsDisabledTitle": "ניתוח AI מושבת",
+      "insightsDisabledHint": "הפעילו ספקים דרך גלגל ההגדרות בכותרת המפה",
+      "sectionPanels": "פאנלים",
+      "badgeAnimLabel": "אנימציות תגים",
+      "badgeAnimDesc": "הנפשת תגי עדכון בכותרות פאנלים",
+      "sectionIntelligence": "מודיעין",
+      "headlineMemoryLabel": "זיכרון כותרות",
+      "headlineMemoryDesc": "זכור כותרות שנצפו כדי להדגיש סיפורים חדשים"
+    },
+    "cascade": {
+      "noImpacts": "לא זוהו השפעות על מדינות",
+      "filters": {
+        "cables": "כבלים",
+        "pipelines": "צינורות",
+        "ports": "נמלים",
+        "chokepoints": "צווארי בקבוק"
+      },
+      "filterType": {
+        "cable": "כבל",
+        "pipeline": "צינור",
+        "port": "נמל",
+        "chokepoint": "צוואר בקבוק",
+        "country": "מדינה"
+      },
+      "selectPrompt": "בחרו {{type}}...",
+      "analyzeImpact": "נתח השפעה",
+      "impactLevels": {
+        "critical": "קריטי",
+        "high": "גבוה",
+        "medium": "בינוני",
+        "low": "נמוך"
+      },
+      "capacityPercent": "{{percent}}% קיבולת",
+      "noCountryImpacts": "לא זוהו השפעות על מדינות",
+      "alternativeRoutes": "מסלולים חלופיים",
+      "countriesAffected": "מדינות מושפעות ({{count}})",
+      "links": "קישורים",
+      "selectInfrastructureHint": "בחרו תשתית לניתוח מפל השפעות",
+      "infoTooltip": "<strong>Cascade Analysis</strong> Models infrastructure dependencies:<ul><li>Subsea cables, pipelines, ports, chokepoints</li><li>Select infrastructure to simulate failure</li><li>Shows affected countries and capacity loss</li><li>Identifies redundant routes</li></ul>Data from TeleGeography and industry sources."
+    },
+    "strategicRisk": {
+      "noRisks": "לא זוהו סיכונים משמעותיים",
+      "levels": {
+        "critical": "קריטי",
+        "elevated": "מוגבר",
+        "moderate": "מתון",
+        "low": "נמוך"
+      },
+      "trend": "מגמה",
+      "trends": {
+        "escalating": "מסלים",
+        "deEscalating": "מתמתן",
+        "stable": "יציב"
+      },
+      "insufficientData": "נתונים לא מספיקים",
+      "unableToAssess": "לא ניתן להעריך רמת סיכון.",
+      "enableDataSources": "הפעילו מקורות נתונים להתחלת ניטור.",
+      "requiredDataSources": "מקורות נתונים נדרשים",
+      "optionalSources": "מקורות אופציונליים",
+      "enableCoreFeeds": "הפעל פידים מרכזיים",
+      "waitingForData": "ממתין לנתונים...",
+      "refresh": "רענן",
+      "learningMode": "מצב למידה, {{minutes}} דק' עד מהימנות",
+      "noData": "אין נתונים",
+      "enable": "הפעל",
+      "convergenceMetric": "התכנסות",
+      "ciiDeviation": "סטיית CII",
+      "infraEvents": "אירועי תשתית",
+      "highAlerts": "התראות גבוהות",
+      "topRisks": "סיכונים מובילים",
+      "recentAlerts": "התראות אחרונות ({{count}})",
+      "updated": "עודכן: {{time}}",
+      "time": {
+        "justNow": "עכשיו",
+        "minutesAgo": "לפני {{count}} דק'",
+        "hoursAgo": "לפני {{count}} שע'"
+      },
+      "infoTooltip": "<strong>Methodology</strong> Composite score (0-100) blending:<ul><li>50% Country Instability (top 5 weighted)</li><li>30% Geographic convergence zones</li><li>20% Infrastructure incidents</li></ul>Auto-refreshes every 5 minutes."
+    },
+    "techEvents": {
+      "loading": "Loading tech events...",
+      "noEvents": "No events to display",
+      "showOnMap": "Show on map",
+      "moreInfo": "More info",
+      "retry": "Retry",
+      "upcoming": "Upcoming",
+      "conferences": "Conferences",
+      "earnings": "Earnings",
+      "all": "All",
+      "conferencesCount": "{{count}} conferences",
+      "onMap": "{{count}} on map",
+      "techmemeEvents": "Techmeme Events ↗",
+      "today": "TODAY",
+      "soon": "SOON"
+    },
+    "techReadiness": {
+      "internetUsers": "Internet Users",
+      "mobileSubscriptions": "Mobile Subscriptions",
+      "rdSpending": "R&D Spending",
+      "fetchingData": "Fetching World Bank Data",
+      "internetUsersIndicator": "Internet Users",
+      "mobileSubscriptionsIndicator": "Mobile Subscriptions",
+      "broadbandAccess": "Broadband Access",
+      "rdExpenditure": "R&D Expenditure",
+      "analyzingCountries": "Analyzing 200+ countries...",
+      "source": "Source: World Bank",
+      "updated": "Updated: {{date}}",
+      "infoTooltip": "<strong>Global Tech Readiness</strong><br>Composite score (0-100) based on World Bank data:<br><br><strong>Metrics shown:</strong><br>🌐 Internet Users (% of population)<br>📱 Mobile Subscriptions (per 100 people)<br>🔬 R&D Expenditure (% of GDP)<br><br><strong>Weights:</strong> R&D (35%), Internet (30%), Broadband (20%), Mobile (15%)<br><br><em>— = No recent data available</em><br><em>Source: World Bank Open Data (2019-2024)</em>"
+    },
+    "populationExposure": {
+      "noData": "No exposure data available",
+      "totalAffected": "Total Affected",
+      "affectedCount": "{{count}} affected",
+      "radiusKm": "{{km}}km radius",
+      "infoTooltip": "<strong>Population Exposure Estimates</strong> Estimated population within event impact radius. Based on WorldPop country density data.<ul><li>Conflict: 50km radius</li><li>Earthquake: 100km radius</li><li>Flood: 100km radius</li><li>Wildfire: 30km radius</li></ul>"
+    },
+    "securityAdvisories": {
+      "loading": "טוען אזהרות נסיעה...",
+      "noMatching": "אין אזהרות התואמות לסינון זה",
+      "critical": "קריטי",
+      "health": "בריאות",
+      "sources": "US State Dept, AU DFAT, UK FCDO, NZ MFAT, CDC, ECDC, WHO, שגרירויות ארה\"ב",
+      "refresh": "רענן",
+      "levels": {
+        "doNotTravel": "איסור נסיעה",
+        "reconsider": "שקלו מחדש נסיעה",
+        "caution": "נקטו זהירות",
+        "normal": "רגיל",
+        "info": "מידע"
+      },
+      "time": {
+        "justNow": "עכשיו",
+        "minutesAgo": "לפני {{count}} דק'",
+        "hoursAgo": "לפני {{count}} שע'",
+        "daysAgo": "לפני {{count}} ימים"
+      },
+      "infoTooltip": "<strong>Security Advisories</strong><br>Travel advisories and security alerts from government foreign affairs agencies:<br><br><strong>Sources:</strong><br>🇺🇸 US State Dept Travel Advisories<br>🇦🇺 AU DFAT Smartraveller<br>🇬🇧 UK FCDO Travel Advice<br>🇳🇿 NZ MFAT SafeTravel<br><br><strong>Levels:</strong><br>🟥 Do Not Travel<br>🟧 Reconsider Travel<br>🟨 Exercise Caution<br>🟩 Normal Precautions"
+    },
+    "orefSirens": {
+      "checking": "בודק התראות צפירה...",
+      "noAlerts": "אין צפירות פעילות, הכל תקין",
+      "notConfigured": "שירות הצפירות לא מוגדר",
+      "activeSirens": "{{count}} צפירות פעילות",
+      "area": "אזור",
+      "time": "זמן",
+      "justNow": "עכשיו",
+      "historyCount": "{{count}} התראות ב-24 השעות האחרונות",
+      "historySummary": "{{count}} התראות ב-24 שע', {{waves}} גלים",
+      "loadingHistory": "טוען היסטוריה...",
+      "infoTooltip": "<strong>צפירות ישראל</strong><br>התראות טילים וצפירות בזמן אמת מפיקוד העורף.<br><br>הנתונים נבדקים כל 10 שניות. מחוון אדום מהבהב מציין צפירות פעילות."
+    },
+    "satelliteFires": {
+      "noData": "No fire data available",
+      "region": "Region",
+      "fires": "Fires",
+      "high": "High",
+      "total": "Total",
+      "never": "never",
+      "time": {
+        "justNow": "just now",
+        "minutesAgo": "{{count}}m ago",
+        "hoursAgo": "{{count}}h ago"
+      },
+      "infoTooltip": "NASA FIRMS VIIRS satellite thermal detections across monitored conflict regions. High-intensity = brightness >360K & confidence >80%."
+    },
+    "ucdpEvents": {
+      "stateBased": "State-Based",
+      "nonState": "Non-State",
+      "oneSided": "One-Sided",
+      "country": "Country",
+      "deaths": "Deaths",
+      "date": "Date",
+      "actors": "Actors",
+      "deathsCount": "{{count}} deaths",
+      "moreNotShown": "{{count}} more events not shown",
+      "noEvents": "No events in this category",
+      "infoTooltip": "<strong>Armed Conflict Events</strong> Event-level conflict data from Uppsala University (UCDP).<ul><li><strong>State-Based</strong>: Government vs rebel group</li><li><strong>Non-State</strong>: Armed group vs armed group</li><li><strong>One-Sided</strong>: Violence against civilians</li></ul>Deaths shown as best estimate (low-high range). ACLED duplicates are filtered out automatically."
+    },
+    "giving": {
+      "activityIndex": "Activity Index",
+      "trend": "Trend",
+      "estDailyFlow": "Est. Daily Flow",
+      "cryptoDaily": "Crypto Daily",
+      "tabs": {
+        "platforms": "Platforms",
+        "categories": "Categories",
+        "crypto": "Crypto",
+        "institutional": "Institutional"
+      },
+      "platform": "Platform",
+      "dailyVol": "Daily Vol.",
+      "velocity": "Velocity",
+      "freshness": "Data",
+      "category": "Category",
+      "share": "Share",
+      "trending": "TREND",
+      "dailyInflow": "24h Inflow",
+      "wallets": "Wallets",
+      "ofTotal": "% of Total",
+      "topReceivers": "Top Receivers",
+      "oecdOda": "OECD ODA",
+      "cafIndex": "CAF Index",
+      "candidGrants": "Candid Grants",
+      "dataLag": "Data Lag",
+      "infoTooltip": "<strong>Global Giving Activity Index</strong> Composite index tracking personal giving across crowdfunding platforms and crypto wallets.<ul><li><strong>Platforms</strong>: GoFundMe, GlobalGiving, JustGiving campaign sampling</li><li><strong>Crypto</strong>: On-chain charity wallet inflows (Endaoment, Giving Block)</li><li><strong>Institutional</strong>: OECD ODA, CAF World Giving Index, Candid grants</li></ul>Index is directional (not exact dollar amounts). Combines live sampling with published annual reports."
+    },
+    "displacement": {
+      "noData": "No data",
+      "refugees": "Refugees",
+      "asylumSeekers": "Asylum Seekers",
+      "idps": "IDPs",
+      "total": "Total",
+      "origins": "Origins",
+      "hosts": "Hosts",
+      "badges": {
+        "crisis": "CRISIS",
+        "high": "HIGH",
+        "elevated": "ELEVATED"
+      },
+      "country": "Country",
+      "status": "Status",
+      "count": "Count",
+      "infoTooltip": "<strong>UNHCR Displacement Data</strong> Global refugee, asylum seeker, and IDP counts from UNHCR.<ul><li><strong>Origins</strong>: Countries people flee FROM</li><li><strong>Hosts</strong>: Countries hosting refugees</li><li>Crisis badges: >1M | High: >500K displaced</li></ul>Data updates yearly. CC BY 4.0 license."
+    },
+    "climate": {
+      "noAnomalies": "No significant anomalies detected",
+      "zone": "Zone",
+      "temp": "Temp",
+      "precip": "Precip",
+      "severityLabel": "Severity",
+      "severity": {
+        "extreme": "EXTREME",
+        "moderate": "MODERATE",
+        "normal": "NORMAL"
+      },
+      "infoTooltip": "<strong>Climate Anomaly Monitor</strong> Temperature and precipitation deviations from 30-day baseline. Data from Open-Meteo (ERA5 reanalysis).<ul><li><strong>Extreme</strong>: >5°C or >80mm/day deviation</li><li><strong>Moderate</strong>: >3°C or >40mm/day deviation</li></ul>Monitors 15 conflict/disaster-prone zones."
+    },
+    "newsPanel": {
+      "close": "סגור",
+      "summarize": "סכם פאנל זה",
+      "generatingSummary": "מייצר סיכום...",
+      "sources": "{{count}} מקורות",
+      "relatedAssetsNear": "נכסים קשורים ליד {{location}}"
+    },
+    "export": {
+      "exportData": "ייצוא נתונים"
+    },
+    "runtimeConfig": {
+      "getApiKey": "Get API key"
+    },
+    "breakingNews": {
+      "critical": "קריטי",
+      "high": "גבוה",
+      "dismiss": "סגור",
+      "enableNotifications": "הפעל התראות שולחן עבודה"
+    },
+    "intelligenceFindings": {
+      "breakingAlerts": "התראות דחופות",
+      "popupAlerts": "הצג התראות חדשות",
+      "badgeTitle": "ממצאים מודיעיניים",
+      "title": "ממצאים מודיעיניים",
+      "none": "אין ממצאים מודיעיניים אחרונים",
+      "monitoring": "ניטור",
+      "scanning": "סורק מתאמים וחריגות...",
+      "reviewRecommended": "{{count}} ממצאים מודיעיניים, מומלץ לבדוק",
+      "count": "{{count}} ממצא מודיעיני",
+      "detected": "{{count}} זוהו",
+      "critical": "{{count}} קריטיים",
+      "highPriority": "{{count}} עדיפות גבוהה",
+      "hideFindings": "הסתר ממצאים",
+      "more": "+{{count}} ממצאים נוספים",
+      "all": "כל הממצאים המודיעיניים ({{count}})",
+      "priority": {
+        "critical": "קריטי",
+        "high": "גבוה",
+        "medium": "בינוני",
+        "low": "נמוך"
+      },
+      "insights": {
+        "criticalDestabilization": "ערעור יציבות קריטי, דורש תשומת לב מיידית",
+        "significantShift": "שינוי משמעותי, עקבו מקרוב",
+        "developingSituation": "מצב מתפתח, עקבו לאיתור הסלמה",
+        "convergence": "ריבוי אירועים מתקבצים באזור",
+        "cascade": "שיבוש תשתיות מתפשט",
+        "review": "סקירה למודעות מצבית"
+      },
+      "time": {
+        "justNow": "עכשיו",
+        "minutesAgo": "לפני {{count}} דק'",
+        "hoursAgo": "לפני {{count}} שע'",
+        "daysAgo": "לפני {{count}} ימים"
+      }
+    },
+    "countryTimeline": {
+      "now": "now",
+      "noEventsIn7Days": "No events in 7 days"
+    },
+    "gdeltIntel": {
+      "infoTooltip": "<strong>GDELT Intelligence</strong> Real-time global news monitoring:<ul><li>Curated topic categories (conflicts, cyber, etc.)</li><li>Articles from 100+ languages translated</li><li>Updates every 15 minutes</li></ul>Source: GDELT Project (gdeltproject.org)"
+    },
+    "telegramIntel": {
+      "infoTooltip": "אותות בזמן אמת מערוצי טלגרם OSINT במעקב",
+      "loading": "מתחבר לממסר טלגרם...",
+      "empty": "אין הודעות זמינות",
+      "disabled": "ממסר טלגרם לא פעיל",
+      "filterAll": "הכל",
+      "filterBreaking": "דחוף",
+      "filterConflict": "סכסוך",
+      "filterAlerts": "התראות",
+      "filterOsint": "OSINT",
+      "filterPolitics": "פוליטיקה",
+      "filterMiddleeast": "המזרח התיכון"
+    },
+    "investments": {
+      "infoTooltip": "Database of Saudi Arabia and UAE foreign direct investments in global critical infrastructure. Click a row to fly to the investment on the map.",
+      "searchPlaceholder": "Search assets, countries, entities…",
+      "allCountries": "All Countries",
+      "saudiArabia": "Saudi Arabia",
+      "uae": "UAE",
+      "allSectors": "All Sectors",
+      "allEntities": "All Entities",
+      "allStatuses": "All Statuses",
+      "operational": "Operational",
+      "underConstruction": "Under Construction",
+      "announced": "Announced",
+      "rumoured": "Rumoured",
+      "divested": "Divested",
+      "asset": "Asset",
+      "country": "Country",
+      "sector": "Sector",
+      "status": "Status",
+      "investment": "Investment",
+      "year": "Year",
+      "noMatch": "No investments match filters",
+      "undisclosed": "Undisclosed",
+      "sectors": {
+        "ports": "Ports",
+        "pipelines": "Pipelines",
+        "energy": "Energy",
+        "datacenters": "Data Centers",
+        "airports": "Airports",
+        "railways": "Railways",
+        "telecoms": "Telecoms",
+        "water": "Water",
+        "logistics": "Logistics",
+        "mining": "Mining",
+        "realEstate": "Real Estate",
+        "manufacturing": "Manufacturing"
+      }
+    },
+    "prediction": {
+      "infoTooltip": "<strong>Prediction Markets</strong> Real-money forecasting markets:<ul><li>Prices reflect crowd probability estimates</li><li>Higher volume = more reliable signal</li><li>Geopolitical and current events focus</li></ul>Source: Polymarket (polymarket.com)"
+    },
+    "etfFlows": {
+      "unavailable": "ETF data temporarily unavailable",
+      "rateLimited": "ETF data temporarily unavailable (rate limited) — retrying shortly",
+      "netFlow": "Net Flow",
+      "estFlow": "Est. Flow",
+      "totalVol": "Total Vol",
+      "etfs": "ETFs",
+      "netInflow": "NET INFLOW",
+      "netOutflow": "NET OUTFLOW",
+      "table": {
+        "ticker": "Ticker",
+        "issuer": "Issuer",
+        "estFlow": "Est. Flow",
+        "volume": "Volume",
+        "change": "Change"
+      }
+    },
+    "macroSignals": {
+      "overall": "Overall",
+      "verdict": {
+        "buy": "BUY",
+        "cash": "CASH"
+      },
+      "bullish": "{{count}}/{{total}} bullish",
+      "signals": {
+        "liquidity": "Liquidity",
+        "flow": "Flow",
+        "regime": "Regime",
+        "btcTrend": "BTC Trend",
+        "hashRate": "Hash Rate",
+        "momentum": "Momentum",
+        "fearGreed": "Fear & Greed"
+      }
+    },
+    "panel": {
+      "showMethodologyInfo": "הצג מידע מתודולוגי",
+      "dragToResize": "גררו לשינוי גודל (לחיצה כפולה לאיפוס)",
+      "openSettings": "פתח הגדרות"
+    },
+    "languageSelector": {
+      "selectLanguage": "בחרו שפה"
+    },
+    "serviceStatus": {
+      "checkingServices": "Checking services...",
+      "allOperational": "All services operational",
+      "ok": "OK",
+      "degraded": "Degraded",
+      "outage": "Outage",
+      "backendUnavailable": "Desktop local backend unavailable. Falling back to cloud API.",
+      "desktopReadiness": "Desktop readiness",
+      "acceptanceChecks": "Acceptance checks: {{ready}}/{{total}} ready · key-backed features {{available}}/{{featureTotal}}",
+      "nonParityFallbacks": "Non-parity fallbacks ({{count}})",
+      "categories": {
+        "all": "All",
+        "cloud": "Cloud",
+        "dev": "Dev Tools",
+        "comm": "Comms",
+        "ai": "AI",
+        "saas": "SaaS"
+      }
+    },
+    "verification": {
+      "title": "רשימת אימות מידע",
+      "hint": "מבוסס על מסגרת OSH של Bellingcat",
+      "verdicts": {
+        "verified": "מאומת",
+        "likely": "ככל הנראה אותנטי",
+        "uncertain": "לא ודאי",
+        "unreliable": "לא אמין"
+      },
+      "notesTitle": "הערות אימות",
+      "noNotes": "לא נוספו הערות",
+      "addNotePlaceholder": "הוסיפו הערת אימות...",
+      "add": "הוסף",
+      "resetChecklist": "אפס רשימה",
+      "checks": {
+        "recency": "חותמת זמן עדכנית אושרה",
+        "geolocation": "מיקום אומת",
+        "source": "מקור ראשוני זוהה",
+        "crossref": "הוצלב עם מקורות אחרים",
+        "noAi": "אין סימני יצירת AI",
+        "noRecrop": "לא צילום ממוחזר/ישן",
+        "metadata": "מטא-נתונים אומתו",
+        "context": "הקשר הוגדר"
+      }
+    },
+    "liveNews": {
+      "retry": "נסה שוב",
+      "notLive": "{{name}} לא משדר כרגע",
+      "cannotEmbed": "לא ניתן להשמיע את {{name}} כאן, ייתכן שמוגבל באזורך (שגיאה {{code}})",
+      "botCheck": "YouTube מבקש התחברות להשמעת {{name}}",
+      "signInToYouTube": "התחבר ל-YouTube",
+      "openOnYouTube": "פתח ב-YouTube",
+      "manage": "ניהול ערוצים",
+      "addChannel": "הוסף ערוץ",
+      "remove": "הסר",
+      "youtubeHandle": "כינוי YouTube (למשל @Channel)",
+      "youtubeHandleOrUrl": "כינוי YouTube או כתובת",
+      "displayName": "שם תצוגה (אופציונלי)",
+      "openPanelSettings": "הגדרות תצוגת פאנל",
+      "channelSettings": "הגדרות ערוץ",
+      "save": "שמור",
+      "cancel": "ביטול",
+      "confirmDelete": "למחוק ערוץ זה?",
+      "confirmTitle": "אישור",
+      "restoreDefaults": "שחזר ערוצי ברירת מחדל",
+      "availableChannels": "ערוצים זמינים",
+      "customChannel": "ערוץ מותאם אישית",
+      "regionAll": "הכל",
+      "regionNorthAmerica": "צפון אמריקה",
+      "regionEurope": "אירופה",
+      "regionLatinAmerica": "אמריקה הלטינית",
+      "regionAsia": "אסיה",
+      "regionMiddleEast": "המזרח התיכון",
+      "regionAfrica": "אפריקה",
+      "regionOceania": "אוקיאניה",
+      "invalidHandle": "הזינו כינוי YouTube חוקי (למשל @ChannelName)",
+      "channelNotFound": "ערוץ YouTube לא נמצא",
+      "verifying": "מאמת..."
+    },
+    "map": {
+      "showMap": "הצג מפה",
+      "hideMap": "הסתר מפה"
+    }
+  },
+  "popups": {
+    "startDate": "תאריך התחלה",
+    "endDate": "תאריך סיום",
+    "magnitude": "עוצמה",
+    "depth": "עומק",
+    "intensity": "עצימות",
+    "type": "סוג",
+    "status": "סטטוס",
+    "severity": "חומרה",
+    "location": "מיקום",
+    "coordinates": "קואורדינטות",
+    "casualties": "נפגעים",
+    "displaced": "עקורים",
+    "belligerents": "צדדים לוחמים",
+    "keyDevelopments": "התפתחויות מרכזיות",
+    "unknown": "לא ידוע",
+    "source": "מקור",
+    "target": "מטרה",
+    "events": "אירועים",
+    "impact": "השפעה",
+    "capacity": "קיבולת",
+    "alerts": "התראות פעילות",
+    "updated": "עודכן",
+    "common": {
+      "start": "התחלה",
+      "end": "סיום",
+      "updated": "עודכן"
+    },
+    "conflict": {
+      "title": "אזור סכסוך"
+    },
+    "earthquake": {
+      "levels": {
+        "major": "חזק",
+        "moderate": "בינוני",
+        "minor": "קל"
+      }
+    },
+    "base": {
+      "types": {
+        "us-nato": "ארה\"ב/נאט\"ו",
+        "china": "סין",
+        "russia": "רוסיה"
+      }
+    },
+    "protest": {
+      "acledVerified": "ACLED (מאומת)",
+      "gdelt": "GDELT",
+      "riots": "מהומות",
+      "highSeverity": "חומרה גבוהה"
+    },
+    "gpsJamming": {
+      "title": "הפרעת GPS/GNSS",
+      "interference": "הפרעה",
+      "aircraftAffected": "מטוסים מושפעים",
+      "aircraftNormal": "מטוסים תקינים",
+      "h3Hex": "משושה H3"
+    },
+    "flight": {
+      "groundStop": "GROUND STOP",
+      "groundDelay": "GROUND DELAY PROGRAM",
+      "departureDelay": "DEPARTURE DELAYS",
+      "arrivalDelay": "ARRIVAL DELAYS",
+      "delaysReported": "DELAYS REPORTED",
+      "closure": "AIRPORT CLOSURE",
+      "delays": "DELAYS",
+      "avgDelay": "AVG DELAY",
+      "cancelled": "CANCELLED",
+      "sources": {
+        "faa": "FAA ASWS",
+        "eurocontrol": "Eurocontrol",
+        "computed": "Computed"
+      },
+      "regions": {
+        "americas": "Americas",
+        "europe": "Europe",
+        "apac": "Asia-Pacific",
+        "mena": "Middle East",
+        "africa": "Africa"
+      }
+    },
+    "apt": {
+      "description": "Advanced Persistent Threat group with state-level capabilities. Known for sophisticated cyber operations targeting critical infrastructure, government, and defense sectors."
+    },
+    "cyberThreat": {
+      "title": "CYBER THREAT"
+    },
+    "nuclear": {
+      "types": {
+        "plant": "POWER PLANT",
+        "enrichment": "ENRICHMENT",
+        "weapons": "WEAPONS COMPLEX",
+        "research": "RESEARCH"
+      },
+      "description": "Nuclear facility under monitoring. Strategic importance for regional security and non-proliferation concerns."
+    },
+    "economic": {
+      "types": {
+        "exchange": "STOCK EXCHANGE",
+        "centralBank": "CENTRAL BANK",
+        "financialHub": "FINANCIAL HUB"
+      },
+      "closed": "CLOSED"
+    },
+    "irradiator": {
+      "subtitle": "Industrial Gamma Irradiator Facility",
+      "description": "Industrial irradiation facility using Cobalt-60 or Cesium-137 sources for medical device sterilization, food preservation, or material processing. Source: IAEA DIIF Database."
+    },
+    "pipeline": {
+      "title": "PIPELINE",
+      "types": {
+        "oil": "OIL PIPELINE",
+        "gas": "GAS PIPELINE",
+        "products": "PRODUCTS PIPELINE"
+      },
+      "status": {
+        "operating": "OPERATING",
+        "construction": "UNDER CONSTRUCTION"
+      },
+      "description": "Major {{type}} pipeline infrastructure. {{status}}"
+    },
+    "pipelineStatusDesc": {
+      "operating": "Currently operational and transporting resources.",
+      "construction": "Currently under construction."
+    },
+    "cable": {
+      "fault": "FAULT",
+      "degraded": "DEGRADED",
+      "active": "ACTIVE",
+      "major": "MAJOR",
+      "cable": "CABLE",
+      "subtitle": "Undersea Fiber Optic Cable",
+      "type": "SUBMARINE CABLE",
+      "advisory": "FAULT ADVISORY",
+      "repairDeployment": "REPAIR DEPLOYMENT",
+      "repairStatus": {
+        "onStation": "On Station",
+        "enRoute": "En Route"
+      },
+      "health": {
+        "evidence": "HEALTH EVIDENCE"
+      },
+      "description": "Undersea telecommunications cable carrying international internet traffic. These fiber optic cables form the backbone of global internet connectivity, transmitting over 95% of intercontinental data."
+    },
+    "repairShip": {
+      "note": "Repair vessel tracking indicates active deployment toward fault site.",
+      "badge": "REPAIR SHIP",
+      "description": "Repair ship tracking indicates active deployment in support of undersea cable restoration.",
+      "status": {
+        "onStation": "ON STATION",
+        "enRoute": "EN ROUTE"
+      }
+    },
+    "strategic": "אסטרטגי",
+    "verified": "מאומת",
+    "sampledList": "מציג רשימה מדגמית של {{count}} אירועים.",
+    "reason": "סיבה",
+    "threat": "איום",
+    "aka": "ידוע גם כ-",
+    "sponsor": "חסות",
+    "origin": "מקור",
+    "country": "מדינה",
+    "malware": "MALWARE",
+    "lastSeen": "נצפה לאחרונה",
+    "open": "פתוח",
+    "tradingHours": "שעות מסחר",
+    "gamma": "GAMMA",
+    "city": "עיר",
+    "length": "אורך",
+    "operator": "מפעיל",
+    "countries": "מדינות",
+    "waypoints": "WAYPOINTS",
+    "repairEta": "REPAIR ETA",
+    "timeUnits": {
+      "m": "m",
+      "h": "h",
+      "d": "d"
+    },
+    "hotspot": {
+      "escalation": "הערכת הסלמה",
+      "baseline": "קו בסיס",
+      "score": "ציון",
+      "trend": "מגמה",
+      "components": {
+        "news": "חדשות",
+        "cii": "CII",
+        "geo": "גיאו",
+        "military": "צבאי"
+      },
+      "levels": {
+        "stable": "יציב",
+        "watch": "מעקב",
+        "elevated": "מוגבר",
+        "high": "גבוה",
+        "critical": "קריטי"
+      }
+    },
+    "buttons": {
+      "track": "עקוב אחר נושא",
+      "details": "צפה בפרטים"
+    },
+    "historicalContext": "הקשר היסטורי",
+    "lastMajorEvent": "אירוע משמעותי אחרון",
+    "precedents": "תקדימים",
+    "cyclicalPattern": "דפוס מחזורי",
+    "whyItMatters": "למה זה חשוב",
+    "keyEntities": "ישויות מרכזיות",
+    "relatedHeadlines": "כותרות קשורות",
+    "liveIntel": "מודיעין חי",
+    "loadingNews": "טוען חדשות גלובליות...",
+    "noCoverage": "אין כיסוי גלובלי עדכני",
+    "time": "זמן",
+    "area": "אזור",
+    "expires": "Expires",
+    "aisGapSpike": "AIS GAP SPIKE",
+    "chokepointCongestion": "CHOKEPOINT CONGESTION",
+    "darkening": "DARKENING",
+    "density": "DENSITY",
+    "darkShips": "DARK SHIPS",
+    "vesselCount": "VESSEL COUNT",
+    "window": "WINDOW",
+    "region": "אזור",
+    "fatalities": "הרוגים",
+    "actors": "שחקנים",
+    "near": "ליד",
+    "moreEvents": "אירועים נוספים",
+    "monitoring": "ניטור",
+    "viewUSGS": "View on USGS",
+    "expired": "פג תוקף",
+    "timeAgo": {
+      "s": "לפני {{count}} שנ'",
+      "m": "לפני {{count}} דק'",
+      "h": "לפני {{count}} שע'",
+      "d": "לפני {{count}} ימים"
+    },
+    "cableAdvisory": {
+      "reported": "REPORTED",
+      "impact": "IMPACT",
+      "eta": "ETA"
+    },
+    "outage": {
+      "levels": {
+        "total": "TOTAL BLACKOUT",
+        "major": "MAJOR OUTAGE",
+        "partial": "PARTIAL DISRUPTION",
+        "disruption": "DISRUPTION"
+      },
+      "reported": "REPORTED",
+      "categories": "CATEGORIES",
+      "readReport": "Read full report"
+    },
+    "datacenter": {
+      "status": {
+        "existing": "OPERATIONAL",
+        "planned": "PLANNED",
+        "decommissioned": "DECOMMISSIONED",
+        "unknown": "UNKNOWN"
+      },
+      "gpuChipCount": "GPU/CHIP COUNT",
+      "chipType": "CHIP TYPE",
+      "power": "POWER",
+      "sector": "SECTOR",
+      "attribution": "Data: Epoch AI GPU Clusters",
+      "chips": "chips",
+      "cluster": {
+        "title": "{{count}} Data Centers",
+        "totalChips": "TOTAL CHIPS",
+        "totalPower": "TOTAL POWER",
+        "operational": "OPERATIONAL",
+        "planned": "PLANNED",
+        "moreDataCenters": "+ {{count}} more data centers",
+        "sampledSites": "Showing a sampled list of {{count}} sites."
+      }
+    },
+    "startupHub": {
+      "tiers": {
+        "mega": "MEGA HUB",
+        "major": "MAJOR HUB",
+        "emerging": "EMERGING",
+        "hub": "HUB"
+      },
+      "unicorns": "UNICORNS"
+    },
+    "cloudRegion": {
+      "provider": "PROVIDER",
+      "availabilityZones": "AVAILABILITY ZONES"
+    },
+    "techHQ": {
+      "types": {
+        "faang": "BIG TECH",
+        "unicorn": "UNICORN",
+        "public": "PUBLIC",
+        "tech": "TECH"
+      },
+      "marketCap": "MARKET CAP",
+      "employees": "EMPLOYEES"
+    },
+    "accelerator": {
+      "types": {
+        "accelerator": "ACCELERATOR",
+        "incubator": "INCUBATOR",
+        "studio": "STARTUP STUDIO"
+      },
+      "founded": "FOUNDED",
+      "notableAlumni": "NOTABLE ALUMNI"
+    },
+    "techEvent": {
+      "days": {
+        "today": "TODAY",
+        "tomorrow": "TOMORROW",
+        "inDays": "IN {{count}} DAYS"
+      },
+      "date": "DATE",
+      "moreInformation": "More Information"
+    },
+    "techHQCluster": {
+      "companiesCount": "{{count}} COMPANIES",
+      "bigTechCount": "{{count}} Big Tech",
+      "unicornsCount": "{{count}} Unicorns",
+      "publicCount": "{{count}} Public",
+      "sampled": "Showing a sampled list of {{count}} companies."
+    },
+    "techEventCluster": {
+      "eventsCount": "{{count}} EVENTS",
+      "upcomingWithin2Weeks": "{{count}} upcoming within 2 weeks",
+      "sampled": "Showing a sampled list of {{count}} events."
+    },
+    "militaryFlight": {
+      "types": {
+        "fighter": "Fighter",
+        "bomber": "Bomber",
+        "transport": "Transport",
+        "tanker": "Tanker",
+        "awacs": "AWACS/AEW",
+        "reconnaissance": "Reconnaissance",
+        "helicopter": "Helicopter",
+        "drone": "UAV/Drone",
+        "patrol": "Patrol",
+        "specialOps": "Special Operations",
+        "vip": "VIP Transport"
+      },
+      "altitude": "ALTITUDE",
+      "ground": "Ground",
+      "speed": "SPEED",
+      "heading": "HEADING",
+      "hexCode": "HEX CODE",
+      "squawk": "SQUAWK",
+      "attribution": "Source: OpenSky Network"
+    },
+    "militaryVessel": {
+      "aisDark": "AIS DARK",
+      "vessel": "Vessel",
+      "speed": "SPEED",
+      "heading": "HEADING",
+      "mmsi": "MMSI",
+      "hull": "HULL #",
+      "region": "REGION",
+      "strikeGroup": "STRIKE GROUP",
+      "deploymentStatus": "STATUS",
+      "usniIntel": "USNI Intel",
+      "usniSource": "Source: USNI News Fleet Tracker",
+      "approximatePosition": "Position approximate — based on USNI weekly report, not real-time AIS.",
+      "darkDescription": "⚠ Vessel has gone dark - AIS signal lost. May indicate sensitive operations."
+    },
+    "militaryCluster": {
+      "flightActivity": {
+        "exercise": "Military Exercise",
+        "patrol": "Patrol Activity",
+        "transport": "Transport Operations",
+        "unknown": "Military Activity"
+      },
+      "moreAircraft": "+{{count}} more aircraft",
+      "aircraftCount": "{{count}} AIRCRAFT",
+      "aircraft": "AIRCRAFT",
+      "activity": "ACTIVITY",
+      "primary": "PRIMARY",
+      "trackedAircraft": "TRACKED AIRCRAFT",
+      "vesselActivity": {
+        "exercise": "Naval Exercise",
+        "deployment": "Naval Deployment",
+        "patrol": "Patrol Activity",
+        "transit": "Fleet Transit",
+        "unknown": "Naval Activity"
+      },
+      "moreVessels": "+{{count}} more vessels",
+      "vesselsCount": "{{count}} VESSELS",
+      "vessels": "VESSELS",
+      "trackedVessels": "TRACKED VESSELS"
+    },
+    "naturalEvent": {
+      "closed": "CLOSED",
+      "active": "ACTIVE",
+      "reported": "REPORTED",
+      "viewOnSource": "View on {{source}}",
+      "attribution": "Data: NASA EONET"
+    },
+    "port": {
+      "types": {
+        "container": "CONTAINER",
+        "oil": "OIL TERMINAL",
+        "lng": "LNG TERMINAL",
+        "naval": "NAVAL PORT",
+        "mixed": "MIXED",
+        "bulk": "BULK"
+      },
+      "worldRank": "WORLD RANK"
+    },
+    "spaceport": {
+      "status": {
+        "active": "ACTIVE",
+        "construction": "CONSTRUCTION",
+        "inactive": "INACTIVE"
+      },
+      "launchActivity": "LAUNCH ACTIVITY",
+      "description": "Strategic space launch facility. Launch cadence and orbit access capabilities are key geopolitical indicators."
+    },
+    "mineral": {
+      "status": {
+        "producing": "PRODUCING",
+        "development": "DEVELOPMENT",
+        "exploration": "EXPLORATION"
+      },
+      "projectSubtitle": "{{mineral}} PROJECT"
+    },
+    "stockExchange": {
+      "marketCap": "MARKET CAP"
+    },
+    "financialCenter": {
+      "gfciRank": "GFCI RANK",
+      "specialties": "SPECIALTIES"
+    },
+    "centralBank": {
+      "currency": "CURRENCY"
+    },
+    "commodityHub": {
+      "commodities": "COMMODITIES"
+    },
+    "iranEvent": {
+      "relatedEvents": "Related Events"
+    },
+    "hotspotSubtexts": {
+      "conflict_zone": "Conflict Zone",
+      "dprk_watch": "DPRK Watch",
+      "egypt_gis": "Egypt/GIS",
+      "energy_space": "Energy/Space",
+      "financial_hub": "Financial Hub",
+      "gchq_mi6": "GCHQ/MI6",
+      "greenland_intel": "Greenland Intel",
+      "haiti_crisis": "Haiti Crisis",
+      "irgc_activity": "IRGC Activity",
+      "insurgency_coups": "Insurgency/Coups",
+      "iraq_pmf": "Iraq/PMF",
+      "kremlin_activity": "Kremlin Activity",
+      "lebanon_hezbollah": "Lebanon/Hezbollah",
+      "mossad_idf": "Mossad/IDF",
+      "nato_hq": "NATO HQ",
+      "pla_mss_activity": "PLA/MSS Activity",
+      "pentagon_pizza_index": "Pentagon Pizza Index",
+      "piracy_conflict": "Piracy/Conflict",
+      "qatar_al_udeid": "Qatar/Al Udeid",
+      "saudi_gip_mbs": "Saudi GIP/MBS",
+      "strait_watch": "Strait Watch",
+      "syria_crisis": "Syria Crisis",
+      "tech_ai_hub": "Tech/AI Hub",
+      "turkey_mit": "Turkey/MIT",
+      "uae_ecsr": "UAE/ECSR",
+      "venezuela_crisis": "Venezuela Crisis",
+      "yemen_houthis": "Yemen/Houthis"
+    }
+  },
+  "signals": {
+    "context": {
+      "prediction_leads_news": {
+        "whyItMatters": "Prediction markets often price in information before it becomes news—traders may have early access to developments.",
+        "actionableInsight": "Monitor for breaking news in the next 1-6 hours that could explain the market move.",
+        "confidenceNote": "Higher confidence if multiple prediction markets move in same direction."
+      },
+      "news_leads_markets": {
+        "whyItMatters": "News is breaking faster than markets are reacting—potential mispricing opportunity.",
+        "actionableInsight": "Watch for market catch-up as algorithms and traders digest the news.",
+        "confidenceNote": "Stronger signal if news is from Tier 1 wire services."
+      },
+      "silent_divergence": {
+        "whyItMatters": "Market moving significantly without any identifiable news catalyst—possible insider knowledge, algorithmic trading, or unreported development.",
+        "actionableInsight": "Investigate alternative data sources; news may emerge later explaining the move.",
+        "confidenceNote": "Lower confidence as cause is unknown—treat as early warning, not confirmed intelligence."
+      },
+      "velocity_spike": {
+        "whyItMatters": "A story is accelerating across multiple news sources—indicates growing significance and potential for market/policy impact.",
+        "actionableInsight": "This topic warrants immediate attention; expect official statements or market reactions.",
+        "confidenceNote": "Higher confidence with more sources; check if Tier 1 sources are among them."
+      },
+      "keyword_spike": {
+        "whyItMatters": "A term is appearing at significantly higher frequency than its baseline across multiple sources, indicating a developing story.",
+        "actionableInsight": "Review related headlines and AI summary, then correlate with country instability and market moves.",
+        "confidenceNote": "Confidence increases with stronger baseline multiplier and broader source diversity."
+      },
+      "convergence": {
+        "whyItMatters": "Multiple independent source types confirming same event—cross-validation increases likelihood of accuracy.",
+        "actionableInsight": "Treat this as high-confidence intelligence; triangulation reduces false positive risk.",
+        "confidenceNote": "Very high confidence when wire + government + intel sources align."
+      },
+      "triangulation": {
+        "whyItMatters": "The \"authority triangle\" (wire services, government sources, intel specialists) are aligned—this is the gold standard for breaking news confirmation.",
+        "actionableInsight": "This is actionable intelligence; expect market/policy reactions imminently.",
+        "confidenceNote": "Highest confidence signal in the system—multiple authoritative sources agree."
+      },
+      "flow_drop": {
+        "whyItMatters": "Physical commodity flow disruption detected—supply constraints often precede price spikes.",
+        "actionableInsight": "Monitor energy commodity prices; assess supply chain exposure.",
+        "confidenceNote": "Confidence depends on disruption duration and alternative supply availability."
+      },
+      "flow_price_divergence": {
+        "whyItMatters": "Supply disruption news is not yet reflected in commodity prices—potential information edge.",
+        "actionableInsight": "Either markets are slow to react, or the disruption is less significant than reported.",
+        "confidenceNote": "Medium confidence—markets may have better information than news reports."
+      },
+      "geo_convergence": {
+        "whyItMatters": "Multiple news events clustering around same geographic location—potential escalation or coordinated activity.",
+        "actionableInsight": "Increase monitoring priority for this region; correlate with satellite/AIS data if available.",
+        "confidenceNote": "Higher confidence if events span multiple source types and time periods."
+      },
+      "explained_market_move": {
+        "whyItMatters": "Market move has clear news catalyst—no mystery, price action reflects known information.",
+        "actionableInsight": "Understand the narrative driving the move; assess if reaction is proportional.",
+        "confidenceNote": "High confidence—news and price action are correlated."
+      },
+      "hotspot_escalation": {
+        "whyItMatters": "Geopolitical hotspot showing significant escalation based on news activity, country instability, geographic convergence, and military presence.",
+        "actionableInsight": "Increase monitoring priority; assess downstream impacts on infrastructure, markets, and regional stability.",
+        "confidenceNote": "Confidence weighted by multiple data sources—news (35%), country instability (25%), geo-convergence (25%), military activity (15%)."
+      },
+      "sector_cascade": {
+        "whyItMatters": "Market movement is cascading across related sectors—indicates systemic reaction to a catalyzing event.",
+        "actionableInsight": "Identify the primary catalyst; assess exposure across correlated assets.",
+        "confidenceNote": "Higher confidence when multiple sectors move with similar velocity and direction."
+      },
+      "military_surge": {
+        "whyItMatters": "Military transport activity significantly above baseline—indicates potential deployment, humanitarian operation, or force projection.",
+        "actionableInsight": "Correlate with regional news; assess nearby base activity and naval movements.",
+        "confidenceNote": "Higher confidence with sustained activity over multiple hours and diverse aircraft types."
+      },
+      "fallback": {
+        "whyItMatters": "Signal detected.",
+        "actionableInsight": "Monitor for developments.",
+        "confidenceNote": "Standard confidence."
+      }
+    }
+  },
+  "alerts": {
+    "instabilityRising": "{{country}} אי-יציבות עולה",
+    "instabilityFalling": "{{country}} אי-יציבות יורדת",
+    "indexRose": "מדד אי-יציבות עלה מ-{{from}} ל-{{to}} ({{change}}). גורם: {{driver}}",
+    "indexFell": "מדד אי-יציבות ירד מ-{{from}} ל-{{to}} ({{change}}). גורם: {{driver}}",
+    "geoAlert": "התראה גיאוגרפית: {{location}}",
+    "cascadeAlert": "התראת מפל תשתיות",
+    "infraAlert": "התראת תשתיות: {{name}}",
+    "countriesAffected": "{{count}} מדינות מושפעות, השפעה גבוהה ביותר: {{impact}}",
+    "alert": "התראה: {{location}}",
+    "multipleRegions": "מספר אזורים",
+    "trending": "\"{{term}}\" במגמה, {{count}} אזכורים ב-{{hours}} שע'",
+    "eventsDetected": "{{count}} אירועים זוהו באזור ({{lat}}°, {{lon}}°)"
+  },
+  "intel": {
+    "topics": {
+      "military": {
+        "name": "פעילות צבאית",
+        "description": "תרגילים, פריסות ומבצעים צבאיים"
+      },
+      "cyber": {
+        "name": "איומי סייבר",
+        "description": "מתקפות סייבר, כופרה ואיומים דיגיטליים"
+      },
+      "nuclear": {
+        "name": "גרעין",
+        "description": "תוכניות גרעין, ביקורות IAEA, הפצה"
+      },
+      "sanctions": {
+        "name": "סנקציות",
+        "description": "סנקציות כלכליות והגבלות סחר"
+      },
+      "intelligence": {
+        "name": "מודיעין",
+        "description": "ריגול, פעולות מודיעין, מעקב"
+      },
+      "maritime": {
+        "name": "ביטחון ימי",
+        "description": "פעולות ימיות, צווארי בקבוק ימיים, נתיבי שיט"
+      }
+    }
+  },
+  "common": {
+    "loading": "טוען...",
+    "error": "שגיאה",
+    "noData": "אין נתונים זמינים",
+    "noDataAvailable": "אין נתונים זמינים",
+    "updated": "עודכן הרגע",
+    "ago": "לפני {{time}}",
+    "retrying": "מנסה שוב...",
+    "failedToLoad": "טעינת נתונים נכשלה",
+    "noDataShort": "אין נתונים",
+    "upstreamUnavailable": "API חיצוני לא זמין, ינסה שוב אוטומטית",
+    "loadingUcdpEvents": "טוען אירועי סכסוך מזוין",
+    "loadingStablecoins": "טוען מטבעות יציבים...",
+    "scanningThermalData": "סורק נתונים תרמיים",
+    "calculatingExposure": "מחשב חשיפה",
+    "computingSignals": "מחשב אותות...",
+    "loadingEtfData": "טוען נתוני ETF...",
+    "loadingGiving": "טוען נתוני תרומות גלובליות",
+    "loadingDisplacement": "טוען נתוני עקירה",
+    "loadingClimateData": "טוען נתוני אקלים",
+    "failedTechReadiness": "טעינת נתוני מוכנות טכנולוגית נכשלה",
+    "failedRiskOverview": "חישוב סקירת סיכונים נכשל",
+    "failedPredictions": "טעינת חיזויים נכשלה",
+    "failedCII": "חישוב CII נכשל",
+    "failedDependencyGraph": "בניית גרף תלויות נכשלה",
+    "failedIntelFeed": "טעינת פיד מודיעין נכשלה",
+    "failedMarketData": "טעינת נתוני שוק נכשלה",
+    "failedSectorData": "טעינת נתוני מגזר נכשלה",
+    "failedCommodities": "טעינת סחורות נכשלה",
+    "failedCryptoData": "טעינת נתוני קריפטו נכשלה",
+    "rateLimitedMarket": "נתוני שוק לא זמינים זמנית (הגבלת קצב), ינסה שוב בקרוב",
+    "failedClusterNews": "קיבוץ חדשות נכשל",
+    "noNewsAvailable": "אין חדשות זמינות",
+    "noActiveTechHubs": "אין מרכזי טכנולוגיה פעילים",
+    "noActiveGeoHubs": "אין מוקדים גיאופוליטיים פעילים",
+    "allSourcesDisabled": "כל המקורות מושבתים",
+    "allIntelSourcesDisabled": "כל מקורות המודיעין מושבתים",
+    "noEventsInCategory": "אין אירועים בקטגוריה זו",
+    "exportCsv": "ייצוא CSV",
+    "exportJson": "ייצוא JSON",
+    "exportData": "ייצוא נתונים",
+    "selectAll": "בחר הכל",
+    "selectNone": "בטל בחירה",
+    "unrest": "אי-שקט",
+    "conflict": "סכסוך",
+    "security": "ביטחון",
+    "information": "מידע",
+    "shareStory": "שתף סיפור",
+    "exportImage": "ייצוא תמונה",
+    "exportPdf": "ייצוא PDF",
+    "new": "חדש",
+    "live": "שידור חי",
+    "cached": "מטמון",
+    "unavailable": "לא זמין",
+    "close": "סגור",
+    "currentVariant": "(נוכחי)",
+    "retry": "נסה שוב",
+    "refresh": "רענן",
+    "all": "הכל"
+  },
+  "magen": {
+    "credits": {
+      "basedOn": "מבוסס על",
+      "by": "מאת",
+      "visualInspiration": "השראה ויזואלית",
+      "license": "רישיון",
+      "sourceCode": "קוד מקור",
+      "builtWithLove": "נבנה באהבה עבור אזרחי ישראל."
+    }
+  }
+}
