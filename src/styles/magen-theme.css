@@ -2034,162 +2034,199 @@ html[data-variant="magen"] {
 
 
 /* ==========================================================
-   31. Compact UI Overhaul -- Shrink Everything
-   Volken feedback: buttons too big, wasted space, pizza
-   triangles, checkboxes oversized, header cluttered.
+   31. Refined UI -- Balanced Sizing (V2)
+   10% bigger than compact. Time slider = map control size.
+   Layer toggles = full map height. Panel titles = large.
+   All buttons = clear white bold text. Snap scroll panels.
    ========================================================== */
 
-/* ---- Header: Ultra Compact ---- */
+/* ---- Header: Clean 38px bar ---- */
 [data-variant="magen"] .header {
-  height: 34px;
-  padding: 0 12px;
-  gap: 8px;
+  height: 38px;
+  padding: 0 14px;
+  gap: 10px;
 }
 
-/* ---- Header buttons: tiny ---- */
+/* ---- Header buttons: medium, clear white text ---- */
 [data-variant="magen"] .header button,
 [data-variant="magen"] .header select,
 [data-variant="magen"] .header .settings-btn,
 [data-variant="magen"] .header .sources-btn {
-  min-height: 28px;
-  min-width: 28px;
-  font-size: 11px;
-  padding: 2px 6px;
+  min-height: 30px;
+  min-width: 30px;
+  font-size: 12px;
+  padding: 3px 8px;
+  color: #e8edf5;
+  font-weight: 600;
 }
 
-/* ---- Theme/Fullscreen buttons in header: icon-only tiny ---- */
+/* ---- Theme/Fullscreen buttons in header ---- */
 [data-variant="magen"] .theme-toggle-btn,
 [data-variant="magen"] .fullscreen-btn {
-  min-width: 28px;
-  min-height: 28px;
-  width: 28px;
-  height: 28px;
+  min-width: 30px;
+  min-height: 30px;
+  width: 30px;
+  height: 30px;
   padding: 0;
 }
 
 [data-variant="magen"] .theme-toggle-btn svg,
 [data-variant="magen"] .fullscreen-btn svg {
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
 }
 
-/* ---- Region Select: Compact ---- */
+/* ---- Region Select ---- */
 [data-variant="magen"] .region-select {
-  min-height: 26px;
-  height: 26px;
-  font-size: 10px;
-  padding: 2px 22px 2px 6px;
+  min-height: 28px;
+  height: 28px;
+  font-size: 11px;
+  padding: 2px 24px 2px 8px;
   letter-spacing: 0.3px;
+  color: #e8edf5;
+  font-weight: 500;
 }
 
-/* ---- Map Section: Zoom Buttons Tiny ---- */
+/* ---- Map Controls: 26px buttons ---- */
 [data-variant="magen"] .deckgl-controls .map-btn,
 [data-variant="magen"] .map-controls .map-control-btn {
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
-  min-height: 24px;
-  font-size: 12px;
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  min-height: 26px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #e8edf5;
   border-radius: 4px;
   padding: 0;
 }
 
-/* ---- Map View Select: Tiny ---- */
+/* ---- Map View Select ---- */
 [data-variant="magen"] .view-select {
-  min-height: 22px;
-  height: 22px;
-  font-size: 9px;
-  padding: 2px 20px 2px 4px;
+  min-height: 24px;
+  height: 24px;
+  font-size: 10px;
+  padding: 2px 22px 2px 6px;
+  color: #e8edf5;
 }
 
-/* ---- Time Slider: Compact single-line ---- */
+/* ---- Time Slider: same size as map controls, move to bottom ---- */
 [data-variant="magen"] .time-slider {
-  padding: 3px 6px;
+  top: auto;
+  bottom: 8px;
+  left: auto;
+  right: 8px;
+  padding: 4px 8px;
   border-radius: 4px;
   gap: 4px;
+  z-index: 112;
 }
 
 [data-variant="magen"] .time-slider-label {
-  font-size: 8px;
+  font-size: 9px;
   letter-spacing: 0.5px;
+  color: #e8edf5;
+  font-weight: 600;
 }
 
 [data-variant="magen"] .time-btn {
-  padding: 2px 4px;
-  font-size: 8px;
-  border-radius: 2px;
-  min-height: 0;
-  min-width: 0;
+  padding: 3px 5px;
+  font-size: 9px;
+  font-weight: 600;
+  color: #e8edf5;
+  border-radius: 3px;
+  min-height: 22px;
+  min-width: 22px;
 }
 
-/* ---- Layer Toggles: Compact ---- */
+[data-variant="magen"] .time-btn.active {
+  font-weight: 700;
+}
+
+/* ---- Layer Toggles: Full map height, spaced rows ---- */
 [data-variant="magen"] .deckgl-layer-toggles {
-  max-width: 200px;
+  max-width: 220px;
+  top: 8px;
+  bottom: 8px;
+  max-height: none;
+  height: auto;
 }
 
 [data-variant="magen"] .deckgl-layer-toggles .toggle-header {
-  padding: 4px 8px;
-  font-size: 9px;
-  letter-spacing: 1px;
+  padding: 6px 10px;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  color: #e8edf5;
+  font-weight: 700;
+}
+
+[data-variant="magen"] .deckgl-layer-toggles .toggle-list {
+  max-height: none !important;
+  overflow-y: auto;
 }
 
 [data-variant="magen"] .deckgl-layer-toggles .layer-toggle {
-  padding: 2px 6px;
-  gap: 4px;
-  font-size: 9px;
+  padding: 5px 8px;
+  gap: 6px;
+  font-size: 10px;
   min-height: 0;
+  margin: 1px 0;
 }
 
-/* Checkbox: same size as emoji icons next to them */
+/* Checkbox: match emoji icon height */
 [data-variant="magen"] .deckgl-layer-toggles .layer-toggle input[type="checkbox"] {
-  width: 12px;
-  height: 12px;
-  min-width: 12px;
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
   min-height: 0;
   border-width: 1.5px;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 [data-variant="magen"] .deckgl-layer-toggles .toggle-icon {
-  font-size: 11px;
-  width: 12px;
-  height: 12px;
-  min-width: 12px;
+  font-size: 13px;
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
 }
 
 [data-variant="magen"] .deckgl-layer-toggles .toggle-label {
-  font-size: 9px;
+  font-size: 10px;
+  color: #e8edf5;
+  font-weight: 500;
 }
 
 [data-variant="magen"] .deckgl-layer-toggles .toggle-collapse {
-  font-size: 8px;
-  min-width: 18px;
-  min-height: 18px;
+  font-size: 9px;
+  min-width: 20px;
+  min-height: 20px;
   padding: 2px;
+  color: #e8edf5;
 }
 
 [data-variant="magen"] .deckgl-layer-toggles .layer-help-btn {
-  min-width: 16px;
-  min-height: 16px;
-  width: 16px;
-  height: 16px;
-  font-size: 8px;
+  min-width: 18px;
+  min-height: 18px;
+  width: 18px;
+  height: 18px;
+  font-size: 9px;
   padding: 0;
+  color: #e8edf5;
 }
 
-/* ---- Map Pin/Fullscreen buttons: Tiny ---- */
+/* ---- Map Pin/Fullscreen buttons ---- */
 [data-variant="magen"] .map-pin-btn {
-  padding: 2px 4px;
+  padding: 3px 5px;
   min-width: 0;
   min-height: 0;
 }
 
 [data-variant="magen"] .map-pin-btn svg {
-  width: 12px;
-  height: 12px;
+  width: 13px;
+  height: 13px;
 }
 
-/* ---- Translate Button: Tiny & Subtle ---- */
+/* ---- Translate Button: Subtle Aא ---- */
 [data-variant="magen"] .item-translate-btn {
   min-width: 0 !important;
   min-height: 0 !important;
@@ -2200,7 +2237,7 @@ html[data-variant="magen"] {
   border: none !important;
   color: var(--magen-text-dim);
   font-size: 10px;
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: pointer;
   display: inline;
   vertical-align: middle;
@@ -2214,66 +2251,26 @@ html[data-variant="magen"] {
   background: rgba(0, 166, 255, 0.08) !important;
 }
 
-/* ---- Live News Channel Buttons: Compact ---- */
-[data-variant="magen"] .live-channel-btn {
-  padding: 3px 6px;
-  font-size: 9px;
-  min-height: 0;
-  min-width: 0;
+/* ---- Panel Title: LARGE, bold, wide font ---- */
+[data-variant="magen"] .panel-title {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #e8edf5;
+}
+
+/* ---- Panel Count Badge: Clear ---- */
+[data-variant="magen"] .panel-count {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
   border-radius: 4px;
 }
 
-/* ---- Live News Toolbar: Compact ---- */
-[data-variant="magen"] .live-news-toolbar {
-  padding: 4px 6px;
-  gap: 2px;
-}
-
-/* ---- Live News Settings Button: Small ---- */
-[data-variant="magen"] .live-news-settings-btn {
-  min-width: 24px;
-  min-height: 24px;
-  padding: 2px 4px;
-}
-
-/* ---- Live Indicator: Small ---- */
-[data-variant="magen"] .live-indicator-btn {
-  font-size: 9px;
-  padding: 2px 4px;
-  min-width: 0;
-  min-height: 0;
-}
-
-[data-variant="magen"] .live-dot {
-  width: 6px;
-  height: 6px;
-}
-
-/* ---- Live Mute/Fullscreen: Small ---- */
-[data-variant="magen"] .live-mute-btn {
-  min-width: 24px;
-  min-height: 24px;
-  width: 24px;
-  height: 24px;
-  padding: 2px;
-}
-
-/* ---- Panel Info Button: Subtle ---- */
-[data-variant="magen"] .panel-info-btn {
-  width: 12px;
-  height: 12px;
-  font-size: 7px;
-  opacity: 0.4;
-  border-color: transparent;
-}
-
-[data-variant="magen"] .panel-info-btn:hover {
-  opacity: 0.8;
-}
-
-/* ---- Panel Header: Compact ---- */
+/* ---- Panel Header ---- */
 [data-variant="magen"] .panel-header {
-  padding: 4px 8px;
+  padding: 6px 10px;
 }
 
 [data-variant="magen"] .panel-header button {
@@ -2281,15 +2278,81 @@ html[data-variant="magen"] {
   min-height: 0;
 }
 
-/* ---- Panel Summarize Button: Subtle ---- */
+/* ---- Panel Info Button: Subtle ---- */
+[data-variant="magen"] .panel-info-btn {
+  width: 14px;
+  height: 14px;
+  font-size: 8px;
+  opacity: 0.3;
+  border-color: transparent;
+}
+
+[data-variant="magen"] .panel-info-btn:hover {
+  opacity: 0.7;
+}
+
+/* ---- Panel Summarize Button ---- */
 [data-variant="magen"] .panel-summarize-btn {
   min-width: 0;
   min-height: 0;
-  padding: 2px 6px;
-  font-size: 9px;
+  padding: 3px 8px;
+  font-size: 10px;
+  color: #e8edf5;
+  font-weight: 600;
 }
 
-/* ---- Update Toast: Bottom bar, not overlay ---- */
+/* ---- Live News Channel Buttons: Clear, White Bold ---- */
+[data-variant="magen"] .live-channel-btn {
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #e8edf5;
+  min-height: 0;
+  min-width: 0;
+  border-radius: 4px;
+  border-width: 1.5px;
+}
+
+/* ---- Live News Toolbar ---- */
+[data-variant="magen"] .live-news-toolbar {
+  padding: 5px 8px;
+  gap: 3px;
+}
+
+/* ---- Live News Settings Button ---- */
+[data-variant="magen"] .live-news-settings-btn {
+  min-width: 26px;
+  min-height: 26px;
+  padding: 3px 5px;
+  color: #e8edf5;
+}
+
+/* ---- Live Indicator ---- */
+[data-variant="magen"] .live-indicator-btn {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 6px;
+  min-width: 0;
+  min-height: 0;
+  color: #e8edf5;
+}
+
+[data-variant="magen"] .live-dot {
+  width: 7px;
+  height: 7px;
+}
+
+/* ---- Live Mute/Fullscreen ---- */
+[data-variant="magen"] .live-mute-btn {
+  min-width: 26px;
+  min-height: 26px;
+  width: 26px;
+  height: 26px;
+  padding: 3px;
+  color: #e8edf5;
+}
+
+/* ---- Update Toast: Bottom bar ---- */
 [data-variant="magen"] .update-toast {
   top: auto;
   bottom: 0;
@@ -2301,7 +2364,7 @@ html[data-variant="magen"] {
   border-bottom: none;
   border-left: none;
   border-right: none;
-  padding: 6px 16px;
+  padding: 8px 16px;
   transform: translateY(20px);
   z-index: 9000;
 }
@@ -2317,9 +2380,48 @@ html[data-variant="magen"] {
   min-height: 0;
   min-width: 0;
   padding: 2px 6px;
+  color: #e8edf5;
+  font-weight: 600;
 }
 
-/* ---- Fullscreen expand button: keep functional ---- */
+/* ---- Fullscreen expand button ---- */
 [data-variant="magen"] .fullscreen-btn {
-  font-size: 14px;
+  font-size: 15px;
+  color: #e8edf5;
+}
+
+/* ---- Snap Scroll: Panels snap into view ---- */
+[data-variant="magen"] .main-content {
+  scroll-snap-type: y proximity;
+  scroll-behavior: smooth;
+}
+
+[data-variant="magen"] .map-section {
+  scroll-snap-align: start;
+}
+
+[data-variant="magen"] .panels-grid {
+  scroll-snap-type: y proximity;
+}
+
+[data-variant="magen"] .panels-grid > .panel {
+  scroll-snap-align: start;
+}
+
+/* ---- Panel Loading Radar: hide confusing sparkles ---- */
+[data-variant="magen"] .panel-loading-radar {
+  width: 40px;
+  height: 40px;
+  border-color: rgba(0, 166, 255, 0.2);
+}
+
+[data-variant="magen"] .panel-radar-sweep {
+  background: linear-gradient(90deg, transparent, var(--magen-accent));
+}
+
+/* ---- All buttons globally: clear white bold ---- */
+[data-variant="magen"] button,
+[data-variant="magen"] [role="button"] {
+  color: #e8edf5;
+  font-weight: 600;
 }
