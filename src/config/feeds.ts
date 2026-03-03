@@ -1080,10 +1080,12 @@ const HAPPY_FEEDS: Record<string, Feed[]> = {
 const MAGEN_FEEDS: Record<string, Feed[]> = {
   // Israeli media (priority)
   middleeast: [
-    { name: 'Times of Israel', url: rss('https://news.google.com/rss/search?q=site:timesofisrael.com+when:1d&hl=en-US&gl=US&ceid=US:en') },
-    { name: 'Jerusalem Post', url: rss('https://news.google.com/rss/search?q=site:jpost.com+when:1d&hl=en-US&gl=US&ceid=US:en') },
-    { name: 'Haaretz', url: rss('https://news.google.com/rss/search?q=site:haaretz.com+when:7d&hl=en-US&gl=US&ceid=US:en') },
-    { name: 'Ynet News', url: rss('https://news.google.com/rss/search?q=site:ynetnews.com+when:1d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Times of Israel', url: rss('https://www.timesofisrael.com/feed/') },
+    { name: 'Jerusalem Post', url: rss('https://www.jpost.com/rss/rssfeedsisraelnews.aspx') },
+    { name: 'JPost Middle East', url: rss('https://www.jpost.com/rss/rssfeedsmiddleeastnews.aspx') },
+    { name: 'Haaretz', url: rss('https://www.haaretz.com/srv/all-headlines-rss') },
+    { name: 'Haaretz Security', url: rss('https://www.haaretz.com/srv/israel-news-rss') },
+    { name: 'Ynet News', url: rss('http://www.ynetnews.com/Integration/StoryRss3254.xml') },
     { name: 'i24NEWS', url: rss('https://news.google.com/rss/search?q=site:i24news.tv+when:1d&hl=en-US&gl=US&ceid=US:en') },
     { name: 'Israel Hayom', url: rss('https://news.google.com/rss/search?q=site:israelhayom.com+when:1d&hl=en-US&gl=US&ceid=US:en') },
     { name: 'Channel 14', url: rss('https://news.google.com/rss/search?q=site:now14.co.il+when:2d&hl=en-US&gl=US&ceid=US:en') },
@@ -1113,10 +1115,15 @@ const MAGEN_FEEDS: Record<string, Feed[]> = {
   gov: [
     { name: 'IDF', url: rss('https://news.google.com/rss/search?q="Israel+Defense+Forces"+OR+"IDF"+when:1d&hl=en-US&gl=US&ceid=US:en') },
     { name: 'Israel MFA', url: rss('https://news.google.com/rss/search?q=site:gov.il+ministry+foreign+affairs+when:7d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'JPost Defense', url: rss('https://www.jpost.com/rss/rssfeeddefense-and-tech') },
+    { name: 'JPost Israel-Hamas', url: rss('https://www.jpost.com/rss/israel-hamas-war') },
+    { name: 'JPost Conflict', url: rss('https://www.jpost.com/rss/rssfeedsarabisraeliconflict.aspx') },
+    { name: 'JPost Iran', url: rss('https://www.jpost.com/rss/rssfeedsiran') },
     { name: 'White House', url: rss('https://news.google.com/rss/search?q=site:whitehouse.gov&hl=en-US&gl=US&ceid=US:en') },
     { name: 'State Dept', url: rss('https://news.google.com/rss/search?q=site:state.gov+OR+"State+Department"&hl=en-US&gl=US&ceid=US:en') },
     { name: 'Pentagon', url: rss('https://news.google.com/rss/search?q=site:defense.gov+OR+Pentagon+when:1d&hl=en-US&gl=US&ceid=US:en') },
     { name: 'UN News', url: rss('https://news.un.org/feed/subscribe/en/news/region/middle-east/feed/rss.xml') },
+    { name: 'Breaking Defense IL', url: rss('https://news.google.com/rss/search?q=site:breakingdefense.com+Israel+when:7d&hl=en-US&gl=US&ceid=US:en') },
   ],
   // Financial feeds relevant to Israel
   finance: [
