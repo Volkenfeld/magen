@@ -299,11 +299,25 @@ if (!('__TAURI_INTERNALS__' in window) && !('__TAURI__' in window) && 'serviceWo
   navigator.serviceWorker.register('/sw.js', { scope: '/' })
     .then((registration) => {
       console.log('[PWA] Service worker registered');
+      // Check for SW updates every 5 minutes (was 60 min)
       const swUpdateInterval = setInterval(async () => {
         if (!navigator.onLine) return;
         try { await registration.update(); } catch {}
-      }, 60 * 60 * 1000);
-      // Expose interval ID for cleanup/debugging
+      }, 5 * 60 * 1000);
+      // Also check when user returns to the tab
+      document.addEventListener('visibilitychange', async () => {
+        if (document.visibilityState === 'visible' && navigator.onLine) {
+          try { await registration.update(); } catch {}
+        }
+      });
+      // Auto-reload when a new SW takes control
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (refreshing) return;
+        refreshing = true;
+        console.log('[PWA] New service worker activated, reloading...');
+        window.location.reload();
+      });
       (window as unknown as Record<string, unknown>).__swUpdateInterval = swUpdateInterval;
     })
     .catch((err) => {
