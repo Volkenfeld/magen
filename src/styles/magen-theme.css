@@ -1538,6 +1538,7 @@ html[data-variant="magen"] {
 
 /* ---- Panel: Glassmorphism Intelligence Cards ---- */
 [data-variant="magen"] .panel {
+  position: relative;
   background: linear-gradient(
     180deg,
     rgba(19, 26, 36, 0.95) 0%,
@@ -1908,4 +1909,125 @@ html[data-variant="magen"] {
   [data-variant="magen"] .panels-grid {
     grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   }
+}
+
+
+/* ==========================================================
+   30. Live News Panel -- Premium Broadcast Feel
+   ========================================================== */
+
+/* ---- Channel Toolbar ---- */
+[data-variant="magen"] .live-news-toolbar {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.3) 100%);
+  border-bottom: 1px solid rgba(0, 166, 255, 0.08);
+  padding: 8px 10px;
+}
+
+/* ---- Channel Buttons ---- */
+[data-variant="magen"] .live-channel-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--magen-text-dim);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  padding: 5px 10px;
+  transition: all 0.2s ease;
+}
+
+[data-variant="magen"] .live-channel-btn:hover {
+  background: rgba(0, 166, 255, 0.08);
+  border-color: rgba(0, 166, 255, 0.3);
+  color: var(--magen-text);
+}
+
+[data-variant="magen"] .live-channel-btn.active {
+  background: rgba(255, 51, 68, 0.15);
+  border-color: var(--magen-alert);
+  color: var(--magen-alert);
+  box-shadow: 0 0 8px rgba(255, 51, 68, 0.2);
+}
+
+/* ---- Live Indicator ---- */
+[data-variant="magen"] .live-indicator-btn {
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--magen-text);
+}
+
+[data-variant="magen"] .live-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--magen-alert);
+  box-shadow: 0 0 6px rgba(255, 51, 68, 0.5);
+}
+
+/* ---- Mute/Fullscreen Buttons ---- */
+[data-variant="magen"] .live-mute-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: var(--magen-text-secondary);
+  transition: all 0.2s ease;
+}
+
+[data-variant="magen"] .live-mute-btn:hover {
+  background: rgba(0, 166, 255, 0.1);
+  border-color: rgba(0, 166, 255, 0.3);
+  color: var(--magen-accent);
+}
+
+/* ---- Player Area ---- */
+[data-variant="magen"] .live-news-player {
+  background: #000;
+}
+
+/* ---- Offline State ---- */
+[data-variant="magen"] .live-offline {
+  background: var(--magen-surface);
+  color: var(--magen-text-dim);
+}
+
+[data-variant="magen"] .live-offline .offline-retry {
+  background: rgba(0, 166, 255, 0.12);
+  border: 1px solid rgba(0, 166, 255, 0.3);
+  color: var(--magen-accent);
+  border-radius: 6px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+[data-variant="magen"] .live-offline .offline-retry:hover {
+  background: rgba(0, 166, 255, 0.2);
+  border-color: var(--magen-accent);
+}
+
+/* ---- Settings Button ---- */
+[data-variant="magen"] .live-news-settings-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: var(--magen-text-secondary);
+  transition: all 0.2s ease;
+}
+
+[data-variant="magen"] .live-news-settings-btn:hover {
+  background: rgba(0, 166, 255, 0.1);
+  border-color: rgba(0, 166, 255, 0.3);
+  color: var(--magen-accent);
+}
+
+/* ---- Channel Modal ---- */
+[data-variant="magen"] .live-channels-modal-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+[data-variant="magen"] .live-channels-modal {
+  background: var(--magen-surface);
+  border: 1px solid rgba(0, 166, 255, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
 }
