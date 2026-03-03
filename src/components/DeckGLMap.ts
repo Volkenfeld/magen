@@ -3237,16 +3237,18 @@ export class DeckGLMap {
     });
   }
 
-  /** Magen variant: 4-mode map view toggle (2D, Night, 3D, Globe) */
+  /** Magen variant: map view + visual filter toggles */
   private createMagenViewModes(): void {
     if (SITE_VARIANT !== 'magen') return;
 
     const saved = localStorage.getItem('magen-map-view-mode') || '3d';
     const modes = [
-      { id: '2d', label: '2D', title: 'Flat map' },
-      { id: 'night', label: 'NV', title: 'Night vision' },
+      { id: '2d', label: '2D', title: 'Flat mercator' },
       { id: '3d', label: '3D', title: '3D terrain' },
-      { id: 'globe', label: 'Globe', title: 'Globe view' },
+      { id: 'globe', label: '\u{1F30D}', title: 'Globe view' },
+      { id: 'nv', label: 'NV', title: 'Night vision' },
+      { id: 'ir', label: 'IR', title: 'Infrared' },
+      { id: 'grain', label: 'FILM', title: 'Stylized film grain' },
     ];
 
     const group = document.createElement('div');
@@ -3276,37 +3278,62 @@ export class DeckGLMap {
     localStorage.setItem('magen-map-view-mode', mode);
 
     const canvas = this.maplibreMap.getCanvas();
+    const wrapper = canvas.parentElement;
 
-    // Reset night vision filter
+    // Reset all visual filters
     canvas.style.filter = '';
+    canvas.style.transition = 'filter 0.4s ease';
+    // Remove grain overlay if exists
+    wrapper?.querySelector('.magen-grain-overlay')?.remove();
 
-    switch (mode) {
-      case '2d':
-        try { (this.maplibreMap as any).setProjection({ type: 'mercator' }); } catch {}
-        this.maplibreMap.easeTo({ pitch: 0, bearing: 0, duration: 800 });
-        try { (this.maplibreMap as any).setTerrain(null); } catch {}
-        break;
+    // Visual filters (don't change projection/terrain, just the look)
+    const isVisualOnly = ['nv', 'ir', 'grain'].includes(mode);
 
-      case 'night':
-        // Green-tint night vision filter on the canvas
-        canvas.style.filter = 'brightness(0.5) saturate(0.2) hue-rotate(80deg) contrast(1.4)';
-        break;
+    if (!isVisualOnly) {
+      switch (mode) {
+        case '2d':
+          try { (this.maplibreMap as any).setProjection({ type: 'mercator' }); } catch {}
+          this.maplibreMap.easeTo({ pitch: 0, bearing: 0, duration: 600 });
+          try { (this.maplibreMap as any).setTerrain(null); } catch {}
+          break;
 
-      case '3d':
-        try { (this.maplibreMap as any).setProjection({ type: 'globe' }); } catch {}
-        this.maplibreMap.easeTo({ pitch: 45, bearing: -15, duration: 800 });
-        try {
-          (this.maplibreMap as any).setTerrain({ source: 'terrain-dem', exaggeration: 1.3 });
-        } catch {}
-        break;
+        case '3d':
+          try { (this.maplibreMap as any).setProjection({ type: 'globe' }); } catch {}
+          this.maplibreMap.easeTo({ pitch: 45, bearing: -15, duration: 600 });
+          try {
+            (this.maplibreMap as any).setTerrain({ source: 'terrain-dem', exaggeration: 1.3 });
+          } catch {}
+          break;
 
-      case 'globe':
-        try { (this.maplibreMap as any).setProjection({ type: 'globe' }); } catch {}
-        this.maplibreMap.easeTo({ pitch: 0, bearing: 0, zoom: 1.5, duration: 1000 });
-        try {
-          (this.maplibreMap as any).setTerrain({ source: 'terrain-dem', exaggeration: 1.3 });
-        } catch {}
-        break;
+        case 'globe':
+          try { (this.maplibreMap as any).setProjection({ type: 'globe' }); } catch {}
+          this.maplibreMap.easeTo({ pitch: 0, bearing: 0, zoom: 1.5, duration: 600 });
+          try {
+            (this.maplibreMap as any).setTerrain({ source: 'terrain-dem', exaggeration: 1.3 });
+          } catch {}
+          break;
+      }
+    } else {
+      switch (mode) {
+        case 'nv':
+          canvas.style.filter = 'brightness(0.45) saturate(0.15) hue-rotate(80deg) contrast(1.5)';
+          break;
+
+        case 'ir':
+          canvas.style.filter = 'brightness(0.6) saturate(0) contrast(1.6) sepia(0.3) hue-rotate(180deg)';
+          break;
+
+        case 'grain': {
+          canvas.style.filter = 'brightness(0.65) contrast(1.3) saturate(0.6)';
+          // Add film grain overlay
+          if (wrapper && !wrapper.querySelector('.magen-grain-overlay')) {
+            const grain = document.createElement('div');
+            grain.className = 'magen-grain-overlay';
+            wrapper.appendChild(grain);
+          }
+          break;
+        }
+      }
     }
   }
 
