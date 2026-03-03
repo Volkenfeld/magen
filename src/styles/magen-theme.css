@@ -1406,6 +1406,90 @@ html[data-variant="magen"] {
 
 
 /* ==========================================================
+   27c. Half-Screen / Split View (500-768px)
+   For iPad split view and desktop half-window.
+   ========================================================== */
+
+@media (max-width: 768px) {
+  [data-variant="magen"] .header {
+    height: 34px;
+    min-height: 34px;
+    padding: 0 6px;
+    gap: 4px;
+  }
+
+  [data-variant="magen"] .header .logo {
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+
+  [data-variant="magen"] .header .logo::before {
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+  }
+
+  [data-variant="magen"] .header button,
+  [data-variant="magen"] .header select {
+    min-height: 28px;
+    min-width: 28px;
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+
+  [data-variant="magen"] .region-select {
+    font-size: 10px;
+    padding: 2px 20px 2px 6px;
+  }
+
+  [data-variant="magen"] .status-indicator {
+    font-size: 9px;
+  }
+
+  [data-variant="magen"] .location-selector .loc-text {
+    display: none;
+  }
+
+  [data-variant="magen"] .panels-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  [data-variant="magen"] .live-news-toolbar {
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 4px 6px;
+  }
+
+  [data-variant="magen"] .live-channel-btn {
+    font-size: 9px !important;
+    padding: 3px 6px !important;
+  }
+
+  [data-variant="magen"] .magen-view-modes {
+    bottom: 6px;
+    left: 6px;
+    padding: 2px;
+  }
+
+  [data-variant="magen"] .magen-view-btn {
+    font-size: 9px;
+    padding: 4px 7px;
+    min-width: 28px;
+  }
+}
+
+@media (max-width: 500px) {
+  [data-variant="magen"] .header .region-selector {
+    display: none;
+  }
+
+  [data-variant="magen"] .header .status-indicator span:last-child {
+    display: none;
+  }
+}
+
+
+/* ==========================================================
    28. Globe Atmosphere Effect
    Visual glow around the 3D globe edges.
    ========================================================== */
@@ -1416,6 +1500,34 @@ html[data-variant="magen"] {
     var(--magen-bg) 0%,
     #040810 100%
   );
+}
+
+
+/* ==========================================================
+   28b. Film Grain Overlay (stylized satellite look)
+   ========================================================== */
+
+.magen-grain-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
+  animation: magen-grain-shift 0.5s steps(4) infinite;
+}
+
+@keyframes magen-grain-shift {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(1px, -2px); }
+  75% { transform: translate(-1px, 2px); }
+  100% { transform: translate(0, 0); }
 }
 
 
@@ -2086,9 +2198,29 @@ html[data-variant="magen"] {
   color: var(--magen-accent);
 }
 
-/* ---- Player Area ---- */
+/* ---- Player Area: LOCKED (no scroll-within-scroll) ---- */
+[data-variant="magen"] #live-news .panel-content {
+  max-height: none;
+  overflow: visible;
+}
+
 [data-variant="magen"] .live-news-player {
   background: #000;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  overflow: hidden;
+}
+
+[data-variant="magen"] .live-news-player iframe,
+[data-variant="magen"] .live-news-player video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: auto;
 }
 
 /* ---- Offline State ---- */
@@ -2409,16 +2541,33 @@ html[data-variant="magen"] {
   font-weight: 600;
 }
 
-/* ---- Live News Channel Buttons: Clear, White Bold ---- */
+/* ---- Live News Channel Buttons: HIGH CONTRAST ---- */
 [data-variant="magen"] .live-channel-btn {
-  padding: 4px 8px;
-  font-size: 10px;
+  padding: 5px 10px;
+  font-size: 11px;
   font-weight: 700;
-  color: #e8edf5;
+  color: #8899aa;
   min-height: 0;
   min-width: 0;
   border-radius: 4px;
-  border-width: 1.5px;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+[data-variant="magen"] .live-channel-btn:hover {
+  color: #fff;
+  background: rgba(0, 166, 255, 0.15);
+  border-color: rgba(0, 166, 255, 0.5);
+}
+
+[data-variant="magen"] .live-channel-btn.active {
+  color: #fff !important;
+  background: rgba(0, 166, 255, 0.3) !important;
+  border-color: var(--magen-accent) !important;
+  box-shadow: 0 0 10px rgba(0, 166, 255, 0.4), inset 0 0 8px rgba(0, 166, 255, 0.1) !important;
+  text-shadow: 0 0 8px rgba(0, 166, 255, 0.5);
 }
 
 /* ---- Live News Toolbar ---- */
