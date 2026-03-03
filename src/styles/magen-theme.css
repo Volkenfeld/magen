@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap');
+
 /* ============================================================
    Magen Variant Theme -- Israeli Civil Defense Intelligence
    Accessibility-first, elderly-friendly, high-contrast dark theme.
@@ -991,4 +993,86 @@ html[data-variant="magen"] {
   [data-variant="magen"] .header-bar {
     display: none !important;
   }
+}
+
+
+/* ==========================================================
+   22. Header Cleanup -- Hide irrelevant elements for Magen
+   ========================================================== */
+
+[data-variant="magen"] .variant-switcher,
+[data-variant="magen"] .download-wrapper,
+[data-variant="magen"] .search-btn,
+[data-variant="magen"] .copy-link-btn {
+  display: none !important;
+}
+
+
+/* ==========================================================
+   23. Tablet Layout (768-1024px)
+   ========================================================== */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  [data-variant="magen"] .panels-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  [data-variant="magen"] .header {
+    height: 36px;
+    min-height: 36px;
+    padding: 0 8px;
+    font-size: 14px;
+  }
+
+  [data-variant="magen"] .header button,
+  [data-variant="magen"] .header select {
+    min-height: 32px;
+    min-width: 32px;
+    font-size: 13px;
+    padding: 4px 8px;
+  }
+
+  [data-variant="magen"] .region-select {
+    min-height: 32px;
+    font-size: 13px;
+    padding: 4px 28px 4px 8px;
+  }
+
+  [data-variant="magen"] .map-control-btn {
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 14px;
+  }
+}
+
+
+/* ==========================================================
+   24. Mobile (< 768px)
+   ========================================================== */
+
+@media (max-width: 767px) {
+  [data-variant="magen"] .version {
+    display: none;
+  }
+}
+
+
+/* ==========================================================
+   25. Compact Map Controls
+   ========================================================== */
+
+[data-variant="magen"] .map-controls .map-control-btn {
+  min-width: 36px;
+  min-height: 36px;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+}
+
+[data-variant="magen"] .view-select {
+  min-height: 32px;
+  height: 32px;
+  font-size: 13px;
+  padding: 4px 28px 4px 8px;
 }
