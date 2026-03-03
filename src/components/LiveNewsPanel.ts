@@ -170,7 +170,7 @@ const _REGION_ENTRIES: { key: string; labelKey: string; channelIds: string[] }[]
   { key: 'eu', labelKey: 'components.liveNews.regionEurope', channelIds: ['sky', 'euronews', 'dw', 'france24', 'bbc-news', 'france24-en', 'welt', 'rtve', 'trt-haber', 'ntv-turkey', 'cnn-turk', 'tv-rain', 'rt', 'tvp-info', 'telewizja-republika', 'tagesschau24', 'euronews-fr', 'france24-fr', 'france-info', 'bfmtv', 'tv5monde-info', 'nrk1', 'aljazeera-balkans'] },
   { key: 'latam', labelKey: 'components.liveNews.regionLatinAmerica', channelIds: ['cnn-brasil', 'jovem-pan', 'record-news', 'band-jornalismo', 'tn-argentina', 'c5n', 'milenio', 'noticias-caracol', 'ntn24', 't13'] },
   { key: 'asia', labelKey: 'components.liveNews.regionAsia', channelIds: ['tbs-news', 'ann-news', 'ntv-news', 'cti-news', 'wion', 'ndtv', 'cna-asia', 'nhk-world', 'arirang-news', 'india-today', 'abp-news'] },
-  { key: 'me', labelKey: 'components.liveNews.regionMiddleEast', channelIds: ['kan-11', 'now14', 'i24news', 'alarabiya', 'aljazeera', 'al-hadath', 'sky-news-arabia', 'trt-world', 'iran-intl', 'cgtn-arabic', 'asharq-news'] },
+  { key: 'me', labelKey: 'components.liveNews.regionMiddleEast', channelIds: ['kan-11', 'reshet-13', 'now14', 'i24news', 'alarabiya', 'aljazeera', 'al-hadath', 'sky-news-arabia', 'trt-world', 'iran-intl', 'cgtn-arabic', 'asharq-news'] },
   { key: 'africa', labelKey: 'components.liveNews.regionAfrica', channelIds: ['africanews', 'channels-tv', 'ktn-news', 'enca', 'sabc-news', 'arise-news'] },
   { key: 'oc', labelKey: 'components.liveNews.regionOceania', channelIds: ['abc-news-au'] },
 ];
@@ -181,14 +181,14 @@ export const OPTIONAL_CHANNEL_REGIONS: { key: string; labelKey: string; channelI
 
 // Magen variant: Israeli + Middle East channels first
 const MAGEN_LIVE_CHANNELS: LiveChannel[] = [
-  { id: 'kan-11', name: 'Kan 11', handle: '@KAN11NEWS', fallbackVideoId: '1cVlyzQJwXE' },
-  { id: 'now14', name: 'NOW 14', handle: '@now14news', fallbackVideoId: 'MZ1XwkGcGV8' },
-  { id: 'i24news', name: 'i24NEWS', handle: '@i24NEWS_EN', fallbackVideoId: '1cVlyzQJwXE' },
+  { id: 'kan-11', name: 'Kan 11', handle: '@kan11', fallbackVideoId: 'gCNeDWCI0vo', hlsUrl: 'https://kancdn.medonecdn.net/livehls/oil/kancdn-live/live/kan11/live.livx/playlist.m3u8' },
+  { id: 'reshet-13', name: 'Reshet 13', handle: '@reshet13', fallbackVideoId: 'gCNeDWCI0vo', hlsUrl: 'https://d2xg1g9o5vns8m.cloudfront.net/out/v1/0855d703f7d5436fae6a9c7ce8ca5075/index.m3u8' },
+  { id: 'now14', name: 'NOW 14', handle: '@now14', fallbackVideoId: 'MZ1XwkGcGV8' },
+  { id: 'i24news', name: 'i24NEWS', handle: '@i24news_en', fallbackVideoId: '1cVlyzQJwXE' },
   { id: 'aljazeera', name: 'AlJazeera', handle: '@AlJazeeraEnglish', fallbackVideoId: 'gCNeDWCI0vo', useFallbackOnly: true },
   { id: 'sky', name: 'SkyNews', handle: '@SkyNews', fallbackVideoId: 'uvviIF4725I' },
   { id: 'alarabiya', name: 'AlArabiya', handle: '@AlArabiya', fallbackVideoId: 'n7eQejkXbnM', useFallbackOnly: true },
   { id: 'bloomberg', name: 'Bloomberg', handle: '@markets', fallbackVideoId: 'iEpJwprxDdk' },
-  { id: 'france24', name: 'France 24', handle: '@FRANCE24', fallbackVideoId: 'Ap-UM1O9RBU' },
 ];
 
 const DEFAULT_LIVE_CHANNELS = SITE_VARIANT === 'magen' ? MAGEN_LIVE_CHANNELS : SITE_VARIANT === 'tech' ? TECH_LIVE_CHANNELS : SITE_VARIANT === 'happy' ? [] : FULL_LIVE_CHANNELS;
@@ -224,7 +224,7 @@ export interface StoredLiveChannels {
 }
 
 // Bump this when default channel list changes to force localStorage refresh
-const CHANNEL_LIST_VERSION = 2;
+const CHANNEL_LIST_VERSION = 3;
 
 const DEFAULT_STORED: StoredLiveChannels = {
   order: DEFAULT_LIVE_CHANNELS.map((c) => c.id),
@@ -246,7 +246,8 @@ const DIRECT_HLS_MAP: Readonly<Record<string, string>> = {
   'bbc-news': 'https://vs-hls-push-uk.live.fastly.md.bbci.co.uk/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/iptv_hd_abr_v1.m3u8',
   'tagesschau24': 'https://tagesschau.akamaized.net/hls/live/2020115/tagesschau/tagesschau_1/master.m3u8',
   'india-today': 'https://indiatodaylive.akamaized.net/hls/live/2014320/indiatoday/indiatodaylive/playlist.m3u8',
-  'kan-11': 'https://kan11.media.kan.org.il/hls/live/2024514/2024514/master.m3u8',
+  'kan-11': 'https://kancdn.medonecdn.net/livehls/oil/kancdn-live/live/kan11/live.livx/playlist.m3u8',
+  'reshet-13': 'https://d2xg1g9o5vns8m.cloudfront.net/out/v1/0855d703f7d5436fae6a9c7ce8ca5075/index.m3u8',
   'tv5monde-info': 'https://ott.tv5monde.com/Content/HLS/Live/channel(info)/index.m3u8',
   'arise-news': 'https://liveedge-arisenews.visioncdn.com/live-hls/arisenews/arisenews/arisenews_web/master.m3u8',
   'nhk-world': 'https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index_4M.m3u8',
