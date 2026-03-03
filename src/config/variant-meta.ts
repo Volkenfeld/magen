@@ -84,7 +84,7 @@ export const VARIANT_META: { full: VariantMeta; [k: string]: VariantMeta } = {
     title: 'Magen - Israeli Civil Defense Intelligence',
     description: 'Real-time Israeli civil defense dashboard with OREF sirens, live news, military tracking, shelter finder, and AI-powered intelligence. Free, open source, bilingual Hebrew/English.',
     keywords: 'Israel defense, OREF alerts, red alert, sirens, shelter, civil defense, intelligence, military, Iran, IDF, real-time monitoring, Hebrew',
-    url: 'https://magen.live/',
+    url: 'https://magenlive.org/',
     siteName: 'Magen',
     shortName: 'Magen',
     subject: 'Israeli Civil Defense and Situation Awareness',

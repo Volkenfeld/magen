@@ -12,7 +12,7 @@ export const SITE_VARIANT: string = (() => {
   if (h.startsWith('tech.')) return 'tech';
   if (h.startsWith('finance.')) return 'finance';
   if (h.startsWith('happy.')) return 'happy';
-  if (h === 'magen.live' || h.endsWith('.magen.live')) return 'magen';
+  if (h === 'magenlive.org' || h.endsWith('.magenlive.org')) return 'magen';
 
   if (h === 'localhost' || h === '127.0.0.1') {
     const stored = localStorage.getItem('worldmonitor-variant');
