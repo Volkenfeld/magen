@@ -189,6 +189,9 @@ const MAGEN_LIVE_CHANNELS: LiveChannel[] = [
   { id: 'sky', name: 'SkyNews', handle: '@SkyNews', fallbackVideoId: 'uvviIF4725I' },
   { id: 'alarabiya', name: 'AlArabiya', handle: '@AlArabiya', fallbackVideoId: 'n7eQejkXbnM', useFallbackOnly: true },
   { id: 'bloomberg', name: 'Bloomberg', handle: '@markets', fallbackVideoId: 'iEpJwprxDdk' },
+  { id: 'n12', name: 'N12', handle: '@makoil9756', fallbackVideoId: 'Kb1kY7VQvYQ' },
+  { id: 'knesset', name: 'Knesset', handle: '@KnessetTV', fallbackVideoId: 'a99c7Qr75sk' },
+  { id: 'france24-en', name: 'France24', handle: '@France24_en', fallbackVideoId: 'Ap-UM1O9RBU' },
 ];
 
 const DEFAULT_LIVE_CHANNELS = SITE_VARIANT === 'magen' ? MAGEN_LIVE_CHANNELS : SITE_VARIANT === 'tech' ? TECH_LIVE_CHANNELS : SITE_VARIANT === 'happy' ? [] : FULL_LIVE_CHANNELS;
@@ -224,7 +227,7 @@ export interface StoredLiveChannels {
 }
 
 // Bump this when default channel list changes to force localStorage refresh
-const CHANNEL_LIST_VERSION = 3;
+const CHANNEL_LIST_VERSION = 4;
 
 const DEFAULT_STORED: StoredLiveChannels = {
   order: DEFAULT_LIVE_CHANNELS.map((c) => c.id),
