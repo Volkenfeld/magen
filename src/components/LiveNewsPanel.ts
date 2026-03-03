@@ -141,6 +141,7 @@ export const OPTIONAL_LIVE_CHANNELS: LiveChannel[] = [
   { id: 'iran-intl', name: 'Iran International', handle: '@IranIntl' },
   { id: 'cgtn-arabic', name: 'CGTN Arabic', handle: '@CGTNArabic' },
   { id: 'kan-11', name: 'Kan 11', handle: '@KAN11NEWS', fallbackVideoId: 'TCnaIE_SAtM' },
+  { id: 'i24news', name: 'i24NEWS', handle: '@i24NEWS_EN', fallbackVideoId: 'KQvoDwAAr2k' },
   { id: 'asharq-news', name: 'Asharq News', handle: '@asharqnews', fallbackVideoId: 'f6VpkfV7m4Y', useFallbackOnly: true },
   // Africa
   { id: 'africanews', name: 'Africanews', handle: '@africanews' },
@@ -168,7 +169,7 @@ const _REGION_ENTRIES: { key: string; labelKey: string; channelIds: string[] }[]
   { key: 'eu', labelKey: 'components.liveNews.regionEurope', channelIds: ['sky', 'euronews', 'dw', 'france24', 'bbc-news', 'france24-en', 'welt', 'rtve', 'trt-haber', 'ntv-turkey', 'cnn-turk', 'tv-rain', 'rt', 'tvp-info', 'telewizja-republika', 'tagesschau24', 'euronews-fr', 'france24-fr', 'france-info', 'bfmtv', 'tv5monde-info', 'nrk1', 'aljazeera-balkans'] },
   { key: 'latam', labelKey: 'components.liveNews.regionLatinAmerica', channelIds: ['cnn-brasil', 'jovem-pan', 'record-news', 'band-jornalismo', 'tn-argentina', 'c5n', 'milenio', 'noticias-caracol', 'ntn24', 't13'] },
   { key: 'asia', labelKey: 'components.liveNews.regionAsia', channelIds: ['tbs-news', 'ann-news', 'ntv-news', 'cti-news', 'wion', 'ndtv', 'cna-asia', 'nhk-world', 'arirang-news', 'india-today', 'abp-news'] },
-  { key: 'me', labelKey: 'components.liveNews.regionMiddleEast', channelIds: ['alarabiya', 'aljazeera', 'al-hadath', 'sky-news-arabia', 'trt-world', 'iran-intl', 'cgtn-arabic', 'kan-11', 'asharq-news'] },
+  { key: 'me', labelKey: 'components.liveNews.regionMiddleEast', channelIds: ['kan-11', 'i24news', 'alarabiya', 'aljazeera', 'al-hadath', 'sky-news-arabia', 'trt-world', 'iran-intl', 'cgtn-arabic', 'asharq-news'] },
   { key: 'africa', labelKey: 'components.liveNews.regionAfrica', channelIds: ['africanews', 'channels-tv', 'ktn-news', 'enca', 'sabc-news', 'arise-news'] },
   { key: 'oc', labelKey: 'components.liveNews.regionOceania', channelIds: ['abc-news-au'] },
 ];
@@ -177,7 +178,19 @@ export const OPTIONAL_CHANNEL_REGIONS: { key: string; labelKey: string; channelI
   ..._REGION_ENTRIES,
 ];
 
-const DEFAULT_LIVE_CHANNELS = SITE_VARIANT === 'tech' ? TECH_LIVE_CHANNELS : SITE_VARIANT === 'happy' ? [] : FULL_LIVE_CHANNELS;
+// Magen variant: Israeli + Middle East channels first
+const MAGEN_LIVE_CHANNELS: LiveChannel[] = [
+  { id: 'kan-11', name: 'Kan 11', handle: '@KAN11NEWS', fallbackVideoId: 'TCnaIE_SAtM' },
+  { id: 'i24news', name: 'i24NEWS', handle: '@i24NEWS_EN', fallbackVideoId: 'KQvoDwAAr2k' },
+  { id: 'aljazeera', name: 'AlJazeera', handle: '@AlJazeeraEnglish', fallbackVideoId: 'gCNeDWCI0vo', useFallbackOnly: true },
+  { id: 'sky', name: 'SkyNews', handle: '@SkyNews', fallbackVideoId: 'uvviIF4725I' },
+  { id: 'alarabiya', name: 'AlArabiya', handle: '@AlArabiya', fallbackVideoId: 'n7eQejkXbnM', useFallbackOnly: true },
+  { id: 'bloomberg', name: 'Bloomberg', handle: '@markets', fallbackVideoId: 'iEpJwprxDdk' },
+  { id: 'cnn', name: 'CNN', handle: '@CNN', fallbackVideoId: 'w_Ma8oQLmSM' },
+  { id: 'france24', name: 'France 24', handle: '@FRANCE24', fallbackVideoId: 'u9foWyMSETk' },
+];
+
+const DEFAULT_LIVE_CHANNELS = SITE_VARIANT === 'magen' ? MAGEN_LIVE_CHANNELS : SITE_VARIANT === 'tech' ? TECH_LIVE_CHANNELS : SITE_VARIANT === 'happy' ? [] : FULL_LIVE_CHANNELS;
 
 /** Default channel list for the current variant (for restore in channel management). */
 export function getDefaultLiveChannels(): LiveChannel[] {
@@ -249,7 +262,7 @@ const PROXIED_HLS_MAP: Readonly<Record<string, ProxiedHlsEntry>> = {
 };
 
 if (import.meta.env.DEV) {
-  const allChannels = [...FULL_LIVE_CHANNELS, ...TECH_LIVE_CHANNELS, ...OPTIONAL_LIVE_CHANNELS];
+  const allChannels = [...FULL_LIVE_CHANNELS, ...TECH_LIVE_CHANNELS, ...MAGEN_LIVE_CHANNELS, ...OPTIONAL_LIVE_CHANNELS];
   for (const id of Object.keys(DIRECT_HLS_MAP)) {
     const ch = allChannels.find(c => c.id === id);
     if (!ch) console.error(`[LiveNews] DIRECT_HLS_MAP key '${id}' has no matching channel`);
@@ -260,6 +273,7 @@ if (import.meta.env.DEV) {
 export const BUILTIN_IDS = new Set([
   ...FULL_LIVE_CHANNELS.map((c) => c.id),
   ...TECH_LIVE_CHANNELS.map((c) => c.id),
+  ...MAGEN_LIVE_CHANNELS.map((c) => c.id),
   ...OPTIONAL_LIVE_CHANNELS.map((c) => c.id),
 ]);
 
@@ -269,6 +283,7 @@ export function loadChannelsFromStorage(): LiveChannel[] {
   const channelMap = new Map<string, LiveChannel>();
   for (const c of FULL_LIVE_CHANNELS) channelMap.set(c.id, { ...c });
   for (const c of TECH_LIVE_CHANNELS) channelMap.set(c.id, { ...c });
+  for (const c of MAGEN_LIVE_CHANNELS) channelMap.set(c.id, { ...c });
   for (const c of OPTIONAL_LIVE_CHANNELS) channelMap.set(c.id, { ...c });
   for (const c of stored.custom ?? []) {
     if (c.id && c.handle) channelMap.set(c.id, { ...c });
@@ -290,7 +305,7 @@ export function saveChannelsToStorage(channels: LiveChannel[]): void {
   const order = channels.map((c) => c.id);
   const custom = channels.filter((c) => !BUILTIN_IDS.has(c.id));
   const builtinNames = new Map<string, string>();
-  for (const c of [...FULL_LIVE_CHANNELS, ...TECH_LIVE_CHANNELS, ...OPTIONAL_LIVE_CHANNELS]) builtinNames.set(c.id, c.name);
+  for (const c of [...FULL_LIVE_CHANNELS, ...TECH_LIVE_CHANNELS, ...MAGEN_LIVE_CHANNELS, ...OPTIONAL_LIVE_CHANNELS]) builtinNames.set(c.id, c.name);
   const displayNameOverrides: Record<string, string> = {};
   for (const c of channels) {
     if (builtinNames.has(c.id) && c.name !== builtinNames.get(c.id)) {
