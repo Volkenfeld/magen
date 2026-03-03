@@ -380,6 +380,11 @@ export class LiveNewsPanel extends Panel {
   private lazyObserver: IntersectionObserver | null = null;
   private idleCallbackId: number | ReturnType<typeof setTimeout> | null = null;
 
+  // Multi-channel grid view (magen variant)
+  private isMultiView = false;
+  private multiViewBtn: HTMLButtonElement | null = null;
+  private multiViewAudioCell = 0; // which cell (0-3) has audio
+
   constructor() {
     super({ id: 'live-news', title: t('panels.liveNews'), className: 'panel-wide' });
     this.youtubeOrigin = LiveNewsPanel.resolveYouTubeOrigin();
@@ -390,6 +395,7 @@ export class LiveNewsPanel extends Panel {
     this.createLiveButton();
     this.createMuteButton();
     this.createChannelSwitcher();
+    if (SITE_VARIANT === 'magen') this.createMultiViewButton();
     this.setupBridgeMessageListener();
     this.renderPlaceholder();
     this.setupLazyInit();
@@ -720,6 +726,149 @@ export class LiveNewsPanel extends Panel {
   private boundFullscreenEscHandler = (e: KeyboardEvent) => {
     if (e.key === 'Escape' && this.isFullscreen) this.toggleFullscreen();
   };
+
+  // ---- Multi-channel grid view ----
+  private createMultiViewButton(): void {
+    this.multiViewBtn = document.createElement('button');
+    this.multiViewBtn.className = 'live-mute-btn multi-view-btn';
+    this.multiViewBtn.title = '4-channel view';
+    this.multiViewBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>';
+    this.multiViewBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.toggleMultiView();
+    });
+    const header = this.element.querySelector('.panel-header');
+    header?.appendChild(this.multiViewBtn);
+  }
+
+  private toggleMultiView(): void {
+    this.isMultiView = !this.isMultiView;
+    this.multiViewBtn?.classList.toggle('active', this.isMultiView);
+    if (this.isMultiView) {
+      this.destroyPlayer();
+      this.renderMultiView();
+    } else {
+      this.destroyMultiView();
+      if (this.deferredInit) {
+        this.renderPlayer();
+      } else {
+        this.renderPlaceholder();
+      }
+    }
+  }
+
+  private renderMultiView(): void {
+    this.content.innerHTML = '';
+    const grid = document.createElement('div');
+    grid.className = 'multi-channel-grid';
+
+    const viewChannels = this.channels.slice(0, 4);
+
+    viewChannels.forEach((ch, idx) => {
+      const cell = document.createElement('div');
+      cell.className = 'multi-channel-cell' + (idx === this.multiViewAudioCell ? ' active-audio' : '');
+      cell.dataset.cellIdx = String(idx);
+
+      const label = document.createElement('div');
+      label.className = 'cell-label';
+      label.textContent = ch.name;
+
+      const volIcon = document.createElement('div');
+      volIcon.className = 'cell-volume-indicator';
+      volIcon.textContent = idx === this.multiViewAudioCell ? '\u{1F50A}' : '\u{1F507}';
+
+      const hlsUrl = DIRECT_HLS_MAP[ch.id];
+      if (hlsUrl) {
+        const video = document.createElement('video');
+        video.autoplay = true;
+        video.muted = idx !== this.multiViewAudioCell;
+        video.playsInline = true;
+        video.setAttribute('referrerpolicy', 'no-referrer');
+        video.dataset.cellIdx = String(idx);
+        video.src = hlsUrl;
+
+        // If native HLS fails, fall back to YouTube embed
+        video.addEventListener('error', () => {
+          const videoId = ch.fallbackVideoId || '';
+          if (!videoId) return;
+          video.remove();
+          const iframe = document.createElement('iframe');
+          const muteVal = idx === this.multiViewAudioCell ? '0' : '1';
+          iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&mute=${muteVal}&enablejsapi=1&rel=0&modestbranding=1&playsinline=1`;
+          iframe.allow = 'autoplay; encrypted-media';
+          iframe.setAttribute('allowfullscreen', '');
+          iframe.dataset.cellIdx = String(idx);
+          cell.insertBefore(iframe, label);
+        });
+
+        cell.appendChild(video);
+      } else {
+        const videoId = ch.fallbackVideoId || '';
+        if (videoId) {
+          const iframe = document.createElement('iframe');
+          const muteVal = idx === this.multiViewAudioCell ? '0' : '1';
+          iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&mute=${muteVal}&enablejsapi=1&rel=0&modestbranding=1&playsinline=1`;
+          iframe.allow = 'autoplay; encrypted-media';
+          iframe.setAttribute('allowfullscreen', '');
+          iframe.dataset.cellIdx = String(idx);
+          cell.appendChild(iframe);
+        }
+      }
+
+      cell.appendChild(label);
+      cell.appendChild(volIcon);
+
+      cell.addEventListener('click', () => {
+        this.multiViewAudioCell = idx;
+        this.updateMultiViewAudio(grid);
+      });
+
+      grid.appendChild(cell);
+    });
+
+    this.content.appendChild(grid);
+  }
+
+  private updateMultiViewAudio(grid: HTMLElement): void {
+    const cells = grid.querySelectorAll('.multi-channel-cell');
+    cells.forEach((cell) => {
+      const el = cell as HTMLElement;
+      const cellIdx = parseInt(el.dataset.cellIdx || '0', 10);
+      const isActive = cellIdx === this.multiViewAudioCell;
+      el.classList.toggle('active-audio', isActive);
+
+      const volIcon = el.querySelector('.cell-volume-indicator');
+      if (volIcon) volIcon.textContent = isActive ? '\u{1F50A}' : '\u{1F507}';
+
+      const video = el.querySelector('video') as HTMLVideoElement | null;
+      if (video) {
+        video.muted = !isActive;
+        return;
+      }
+
+      const iframe = el.querySelector('iframe') as HTMLIFrameElement | null;
+      if (iframe?.contentWindow) {
+        const cmd = isActive ? 'unMute' : 'mute';
+        iframe.contentWindow.postMessage(JSON.stringify({
+          event: 'command', func: cmd, args: [],
+        }), '*');
+      }
+    });
+  }
+
+  private destroyMultiView(): void {
+    const grid = this.content.querySelector('.multi-channel-grid');
+    if (!grid) return;
+    grid.querySelectorAll('video').forEach((v) => {
+      v.pause();
+      v.removeAttribute('src');
+      v.load();
+    });
+    grid.querySelectorAll('iframe').forEach((f) => {
+      f.removeAttribute('src');
+    });
+    grid.remove();
+  }
 
   private updateMuteIcon(): void {
     if (!this.muteBtn) return;

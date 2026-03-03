@@ -250,6 +250,39 @@ export class EventHandlerManager implements AppModule {
       trackMapViewChange(regionSelect.value);
     });
 
+    // Location selector (magen variant) - geolocation for alert area
+    const locBtn = document.getElementById('locationSelector');
+    locBtn?.addEventListener('click', () => {
+      const locText = locBtn.querySelector('.loc-text');
+      if (!locText) return;
+      if (!navigator.geolocation) {
+        locText.textContent = 'Not supported';
+        return;
+      }
+      locText.textContent = 'Locating...';
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const { latitude, longitude } = pos.coords;
+          const stored = { lat: latitude, lon: longitude, ts: Date.now() };
+          try { localStorage.setItem('magen-user-location', JSON.stringify(stored)); } catch {}
+          locText.textContent = `${latitude.toFixed(2)}, ${longitude.toFixed(2)}`;
+          locBtn.title = `Location set: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+        },
+        () => { locText.textContent = 'Set Location'; },
+        { timeout: 10000, maximumAge: 300000 },
+      );
+    });
+
+    // Restore saved location on load
+    try {
+      const saved = localStorage.getItem('magen-user-location');
+      if (saved) {
+        const { lat, lon } = JSON.parse(saved);
+        const locText = locBtn?.querySelector('.loc-text');
+        if (locText) locText.textContent = `${lat.toFixed(2)}, ${lon.toFixed(2)}`;
+      }
+    } catch {}
+
     this.boundResizeHandler = () => {
       this.ctx.map?.render();
     };
