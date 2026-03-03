@@ -5,6 +5,10 @@
     }
   },
   "crons": [],
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://worldmonitor.app/api/:path*" },
+    { "source": "/rss/:path*", "destination": "https://worldmonitor.app/rss/:path*" }
+  ],
   "headers": [
     {
       "source": "/api/(.*)",
