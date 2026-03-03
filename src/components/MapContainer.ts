@@ -37,6 +37,8 @@ import type { HappinessData } from '@/services/happiness-data';
 import type { SpeciesRecovery } from '@/services/conservation-data';
 import type { RenewableInstallation } from '@/services/renewable-installations';
 import type { GpsJamHex } from '@/services/gps-interference';
+import type { LiveFlight } from '@/services/live-flights';
+import type { TrackedSatellite } from '@/services/satellite-tracking';
 
 export type TimeRange = '1h' | '6h' | '24h' | '48h' | '7d' | 'all';
 export type MapView = 'global' | 'america' | 'mena' | 'eu' | 'asia' | 'latam' | 'africa' | 'oceania';
@@ -316,6 +318,20 @@ export class MapContainer {
     } else {
       this.svgMap?.setMilitaryVessels(vessels, clusters);
     }
+  }
+
+  public setLiveFlights(flights: LiveFlight[]): void {
+    if (this.useDeckGL) {
+      this.deckGLMap?.setLiveFlights(flights);
+    }
+    // SVG map doesn't support live flights
+  }
+
+  public setTrackedSatellites(satellites: TrackedSatellite[]): void {
+    if (this.useDeckGL) {
+      this.deckGLMap?.setTrackedSatellites(satellites);
+    }
+    // SVG map doesn't support satellite tracking
   }
 
   public setNaturalEvents(events: NaturalEvent[]): void {

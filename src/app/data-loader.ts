@@ -68,6 +68,8 @@ import { analyzeFlightsForSurge, surgeAlertToSignal, detectForeignMilitaryPresen
 import { fetchCachedTheaterPosture } from '@/services/cached-theater-posture';
 import { ingestProtestsForCII, ingestMilitaryForCII, ingestNewsForCII, ingestOutagesForCII, ingestConflictsForCII, ingestUcdpForCII, ingestHapiForCII, ingestDisplacementForCII, ingestClimateForCII, ingestStrikesForCII, ingestOrefForCII, ingestAviationForCII, ingestAdvisoriesForCII, ingestGpsJammingForCII, ingestAisDisruptionsForCII, ingestSatelliteFiresForCII, ingestCyberThreatsForCII, ingestTemporalAnomaliesForCII, isInLearningMode, resetHotspotActivity, setIntelligenceSignalsLoaded, hasAnyIntelligenceData } from '@/services/country-instability';
 import { fetchGpsInterference } from '@/services/gps-interference';
+import { fetchLiveFlights } from '@/services/live-flights';
+import { fetchSatellitePositions } from '@/services/satellite-tracking';
 import { dataFreshness, type DataSourceId } from '@/services/data-freshness';
 import { fetchConflictEvents, fetchUcdpClassifications, fetchHapiSummary, fetchUcdpEvents, deduplicateAgainstAcled, fetchIranEvents } from '@/services/conflict';
 import { fetchUnhcrPopulation } from '@/services/displacement';
@@ -359,6 +361,8 @@ export class DataLoaderManager implements AppModule {
     if (SITE_VARIANT !== 'happy' && this.ctx.mapLayers.flights) tasks.push({ name: 'flights', task: runGuarded('flights', () => this.loadFlightDelays()) });
     if (SITE_VARIANT !== 'happy' && CYBER_LAYER_ENABLED && this.ctx.mapLayers.cyberThreats) tasks.push({ name: 'cyberThreats', task: runGuarded('cyberThreats', () => this.loadCyberThreats()) });
     if (SITE_VARIANT !== 'happy') tasks.push({ name: 'iranAttacks', task: runGuarded('iranAttacks', () => this.loadIranEvents()) });
+    if (SITE_VARIANT === 'magen' && this.ctx.mapLayers.liveFlights) tasks.push({ name: 'liveFlights', task: runGuarded('liveFlights', () => this.loadLiveFlights()) });
+    if (SITE_VARIANT === 'magen' && this.ctx.mapLayers.satellites) tasks.push({ name: 'satellites', task: runGuarded('satellites', () => this.loadSatellites()) });
     if (SITE_VARIANT !== 'happy' && (this.ctx.mapLayers.techEvents || SITE_VARIANT === 'tech')) tasks.push({ name: 'techEvents', task: runGuarded('techEvents', () => this.loadTechEvents()) });
 
     if (SITE_VARIANT === 'tech') {
@@ -425,6 +429,12 @@ export class DataLoaderManager implements AppModule {
           break;
         case 'iranAttacks':
           await this.loadIranEvents();
+          break;
+        case 'liveFlights':
+          await this.loadLiveFlights();
+          break;
+        case 'satellites':
+          await this.loadSatellites();
           break;
         case 'ucdpEvents':
         case 'displacement':
@@ -1822,6 +1832,28 @@ export class DataLoaderManager implements AppModule {
       this.ctx.statusPanel?.updateFeed('Military', { status: 'error', errorMessage: String(error) });
       this.ctx.statusPanel?.updateApi('OpenSky', { status: 'error' });
       dataFreshness.recordError('opensky', String(error));
+    }
+  }
+
+  private async loadLiveFlights(): Promise<void> {
+    try {
+      const flights = await fetchLiveFlights();
+      this.ctx.map?.setLiveFlights(flights);
+      this.ctx.map?.setLayerReady('liveFlights', flights.length > 0);
+    } catch (error) {
+      console.warn('[App] Live flights load failed:', error);
+      this.ctx.map?.setLayerReady('liveFlights', false);
+    }
+  }
+
+  private async loadSatellites(): Promise<void> {
+    try {
+      const satellites = await fetchSatellitePositions();
+      this.ctx.map?.setTrackedSatellites(satellites);
+      this.ctx.map?.setLayerReady('satellites', satellites.length > 0);
+    } catch (error) {
+      console.warn('[App] Satellite tracking load failed:', error);
+      this.ctx.map?.setLayerReady('satellites', false);
     }
   }
 

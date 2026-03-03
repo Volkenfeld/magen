@@ -128,6 +128,8 @@ const layers = {
   renewableInstallations: false,
   tradeRoutes: false,
   iranAttacks: false,
+  liveFlights: false,
+  satellites: false,
   dayNight: false,
 };
 

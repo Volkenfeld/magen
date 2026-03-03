@@ -77,6 +77,8 @@ export const DEFAULT_MAP_LAYERS: MapLayers = {
   speciesRecovery: false,
   renewableInstallations: false,
   tradeRoutes: false,
+  liveFlights: true,
+  satellites: true,
   dayNight: true,
 };
 
@@ -125,6 +127,8 @@ export const MOBILE_DEFAULT_MAP_LAYERS: MapLayers = {
   speciesRecovery: false,
   renewableInstallations: false,
   tradeRoutes: false,
+  liveFlights: true,
+  satellites: false,
   dayNight: false,
 };
 
