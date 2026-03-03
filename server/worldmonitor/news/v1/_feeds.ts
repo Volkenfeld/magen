@@ -251,6 +251,55 @@ export const VARIANT_FEEDS: Record<string, Record<string, ServerFeed[]>> = {
     ],
   },
 
+  magen: {
+    middleeast: [
+      { name: 'Times of Israel', url: gn('site:timesofisrael.com when:1d') },
+      { name: 'Jerusalem Post', url: gn('site:jpost.com when:1d') },
+      { name: 'Haaretz', url: gn('site:haaretz.com when:7d') },
+      { name: 'Ynet News', url: gn('site:ynetnews.com when:1d') },
+      { name: 'i24NEWS', url: gn('site:i24news.tv when:1d') },
+      { name: 'Kan News', url: gn('"Kan News" OR site:kan.org.il when:2d') },
+      { name: 'Israel Hayom', url: gn('site:israelhayom.com when:1d') },
+      { name: 'BBC Middle East', url: 'https://feeds.bbci.co.uk/news/world/middle_east/rss.xml' },
+      { name: 'Al Jazeera', url: 'https://www.aljazeera.com/xml/rss/all.xml' },
+      { name: 'Al Arabiya', url: gn('site:english.alarabiya.net when:2d') },
+      { name: 'Iran International', url: gn('site:iranintl.com when:2d') },
+      { name: 'Guardian ME', url: 'https://www.theguardian.com/world/middleeast/rss' },
+      { name: 'The National', url: gn('site:thenationalnews.com when:2d') },
+    ],
+    politics: [
+      { name: 'Reuters World', url: gn('site:reuters.com world') },
+      { name: 'AP News', url: gn('site:apnews.com') },
+      { name: 'BBC World', url: 'https://feeds.bbci.co.uk/news/world/rss.xml' },
+      { name: 'CNN World', url: gn('site:cnn.com world news when:1d') },
+      { name: 'Guardian World', url: 'https://www.theguardian.com/world/rss' },
+    ],
+    gov: [
+      { name: 'IDF', url: gn('"Israel Defense Forces" OR "IDF" when:1d') },
+      { name: 'Israel MFA', url: gn('site:gov.il ministry foreign affairs when:7d') },
+      { name: 'White House', url: gn('site:whitehouse.gov') },
+      { name: 'State Dept', url: gn('site:state.gov OR "State Department"') },
+      { name: 'Pentagon', url: gn('site:defense.gov OR Pentagon when:1d') },
+      { name: 'UN News', url: 'https://news.un.org/feed/subscribe/en/news/region/middle-east/feed/rss.xml' },
+    ],
+    crisis: [
+      { name: 'CrisisWatch', url: gn('site:crisisgroup.org') },
+      { name: 'IAEA', url: 'https://www.iaea.org/feeds/press-releases' },
+      { name: 'WHO', url: gn('site:who.int when:2d') },
+      { name: 'CISA', url: gn('site:cisa.gov when:2d') },
+    ],
+    finance: [
+      { name: 'CNBC', url: 'https://www.cnbc.com/id/100003114/device/rss/rss.html' },
+      { name: 'Reuters Business', url: gn('site:reuters.com business markets') },
+      { name: 'Globes', url: gn('site:en.globes.co.il when:2d') },
+      { name: 'Calcalist', url: gn('site:calcalistech.com when:2d') },
+    ],
+    energy: [
+      { name: 'Oil & Gas', url: gn('oil gas energy prices when:1d') },
+      { name: 'Reuters Energy', url: gn('site:reuters.com energy oil when:1d') },
+    ],
+  },
+
   happy: {
     positive: [
       { name: 'Good News Network', url: 'https://www.goodnewsnetwork.org/feed/' },
