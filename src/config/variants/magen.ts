@@ -52,7 +52,7 @@ export const DEFAULT_MAP_LAYERS: MapLayers = {
   cyberThreats: false,
   datacenters: false,
   protests: false,
-  flights: false,
+  flights: true,
   military: true,
   natural: true,
   spaceports: false,
@@ -77,7 +77,7 @@ export const DEFAULT_MAP_LAYERS: MapLayers = {
   speciesRecovery: false,
   renewableInstallations: false,
   tradeRoutes: false,
-  dayNight: false,
+  dayNight: true,
 };
 
 // Mobile-specific defaults
