@@ -32,7 +32,7 @@ function getRelayHeaders(): Record<string, string> {
   return headers;
 }
 
-const VALID_VARIANTS = new Set(['full', 'tech', 'finance', 'happy']);
+const VALID_VARIANTS = new Set(['full', 'tech', 'finance', 'happy', 'magen']);
 const fallbackDigestCache = new Map<string, { data: ListFeedDigestResponse; ts: number }>();
 const ITEMS_PER_FEED = 5;
 const MAX_ITEMS_PER_CATEGORY = 20;
@@ -270,7 +270,7 @@ async function buildDigest(variant: string, lang: string): Promise<ListFeedDiges
       }
     }
 
-    if (variant === 'full') {
+    if (variant === 'full' || variant === 'magen') {
       const filteredIntel = INTEL_SOURCES.filter(f => !f.lang || f.lang === lang);
       for (const feed of filteredIntel) {
         allEntries.push({ category: 'intel', feed });
