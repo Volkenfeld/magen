@@ -1,0 +1,137 @@
+// Magen variant - Israeli civil defense intelligence dashboard
+import type { PanelConfig, MapLayers } from '@/types';
+import type { VariantConfig } from './base';
+
+// Re-export base config
+export * from './base';
+
+// Re-export data needed for magen
+export * from '../feeds';
+export * from '../geo';
+export * from '../military';
+export * from '../entities';
+
+// Panel configuration for Israeli civil defense
+export const DEFAULT_PANELS: Record<string, PanelConfig> = {
+  map: { name: 'Situation Map', enabled: true, priority: 1 },
+  'oref-sirens': { name: 'OREF Sirens', enabled: true, priority: 1 },
+  'live-news': { name: 'Live News', enabled: true, priority: 1 },
+  insights: { name: 'AI Insights', enabled: true, priority: 1 },
+  'telegram-intel': { name: 'Telegram Intel', enabled: true, priority: 1 },
+  'strategic-risk': { name: 'Strategic Risk Overview', enabled: true, priority: 1 },
+  middleeast: { name: 'Middle East', enabled: true, priority: 1 },
+  intel: { name: 'Intel Feed', enabled: true, priority: 1 },
+  'gdelt-intel': { name: 'Live Intelligence', enabled: true, priority: 1 },
+  'strategic-posture': { name: 'AI Strategic Posture', enabled: true, priority: 1 },
+  cii: { name: 'Country Instability', enabled: true, priority: 1 },
+  markets: { name: 'Markets', enabled: true, priority: 2 },
+  energy: { name: 'Energy & Resources', enabled: true, priority: 2 },
+  'security-advisories': { name: 'Security Advisories', enabled: true, priority: 2 },
+  cascade: { name: 'Infrastructure Cascade', enabled: true, priority: 2 },
+  'world-clock': { name: 'World Clock', enabled: true, priority: 2 },
+  monitors: { name: 'My Monitors', enabled: true, priority: 2 },
+};
+
+// Map layers for Israeli defense view
+export const DEFAULT_MAP_LAYERS: MapLayers = {
+  iranAttacks: true,
+  gpsJamming: false,
+  conflicts: true,
+  bases: true,
+  cables: false,
+  pipelines: false,
+  hotspots: true,
+  ais: false,
+  nuclear: true,
+  irradiators: false,
+  sanctions: true,
+  weather: true,
+  economic: false,
+  waterways: true,
+  outages: true,
+  cyberThreats: false,
+  datacenters: false,
+  protests: false,
+  flights: false,
+  military: true,
+  natural: true,
+  spaceports: false,
+  minerals: false,
+  fires: false,
+  ucdpEvents: false,
+  displacement: false,
+  climate: false,
+  startupHubs: false,
+  cloudRegions: false,
+  accelerators: false,
+  techHQs: false,
+  techEvents: false,
+  stockExchanges: false,
+  financialCenters: false,
+  centralBanks: false,
+  commodityHubs: false,
+  gulfInvestments: false,
+  positiveEvents: false,
+  kindness: false,
+  happiness: false,
+  speciesRecovery: false,
+  renewableInstallations: false,
+  tradeRoutes: false,
+  dayNight: false,
+};
+
+// Mobile-specific defaults
+export const MOBILE_DEFAULT_MAP_LAYERS: MapLayers = {
+  iranAttacks: true,
+  gpsJamming: false,
+  conflicts: true,
+  bases: false,
+  cables: false,
+  pipelines: false,
+  hotspots: true,
+  ais: false,
+  nuclear: false,
+  irradiators: false,
+  sanctions: false,
+  weather: true,
+  economic: false,
+  waterways: false,
+  outages: true,
+  cyberThreats: false,
+  datacenters: false,
+  protests: false,
+  flights: false,
+  military: true,
+  natural: true,
+  spaceports: false,
+  minerals: false,
+  fires: false,
+  ucdpEvents: false,
+  displacement: false,
+  climate: false,
+  startupHubs: false,
+  cloudRegions: false,
+  accelerators: false,
+  techHQs: false,
+  techEvents: false,
+  stockExchanges: false,
+  financialCenters: false,
+  centralBanks: false,
+  commodityHubs: false,
+  gulfInvestments: false,
+  positiveEvents: false,
+  kindness: false,
+  happiness: false,
+  speciesRecovery: false,
+  renewableInstallations: false,
+  tradeRoutes: false,
+  dayNight: false,
+};
+
+export const VARIANT_CONFIG: VariantConfig = {
+  name: 'magen',
+  description: 'Israeli civil defense intelligence dashboard',
+  panels: DEFAULT_PANELS,
+  mapLayers: DEFAULT_MAP_LAYERS,
+  mobileMapLayers: MOBILE_DEFAULT_MAP_LAYERS,
+};

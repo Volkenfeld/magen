@@ -20,6 +20,19 @@ export const SOURCE_TIERS: Record<string, number> = {
   'AFP': 1,
   'Bloomberg': 1,
 
+  // Tier 1.5 - Israeli Major Outlets
+  'Times of Israel': 2,
+  'Jerusalem Post': 2,
+  'Ynet News': 2,
+  'i24NEWS': 2,
+  'Kan News': 2,
+  'Israel Hayom': 2,
+  'Walla News': 2,
+  'Globes': 2,
+  'Calcalist': 2,
+  'IDF': 1,
+  'Israel MFA': 1,
+
   // Tier 2 - Major Outlets
   'BBC World': 2,
   'BBC Middle East': 2,
@@ -1055,14 +1068,67 @@ const HAPPY_FEEDS: Record<string, Feed[]> = {
   ],
 };
 
+// ============================================
+// MAGEN VARIANT FEEDS (Israeli Civil Defense)
+// ============================================
+const MAGEN_FEEDS: Record<string, Feed[]> = {
+  // Israeli media (priority)
+  middleeast: [
+    { name: 'Times of Israel', url: rss('https://news.google.com/rss/search?q=site:timesofisrael.com+when:1d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Jerusalem Post', url: rss('https://news.google.com/rss/search?q=site:jpost.com+when:1d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Haaretz', url: rss('https://news.google.com/rss/search?q=site:haaretz.com+when:7d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Ynet News', url: rss('https://news.google.com/rss/search?q=site:ynetnews.com+when:1d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'i24NEWS', url: rss('https://news.google.com/rss/search?q=site:i24news.tv+when:1d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Kan News', url: rss('https://news.google.com/rss/search?q="Kan+News"+OR+site:kan.org.il+when:2d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Israel Hayom', url: rss('https://news.google.com/rss/search?q=site:israelhayom.com+when:1d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Walla News', url: rss('https://news.google.com/rss/search?q=site:walla.co.il+when:1d&hl=en-US&gl=US&ceid=US:en'), lang: 'he' },
+    { name: 'BBC Middle East', url: rss('https://feeds.bbci.co.uk/news/world/middle_east/rss.xml') },
+    { name: 'Al Jazeera', url: rss('https://www.aljazeera.com/xml/rss/all.xml') },
+    { name: 'Al Arabiya', url: rss('https://news.google.com/rss/search?q=site:english.alarabiya.net+when:2d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Iran International', url: rss('https://news.google.com/rss/search?q=site:iranintl.com+when:2d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Guardian ME', url: rss('https://www.theguardian.com/world/middleeast/rss') },
+    { name: 'The National', url: rss('https://news.google.com/rss/search?q=site:thenationalnews.com+when:2d&hl=en-US&gl=US&ceid=US:en') },
+  ],
+  // Wire services and world news
+  politics: [
+    { name: 'Reuters World', url: rss('https://news.google.com/rss/search?q=site:reuters.com+world&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'AP News', url: rss('https://news.google.com/rss/search?q=site:apnews.com&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'BBC World', url: rss('https://feeds.bbci.co.uk/news/world/rss.xml') },
+    { name: 'CNN World', url: rss('https://news.google.com/rss/search?q=site:cnn.com+world+news+when:1d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Guardian World', url: rss('https://www.theguardian.com/world/rss') },
+  ],
+  // Israel-specific defense and security feeds
+  gov: [
+    { name: 'IDF', url: rss('https://news.google.com/rss/search?q="Israel+Defense+Forces"+OR+"IDF"+when:1d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Israel MFA', url: rss('https://news.google.com/rss/search?q=site:gov.il+ministry+foreign+affairs+when:7d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'White House', url: rss('https://news.google.com/rss/search?q=site:whitehouse.gov&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'State Dept', url: rss('https://news.google.com/rss/search?q=site:state.gov+OR+"State+Department"&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Pentagon', url: rss('https://news.google.com/rss/search?q=site:defense.gov+OR+Pentagon+when:1d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'UN News', url: rss('https://news.un.org/feed/subscribe/en/news/region/middle-east/feed/rss.xml') },
+  ],
+  // Financial feeds relevant to Israel
+  finance: [
+    { name: 'CNBC', url: rss('https://www.cnbc.com/id/100003114/device/rss/rss.html') },
+    { name: 'Reuters Business', url: rss('https://news.google.com/rss/search?q=site:reuters.com+business+markets&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Globes', url: rss('https://news.google.com/rss/search?q=site:en.globes.co.il+when:2d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Calcalist', url: rss('https://news.google.com/rss/search?q=site:calcalistech.com+when:2d&hl=en-US&gl=US&ceid=US:en') },
+  ],
+  energy: [
+    { name: 'Oil & Gas', url: rss('https://news.google.com/rss/search?q=oil+gas+energy+prices+when:1d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Reuters Energy', url: rss('https://news.google.com/rss/search?q=site:reuters.com+energy+oil+when:1d&hl=en-US&gl=US&ceid=US:en') },
+  ],
+};
+
 // Variant-aware exports
-export const FEEDS = SITE_VARIANT === 'tech'
-  ? TECH_FEEDS
-  : SITE_VARIANT === 'finance'
-    ? FINANCE_FEEDS
-    : SITE_VARIANT === 'happy'
-      ? HAPPY_FEEDS
-      : FULL_FEEDS;
+export const FEEDS = SITE_VARIANT === 'magen'
+  ? MAGEN_FEEDS
+  : SITE_VARIANT === 'tech'
+    ? TECH_FEEDS
+    : SITE_VARIANT === 'finance'
+      ? FINANCE_FEEDS
+      : SITE_VARIANT === 'happy'
+        ? HAPPY_FEEDS
+        : FULL_FEEDS;
 
 export const SOURCE_REGION_MAP: Record<string, { labelKey: string; feedKeys: string[] }> = {
   // Full (geopolitical) variant regions
@@ -1165,6 +1231,9 @@ export const DEFAULT_ENABLED_SOURCES: Record<string, string[]> = {
   thinktanks: ['Foreign Policy', 'Atlantic Council', 'Foreign Affairs', 'CSIS', 'RAND', 'Brookings', 'Carnegie', 'War on the Rocks'],
   crisis: ['CrisisWatch', 'IAEA', 'WHO', 'UNHCR'],
   energy: ['Oil & Gas', 'Nuclear Energy', 'Reuters Energy', 'Mining & Resources'],
+  // Magen variant defaults
+  magen_middleeast: ['Times of Israel', 'Jerusalem Post', 'Haaretz', 'Ynet News', 'i24NEWS', 'Kan News', 'Israel Hayom', 'BBC Middle East', 'Iran International'],
+  magen_gov: ['IDF', 'Israel MFA', 'White House', 'State Dept', 'Pentagon', 'UN News'],
 };
 
 export const DEFAULT_ENABLED_INTEL: string[] = [

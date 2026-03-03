@@ -92,7 +92,7 @@
 
 
     <!-- Theme: apply stored preference before first paint to prevent FOUC -->
-    <script>(function(){try{var h=location.hostname;var v;if(h.startsWith('happy.'))v='happy';else if(h.startsWith('tech.'))v='tech';else if(h.startsWith('finance.'))v='finance';if(!v&&(h==='localhost'||h==='127.0.0.1'||'__TAURI_INTERNALS__' in window))v=localStorage.getItem('worldmonitor-variant');if(v)document.documentElement.dataset.variant=v;else document.documentElement.removeAttribute('data-variant');var t=localStorage.getItem('worldmonitor-theme');if(t==='dark'||t==='light'){document.documentElement.dataset.theme=t;}else if(v==='happy'){document.documentElement.dataset.theme='light';}}catch(e){}document.documentElement.classList.add('no-transition');})()</script>
+    <script>(function(){try{var h=location.hostname;var v;if(h==='magen.live'||h.endsWith('.magen.live'))v='magen';else if(h.startsWith('happy.'))v='happy';else if(h.startsWith('tech.'))v='tech';else if(h.startsWith('finance.'))v='finance';if(!v&&(h==='localhost'||h==='127.0.0.1'||'__TAURI_INTERNALS__' in window))v=localStorage.getItem('worldmonitor-variant');if(v)document.documentElement.dataset.variant=v;else document.documentElement.removeAttribute('data-variant');var t=localStorage.getItem('worldmonitor-theme');if(t==='dark'||t==='light'){document.documentElement.dataset.theme=t;}else if(v==='happy'){document.documentElement.dataset.theme='light';}else if(v==='magen'){document.documentElement.dataset.theme='dark';}}catch(e){}document.documentElement.classList.add('no-transition');})()</script>
 
     <!-- Critical CSS: inline skeleton visible before JS boots -->
     <style>
@@ -142,6 +142,19 @@
       [data-variant="happy"] .skeleton-panel{background:#FFFFFF;border-color:#DDD9CF;border-radius:14px}
       [data-variant="happy"] .skeleton-panel-header{border-bottom-color:#EBE8E0}
       [data-variant="happy"] .skeleton-line{background:linear-gradient(90deg,rgba(107,143,94,.06) 25%,rgba(107,143,94,.12) 50%,rgba(107,143,94,.06) 75%);background-size:200% 100%;animation:skel-shimmer 1.5s infinite}
+
+      /* ---------- skeleton shell (magen variant — dark) ---------- */
+      [data-variant="magen"] .skeleton-shell{background:#0a0e14}
+      [data-variant="magen"] .skeleton-header{background:#131a24;border-bottom-color:#2a3544}
+      [data-variant="magen"] .skeleton-pill{background:#1a2332}
+      [data-variant="magen"] .skeleton-dot{background:#00a6ff}
+      [data-variant="magen"] .skeleton-main{background:#0a0e14}
+      [data-variant="magen"] .skeleton-map{border-color:#2a3544;background:#0d1420}
+      [data-variant="magen"] .skeleton-map-bar{background:#131a24;border-bottom-color:#2a3544}
+      [data-variant="magen"] .skeleton-map-body::after{background:radial-gradient(ellipse 60% 50% at 50% 50%,#0d2a40 0%,#0d1420 100%);opacity:.5}
+      [data-variant="magen"] .skeleton-panel{background:#131a24;border-color:#2a3544}
+      [data-variant="magen"] .skeleton-panel-header{border-bottom-color:#1a2332}
+      [data-variant="magen"] .skeleton-line{background:linear-gradient(90deg,rgba(0,166,255,.04) 25%,rgba(0,166,255,.10) 50%,rgba(0,166,255,.04) 75%);background-size:200% 100%;animation:skel-shimmer 1.5s infinite}
 
       /* ---------- skeleton shell (happy variant — dark) ---------- */
       [data-variant="happy"][data-theme="dark"] .skeleton-shell{background:#1A2332}

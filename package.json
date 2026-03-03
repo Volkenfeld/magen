@@ -18,6 +18,8 @@
     "build:full": "cross-env-shell VITE_VARIANT=full \"tsc && vite build\"",
     "build:tech": "cross-env-shell VITE_VARIANT=tech \"tsc && vite build\"",
     "build:finance": "cross-env-shell VITE_VARIANT=finance \"tsc && vite build\"",
+    "build:magen": "cross-env-shell VITE_VARIANT=magen \"tsc && vite build\"",
+    "dev:magen": "cross-env VITE_VARIANT=magen vite",
     "build:happy": "cross-env-shell VITE_VARIANT=happy \"tsc && vite build\"",
     "typecheck": "tsc --noEmit",
     "typecheck:api": "tsc --noEmit -p tsconfig.api.json",
