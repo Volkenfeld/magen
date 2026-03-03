@@ -169,6 +169,10 @@ export class PanelLayoutManager implements AppModule {
             <span class="status-dot"></span>
             <span>${t('header.live')}</span>
           </div>
+          ${SITE_VARIANT === 'magen' ? `<button class="location-selector" id="locationSelector" title="Set your location for alerts">
+            <span class="loc-icon">\u{1F4CD}</span>
+            <span class="loc-text">Set Location</span>
+          </button>` : ''}
           <div class="region-selector">
             <select id="regionSelect" class="region-select">
               <option value="global">${t('components.deckgl.views.global')}</option>
