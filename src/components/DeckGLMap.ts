@@ -417,6 +417,7 @@ export class DeckGLMap {
     });
 
     this.createControls();
+    this.createMagenViewModes();
     this.createTimeSlider();
     this.createLayerToggles();
     this.createLegend();
@@ -3236,6 +3237,79 @@ export class DeckGLMap {
     });
   }
 
+  /** Magen variant: 4-mode map view toggle (2D, Night, 3D, Globe) */
+  private createMagenViewModes(): void {
+    if (SITE_VARIANT !== 'magen') return;
+
+    const saved = localStorage.getItem('magen-map-view-mode') || '3d';
+    const modes = [
+      { id: '2d', label: '2D', title: 'Flat map' },
+      { id: 'night', label: 'NV', title: 'Night vision' },
+      { id: '3d', label: '3D', title: '3D terrain' },
+      { id: 'globe', label: 'Globe', title: 'Globe view' },
+    ];
+
+    const group = document.createElement('div');
+    group.className = 'magen-view-modes';
+    group.innerHTML = modes.map(m =>
+      `<button class="magen-view-btn${m.id === saved ? ' active' : ''}" data-mode="${m.id}" title="${m.title}">${m.label}</button>`
+    ).join('');
+
+    this.container.appendChild(group);
+
+    group.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest('.magen-view-btn') as HTMLElement | null;
+      if (!btn) return;
+      const mode = btn.dataset.mode as string;
+      this.setMagenViewMode(mode);
+      group.querySelectorAll('.magen-view-btn').forEach(b => b.classList.toggle('active', (b as HTMLElement).dataset.mode === mode));
+    });
+
+    // Apply saved mode on init (after map loads)
+    this.maplibreMap?.on('load', () => {
+      this.setMagenViewMode(saved);
+    });
+  }
+
+  private setMagenViewMode(mode: string): void {
+    if (!this.maplibreMap) return;
+    localStorage.setItem('magen-map-view-mode', mode);
+
+    const canvas = this.maplibreMap.getCanvas();
+
+    // Reset night vision filter
+    canvas.style.filter = '';
+
+    switch (mode) {
+      case '2d':
+        try { (this.maplibreMap as any).setProjection({ type: 'mercator' }); } catch {}
+        this.maplibreMap.easeTo({ pitch: 0, bearing: 0, duration: 800 });
+        try { (this.maplibreMap as any).setTerrain(null); } catch {}
+        break;
+
+      case 'night':
+        // Green-tint night vision filter on the canvas
+        canvas.style.filter = 'brightness(0.5) saturate(0.2) hue-rotate(80deg) contrast(1.4)';
+        break;
+
+      case '3d':
+        try { (this.maplibreMap as any).setProjection({ type: 'globe' }); } catch {}
+        this.maplibreMap.easeTo({ pitch: 45, bearing: -15, duration: 800 });
+        try {
+          (this.maplibreMap as any).setTerrain({ source: 'terrain-dem', exaggeration: 1.3 });
+        } catch {}
+        break;
+
+      case 'globe':
+        try { (this.maplibreMap as any).setProjection({ type: 'globe' }); } catch {}
+        this.maplibreMap.easeTo({ pitch: 0, bearing: 0, zoom: 1.5, duration: 1000 });
+        try {
+          (this.maplibreMap as any).setTerrain({ source: 'terrain-dem', exaggeration: 1.3 });
+        } catch {}
+        break;
+    }
+  }
+
   private createTimeSlider(): void {
     const slider = document.createElement('div');
     slider.className = 'time-slider deckgl-time-slider';
@@ -4634,10 +4708,11 @@ export class DeckGLMap {
         type: 'raster',
         source: 'satellite',
         paint: {
-          'raster-opacity': 0.85,
-          'raster-brightness-min': 0.04,
-          'raster-contrast': 0.15,
-          'raster-saturation': -0.15,
+          'raster-opacity': 0.75,
+          'raster-brightness-min': 0.02,
+          'raster-brightness-max': 0.7,
+          'raster-contrast': 0.05,
+          'raster-saturation': -0.3,
         },
       }, firstSymbolId);
     }
