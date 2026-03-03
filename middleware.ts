@@ -15,6 +15,8 @@ const VARIANT_HOST_MAP: Record<string, string> = {
   'tech.worldmonitor.app': 'tech',
   'finance.worldmonitor.app': 'finance',
   'happy.worldmonitor.app': 'happy',
+  'magenlive.org': 'magen',
+  'www.magenlive.org': 'magen',
 };
 
 // Source of truth: src/config/variant-meta.ts — keep in sync when variant metadata changes.
@@ -37,10 +39,18 @@ const VARIANT_OG: Record<string, { title: string; description: string; image: st
     image: 'https://happy.worldmonitor.app/favico/happy/og-image.png',
     url: 'https://happy.worldmonitor.app/',
   },
+  magen: {
+    title: 'Magen - Real-Time Israeli Civil Defense Intelligence',
+    description: 'Real-time defense intelligence dashboard for Israeli citizens. OREF alerts, news, military tracking, and AI insights.',
+    image: 'https://magenlive.org/favico/og-image.png',
+    url: 'https://magenlive.org/',
+  },
 };
 
 const ALLOWED_HOSTS = new Set([
   'worldmonitor.app',
+  'magenlive.org',
+  'www.magenlive.org',
   ...Object.keys(VARIANT_HOST_MAP),
 ]);
 const VERCEL_PREVIEW_RE = /^[a-z0-9-]+-[a-z0-9]{8,}\.vercel\.app$/;
