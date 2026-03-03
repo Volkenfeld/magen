@@ -2830,3 +2830,45 @@ html[data-variant="magen"] {
   font-size: 10px;
   letter-spacing: 1px;
 }
+
+/* =================================================================
+   SATELLITE MAP ENHANCEMENTS (S69)
+   Premium satellite basemap with terrain, better labels over imagery
+   ================================================================= */
+
+/* MapLibre canvas: sharper rendering on satellite imagery */
+[data-variant="magen"] .maplibregl-canvas {
+  image-rendering: auto;
+}
+
+/* Map labels: text shadow for readability over satellite tiles */
+[data-variant="magen"] .maplibregl-map {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Map controls: glass effect over satellite */
+[data-variant="magen"] .maplibregl-ctrl-group {
+  background: rgba(8, 14, 26, 0.75) !important;
+  border: 1px solid rgba(100, 140, 200, 0.15) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-variant="magen"] .maplibregl-ctrl-group button {
+  border-color: rgba(100, 140, 200, 0.1) !important;
+}
+
+/* Attribution: minimal over satellite */
+[data-variant="magen"] .maplibregl-ctrl-attrib {
+  background: rgba(0, 0, 0, 0.4) !important;
+  font-size: 8px !important;
+  backdrop-filter: blur(4px);
+}
+
+/* Map section: satellite-ready border glow */
+[data-variant="magen"] .map-section {
+  box-shadow:
+    0 0 20px rgba(0, 0, 0, 0.5),
+    inset 0 0 1px rgba(100, 140, 200, 0.1);
+}
