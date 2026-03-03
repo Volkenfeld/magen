@@ -95,6 +95,8 @@ import type { RenewableInstallation } from '@/services/renewable-installations';
 import type { SpeciesRecovery } from '@/services/conservation-data';
 import { getCountriesGeoJson, getCountryAtCoordinates, getCountryBbox } from '@/services/country-geometry';
 import type { FeatureCollection, Geometry } from 'geojson';
+import type { LiveFlight } from '@/services/live-flights';
+import type { TrackedSatellite } from '@/services/satellite-tracking';
 
 export type TimeRange = '1h' | '6h' | '24h' | '48h' | '7d' | 'all';
 export type DeckMapView = 'global' | 'america' | 'mena' | 'eu' | 'asia' | 'latam' | 'africa' | 'oceania';
@@ -314,6 +316,8 @@ export class DeckGLMap {
   private tradeRouteSegments: TradeRouteSegment[] = resolveTradeRouteSegments();
   private positiveEvents: PositiveGeoEvent[] = [];
   private kindnessPoints: KindnessPoint[] = [];
+  private liveFlights: LiveFlight[] = [];
+  private trackedSatellites: TrackedSatellite[] = [];
 
   // Phase 8 overlay data
   private happinessScores: Map<string, number> = new Map();
@@ -1224,6 +1228,17 @@ export class DeckGLMap {
       layers.push(this.createMilitaryFlightClustersLayer(filteredMilitaryFlightClusters));
     }
 
+    // Live civilian flights layer (magen variant)
+    if (mapLayers.liveFlights && this.liveFlights.length > 0) {
+      layers.push(this.createLiveFlightsLayer());
+    }
+
+    // Satellite tracking layers (magen variant)
+    if (mapLayers.satellites && this.trackedSatellites.length > 0) {
+      layers.push(this.createSatelliteOrbitsLayer());
+      layers.push(this.createSatellitesLayer());
+    }
+
     // Strategic waterways layer
     if (mapLayers.waterways) {
       layers.push(this.createWaterwaysLayer());
@@ -1987,6 +2002,73 @@ export class DeckGLMap {
       radiusMinPixels: 8,
       radiusMaxPixels: 25,
       pickable: true,
+    });
+  }
+
+  private createLiveFlightsLayer(): ScatterplotLayer {
+    return new ScatterplotLayer({
+      id: 'live-flights-layer',
+      data: this.liveFlights.filter(f => !f.onGround),
+      getPosition: (d: LiveFlight) => [d.lon, d.lat],
+      getRadius: 4000,
+      getFillColor: (d: LiveFlight) => {
+        // Altitude-based coloring: low=green, mid=cyan, high=blue
+        const alt = d.altitude;
+        if (alt < 10000) return [100, 255, 150, 160] as [number, number, number, number];
+        if (alt < 25000) return [0, 200, 255, 140] as [number, number, number, number];
+        return [80, 140, 255, 120] as [number, number, number, number];
+      },
+      radiusMinPixels: 2,
+      radiusMaxPixels: 6,
+      pickable: true,
+      updateTriggers: {
+        getPosition: this.liveFlights.length,
+        getFillColor: this.liveFlights.length,
+      },
+    });
+  }
+
+  private createSatellitesLayer(): ScatterplotLayer {
+    return new ScatterplotLayer({
+      id: 'satellites-layer',
+      data: this.trackedSatellites,
+      getPosition: (d: TrackedSatellite) => [d.lon, d.lat],
+      getRadius: (d: TrackedSatellite) => d.category === 'station' ? 12000 : 6000,
+      getFillColor: (d: TrackedSatellite) => {
+        switch (d.category) {
+          case 'station': return [255, 255, 100, 220] as [number, number, number, number];
+          case 'military': return [255, 100, 100, 180] as [number, number, number, number];
+          default: return [200, 200, 255, 150] as [number, number, number, number];
+        }
+      },
+      radiusMinPixels: 3,
+      radiusMaxPixels: 10,
+      pickable: true,
+      updateTriggers: {
+        getPosition: this.trackedSatellites.length,
+      },
+    });
+  }
+
+  private createSatelliteOrbitsLayer(): PathLayer {
+    const orbits = this.trackedSatellites
+      .filter(s => s.orbitPath && s.orbitPath.length > 2);
+
+    return new PathLayer({
+      id: 'satellite-orbits-layer',
+      data: orbits,
+      getPath: (d: TrackedSatellite) => d.orbitPath!,
+      getColor: (d: TrackedSatellite) => {
+        switch (d.category) {
+          case 'station': return [255, 255, 100, 80] as [number, number, number, number];
+          case 'military': return [255, 100, 100, 60] as [number, number, number, number];
+          default: return [200, 200, 255, 50] as [number, number, number, number];
+        }
+      },
+      getWidth: 1,
+      widthMinPixels: 1,
+      widthMaxPixels: 2,
+      pickable: false,
     });
   }
 
@@ -2781,6 +2863,10 @@ export class DeckGLMap {
         return { html: `<div class="deckgl-tooltip"><strong>${text(obj.name || t('components.deckgl.tooltip.vesselCluster'))}</strong><br/>${obj.vesselCount || 0} ${t('components.deckgl.tooltip.vessels')}<br/>${text(obj.activityType)}</div>` };
       case 'military-flight-clusters-layer':
         return { html: `<div class="deckgl-tooltip"><strong>${text(obj.name || t('components.deckgl.tooltip.flightCluster'))}</strong><br/>${obj.flightCount || 0} ${t('components.deckgl.tooltip.aircraft')}<br/>${text(obj.activityType)}</div>` };
+      case 'live-flights-layer':
+        return { html: `<div class="deckgl-tooltip"><strong>${text(obj.callsign)}</strong><br/>${text(obj.country)}<br/>${obj.altitude ? `${obj.altitude.toLocaleString()} ft` : ''} ${obj.speed ? `· ${obj.speed} kts` : ''}</div>` };
+      case 'satellites-layer':
+        return { html: `<div class="deckgl-tooltip"><strong>${text(obj.name)}</strong><br/>${text(obj.category)}<br/>${obj.altitude ? `${Math.round(obj.altitude)} km` : ''} ${obj.velocity ? `· ${obj.velocity.toFixed(1)} km/s` : ''}</div>` };
       case 'protests-layer':
         return { html: `<div class="deckgl-tooltip"><strong>${text(obj.title)}</strong><br/>${text(obj.country)}</div>` };
       case 'protest-clusters-layer':
@@ -3427,6 +3513,8 @@ export class DeckGLMap {
             { key: 'pipelines', label: t('components.deckgl.layers.pipelines'), icon: '&#128738;' },
             { key: 'datacenters', label: t('components.deckgl.layers.aiDataCenters'), icon: '&#128421;' },
             { key: 'military', label: t('components.deckgl.layers.militaryActivity'), icon: '&#9992;' },
+            { key: 'liveFlights', label: 'Live Flights', icon: '&#9992;' },
+            { key: 'satellites', label: 'Satellites', icon: '&#128752;' },
             { key: 'ais', label: t('components.deckgl.layers.shipTraffic'), icon: '&#128674;' },
             { key: 'tradeRoutes', label: t('components.deckgl.layers.tradeRoutes'), icon: '&#9875;' },
             { key: 'flights', label: t('components.deckgl.layers.flightDelays'), icon: '&#9992;' },
@@ -4090,6 +4178,16 @@ export class DeckGLMap {
   public setCableHealth(healthMap: Record<string, CableHealthRecord>): void {
     this.healthByCableId = healthMap;
     this.layerCache.delete('cables-layer');
+    this.render();
+  }
+
+  public setLiveFlights(flights: LiveFlight[]): void {
+    this.liveFlights = flights;
+    this.render();
+  }
+
+  public setTrackedSatellites(satellites: TrackedSatellite[]): void {
+    this.trackedSatellites = satellites;
     this.render();
   }
 

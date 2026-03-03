@@ -551,6 +551,9 @@ export interface MapLayers {
   iranAttacks: boolean;
   // GPS/GNSS interference layer
   gpsJamming: boolean;
+  // Magen variant layers
+  liveFlights: boolean;
+  satellites: boolean;
   // Overlay layers
   dayNight: boolean;
 }

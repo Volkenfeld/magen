@@ -179,6 +179,8 @@ const allLayersEnabled: MapLayers = {
   renewableInstallations: false,
   tradeRoutes: true,
   iranAttacks: false,
+  liveFlights: false,
+  satellites: false,
   dayNight: true,
 };
 
@@ -226,6 +228,8 @@ const allLayersDisabled: MapLayers = {
   renewableInstallations: false,
   tradeRoutes: false,
   iranAttacks: false,
+  liveFlights: false,
+  satellites: false,
   dayNight: false,
 };
 
