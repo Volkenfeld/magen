@@ -140,8 +140,9 @@ export const OPTIONAL_LIVE_CHANNELS: LiveChannel[] = [
   { id: 'trt-world', name: 'TRT World', handle: '@TRTWorld', fallbackVideoId: 'ABfFhWzWs0s' },
   { id: 'iran-intl', name: 'Iran International', handle: '@IranIntl' },
   { id: 'cgtn-arabic', name: 'CGTN Arabic', handle: '@CGTNArabic' },
-  { id: 'kan-11', name: 'Kan 11', handle: '@KAN11NEWS', fallbackVideoId: 'TCnaIE_SAtM' },
-  { id: 'i24news', name: 'i24NEWS', handle: '@i24NEWS_EN', fallbackVideoId: 'KQvoDwAAr2k' },
+  { id: 'kan-11', name: 'Kan 11', handle: '@KAN11NEWS', fallbackVideoId: '1cVlyzQJwXE' },
+  { id: 'now14', name: 'NOW 14', handle: '@now14news', fallbackVideoId: 'MZ1XwkGcGV8' },
+  { id: 'i24news', name: 'i24NEWS', handle: '@i24NEWS_EN', fallbackVideoId: '1cVlyzQJwXE' },
   { id: 'asharq-news', name: 'Asharq News', handle: '@asharqnews', fallbackVideoId: 'f6VpkfV7m4Y', useFallbackOnly: true },
   // Africa
   { id: 'africanews', name: 'Africanews', handle: '@africanews' },
