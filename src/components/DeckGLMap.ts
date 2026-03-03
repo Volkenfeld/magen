@@ -148,13 +148,18 @@ const MAP_INTERACTION_MODE: MapInteractionMode =
   import.meta.env.VITE_MAP_INTERACTION_MODE === 'flat' ? 'flat' : '3d';
 
 // Theme-aware basemap vector style URLs (English labels, no local scripts)
-// Happy variant uses self-hosted warm styles; default uses CARTO CDN
+// Happy variant uses self-hosted warm styles; magen uses satellite; default uses CARTO CDN
 const DARK_STYLE = SITE_VARIANT === 'happy'
   ? '/map-styles/happy-dark.json'
   : 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
 const LIGHT_STYLE = SITE_VARIANT === 'happy'
   ? '/map-styles/happy-light.json'
   : 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json';
+
+// Satellite imagery tile URL (Esri World Imagery, free for non-commercial)
+const SATELLITE_TILES_URL = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+// AWS Terrarium DEM tiles for 3D terrain elevation
+const TERRAIN_DEM_URL = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png';
 
 // Zoom thresholds for layer visibility and labels (matches old Map.ts)
 // Zoom-dependent layer visibility and labels
@@ -402,6 +407,7 @@ export class DeckGLMap {
     this.initMapLibre();
 
     this.maplibreMap?.on('load', () => {
+      this.addMagenOverlays();
       this.rebuildTechHQSupercluster();
       this.rebuildDatacenterSupercluster();
       this.initDeck();
@@ -1409,18 +1415,41 @@ export class DeckGLMap {
 
   private createConflictZonesLayer(): GeoJsonLayer {
     const cacheKey = 'conflict-zones-layer';
+    const isMagen = SITE_VARIANT === 'magen';
+    const isLight = getCurrentTheme() === 'light';
 
     const layer = new GeoJsonLayer({
       id: cacheKey,
       data: CONFLICT_ZONES_GEOJSON,
       filled: true,
       stroked: true,
-      getFillColor: () => COLORS.conflict,
-      getLineColor: () => getCurrentTheme() === 'light'
-        ? [255, 0, 0, 120] as [number, number, number, number]
-        : [255, 0, 0, 180] as [number, number, number, number],
-      getLineWidth: 2,
-      lineWidthMinPixels: 1,
+      getFillColor: (d) => {
+        if (!isMagen) return COLORS.conflict;
+        // Intel-style: intensity-based tactical coloring
+        const intensity = d.properties?.intensity;
+        switch (intensity) {
+          case 'high': return [255, 50, 30, 45] as [number, number, number, number];
+          case 'medium': return [255, 140, 0, 35] as [number, number, number, number];
+          default: return [255, 200, 40, 25] as [number, number, number, number];
+        }
+      },
+      getLineColor: (d) => {
+        if (!isMagen) {
+          return isLight
+            ? [255, 0, 0, 120] as [number, number, number, number]
+            : [255, 0, 0, 180] as [number, number, number, number];
+        }
+        // Magen: bright tactical borders by intensity
+        const intensity = d.properties?.intensity;
+        switch (intensity) {
+          case 'high': return [255, 70, 50, 220] as [number, number, number, number];
+          case 'medium': return [255, 160, 30, 180] as [number, number, number, number];
+          default: return [255, 210, 60, 150] as [number, number, number, number];
+        }
+      },
+      getLineWidth: isMagen ? 3 : 2,
+      lineWidthMinPixels: isMagen ? 2 : 1,
+      lineWidthMaxPixels: isMagen ? 5 : 4,
       pickable: true,
     });
     return layer;
@@ -4574,12 +4603,73 @@ export class DeckGLMap {
     } catch { /* layer not ready */ }
   }
 
+  /** Add satellite imagery raster tiles and 3D terrain for magen variant */
+  private addMagenOverlays(): void {
+    if (SITE_VARIANT !== 'magen' || !this.maplibreMap) return;
+
+    // Add satellite raster tile source
+    if (!this.maplibreMap.getSource('satellite')) {
+      this.maplibreMap.addSource('satellite', {
+        type: 'raster',
+        tiles: [SATELLITE_TILES_URL],
+        tileSize: 256,
+        maxzoom: 19,
+        attribution: '&copy; Esri',
+      });
+    }
+
+    // Insert satellite layer below the first symbol (label) layer
+    const layers = this.maplibreMap.getStyle().layers || [];
+    let firstSymbolId: string | undefined;
+    for (const layer of layers) {
+      if (layer.type === 'symbol') {
+        firstSymbolId = layer.id;
+        break;
+      }
+    }
+
+    if (!this.maplibreMap.getLayer('satellite-tiles')) {
+      this.maplibreMap.addLayer({
+        id: 'satellite-tiles',
+        type: 'raster',
+        source: 'satellite',
+        paint: {
+          'raster-opacity': 0.85,
+          'raster-brightness-min': 0.04,
+          'raster-contrast': 0.15,
+          'raster-saturation': -0.15,
+        },
+      }, firstSymbolId);
+    }
+
+    // Add 3D terrain elevation via AWS Terrarium DEM
+    if (!this.maplibreMap.getSource('terrain-dem')) {
+      this.maplibreMap.addSource('terrain-dem', {
+        type: 'raster-dem',
+        tiles: [TERRAIN_DEM_URL],
+        tileSize: 256,
+        maxzoom: 15,
+        encoding: 'terrarium',
+      });
+    }
+
+    try {
+      (this.maplibreMap as any).setTerrain({
+        source: 'terrain-dem',
+        exaggeration: 1.3,
+      });
+    } catch {
+      // Terrain not supported in this browser/version
+    }
+  }
+
   private switchBasemap(theme: 'dark' | 'light'): void {
     if (!this.maplibreMap) return;
     this.maplibreMap.setStyle(theme === 'light' ? LIGHT_STYLE : DARK_STYLE);
     // setStyle() replaces all sources/layers — reset guard so country layers are re-added
     this.countryGeoJsonLoaded = false;
     this.maplibreMap.once('style.load', () => {
+      this.addMagenOverlays();
       this.loadCountryBoundaries();
       this.updateCountryLayerPaint(theme);
       // Re-render deck.gl overlay after style swap — interleaved layers need
