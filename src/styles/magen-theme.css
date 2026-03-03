@@ -1611,7 +1611,21 @@ html[data-variant="magen"] {
     0 0 1px rgba(0, 166, 255, 0.2);
 }
 
-/* ---- Panel Header: Subtle Gradient Bar ---- */
+/* ---- Panel Content: Capped height to prevent scroll trapping ---- */
+[data-variant="magen"] .panel-content {
+  max-height: 220px;
+  overflow-y: auto;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+[data-variant="magen"] .panel.panel-collapsed .panel-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding: 0;
+}
+
+/* ---- Panel Header: Subtle Gradient Bar + Clickable ---- */
 [data-variant="magen"] .panel-header {
   background: linear-gradient(
     180deg,
@@ -1620,6 +1634,29 @@ html[data-variant="magen"] {
   );
   border-bottom: 1px solid rgba(0, 166, 255, 0.08);
   padding: 8px 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+[data-variant="magen"] .panel-header:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 166, 255, 0.1) 0%,
+    transparent 100%
+  );
+}
+
+/* ---- Chevron indicator for collapse state ---- */
+[data-variant="magen"] .panel-collapse-chevron {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 10px;
+  color: var(--magen-text-dim);
+  transition: transform 0.3s ease;
+}
+
+[data-variant="magen"] .panel.panel-collapsed .panel-collapse-chevron {
+  transform: rotate(-90deg);
 }
 
 /* ---- Panel Title: Intelligence Label ---- */
