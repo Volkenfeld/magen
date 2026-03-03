@@ -237,6 +237,7 @@ export class PanelLayoutManager implements AppModule {
 
     if (SITE_VARIANT === 'magen') {
       this.setupPanelCollapse();
+      this.showMagenWelcome();
     }
 
     if (this.ctx.isMobile) {
@@ -275,6 +276,65 @@ export class PanelLayoutManager implements AppModule {
       if (clickedEl.closest('button, a, select, input, .panel-btn')) return;
       const panel = header.closest('.panel');
       if (panel) panel.classList.toggle('panel-collapsed');
+    });
+  }
+
+  /** Magen: first-visit premium welcome overlay */
+  private showMagenWelcome(): void {
+    if (localStorage.getItem('magen-welcome-seen')) return;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'magen-welcome-overlay';
+    overlay.innerHTML = `
+      <div class="magen-welcome-card">
+        <div class="magen-welcome-shield">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#00a6ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h1 class="magen-welcome-title">MAGEN</h1>
+        <p class="magen-welcome-subtitle">\u05DC\u05D5\u05D7 \u05DE\u05D5\u05D3\u05D9\u05E2\u05D9\u05DF \u05D4\u05D2\u05E0\u05D4 \u05D0\u05D6\u05E8\u05D7\u05D9\u05EA \u05D1\u05D6\u05DE\u05DF \u05D0\u05DE\u05EA</p>
+        <div class="magen-welcome-hints">
+          <div class="magen-welcome-hint">
+            <span class="hint-icon">\u{1F30D}</span>
+            <span class="hint-text">\u05E1\u05D5\u05D1\u05D1\u05D5 \u05D0\u05EA \u05D4\u05D2\u05DC\u05D5\u05D1\u05D5\u05E1 \u05D1\u05EA\u05DC\u05EA \u05DE\u05D9\u05DE\u05D3</span>
+          </div>
+          <div class="magen-welcome-hint">
+            <span class="hint-icon">\u{1F4FA}</span>
+            <span class="hint-text">\u05DC\u05D7\u05E6\u05D5 \u05E2\u05DC \u05E2\u05E8\u05D5\u05E5 \u05DC\u05E9\u05D9\u05D3\u05D5\u05E8 \u05D7\u05D9</span>
+          </div>
+          <div class="magen-welcome-hint">
+            <span class="hint-icon">\u{1F5FA}\uFE0F</span>
+            <span class="hint-text">\u05D4\u05D7\u05DC\u05D9\u05E4\u05D5 \u05E9\u05DB\u05D1\u05D5\u05EA \u05E2\u05DC \u05D4\u05DE\u05E4\u05D4</span>
+          </div>
+          <div class="magen-welcome-hint">
+            <span class="hint-icon">\u{1F4CD}</span>
+            <span class="hint-text">\u05D4\u05D2\u05D3\u05D9\u05E8\u05D5 \u05DE\u05D9\u05E7\u05D5\u05DD \u05DC\u05D4\u05EA\u05E8\u05D0\u05D5\u05EA</span>
+          </div>
+        </div>
+        <button class="magen-welcome-enter">\u05DB\u05E0\u05D9\u05E1\u05D4</button>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    // Trigger entrance animation
+    requestAnimationFrame(() => {
+      overlay.classList.add('visible');
+    });
+
+    const dismiss = () => {
+      overlay.classList.add('exiting');
+      localStorage.setItem('magen-welcome-seen', '1');
+      overlay.addEventListener('transitionend', () => overlay.remove(), { once: true });
+      // Fallback removal after 1s
+      setTimeout(() => { if (overlay.parentNode) overlay.remove(); }, 1000);
+    };
+
+    overlay.querySelector('.magen-welcome-enter')?.addEventListener('click', dismiss);
+    // Also dismiss on overlay background click
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) dismiss();
     });
   }
 

@@ -2958,3 +2958,175 @@ html[data-variant="magen"] {
     0 0 20px rgba(0, 0, 0, 0.5),
     inset 0 0 1px rgba(100, 140, 200, 0.1);
 }
+
+
+/* ==========================================================
+   40. Welcome Overlay -- Premium First-Visit Experience
+   Glassmorphism, glow effects, smooth animations.
+   ========================================================== */
+
+.magen-welcome-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.magen-welcome-overlay.visible {
+  opacity: 1;
+}
+
+.magen-welcome-overlay.exiting {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.magen-welcome-card {
+  text-align: center;
+  max-width: 420px;
+  width: 90%;
+  padding: 48px 36px;
+  background: linear-gradient(
+    180deg,
+    rgba(19, 26, 36, 0.95) 0%,
+    rgba(10, 14, 20, 0.98) 100%
+  );
+  border: 1px solid rgba(0, 166, 255, 0.2);
+  border-radius: 20px;
+  box-shadow:
+    0 0 60px rgba(0, 166, 255, 0.15),
+    0 0 120px rgba(0, 166, 255, 0.05),
+    0 20px 60px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transform: scale(0.9) translateY(20px);
+  animation: magen-welcome-enter 0.6s 0.2s ease forwards;
+}
+
+@keyframes magen-welcome-enter {
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.magen-welcome-shield {
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 20px rgba(0, 166, 255, 0.4));
+  animation: magen-shield-pulse 3s ease-in-out infinite;
+}
+
+@keyframes magen-shield-pulse {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(0, 166, 255, 0.4)); }
+  50% { filter: drop-shadow(0 0 30px rgba(0, 166, 255, 0.7)); }
+}
+
+.magen-welcome-title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 8px;
+  color: #e8edf5;
+  margin: 0 0 8px;
+  text-shadow: 0 0 30px rgba(0, 166, 255, 0.4);
+}
+
+.magen-welcome-subtitle {
+  font-family: 'Heebo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--magen-text-secondary, #8899aa);
+  margin: 0 0 32px;
+  line-height: 1.6;
+  direction: rtl;
+}
+
+.magen-welcome-hints {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.magen-welcome-hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: rgba(0, 166, 255, 0.06);
+  border: 1px solid rgba(0, 166, 255, 0.1);
+  border-radius: 10px;
+  direction: rtl;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.magen-welcome-hint:hover {
+  background: rgba(0, 166, 255, 0.12);
+  border-color: rgba(0, 166, 255, 0.25);
+}
+
+.hint-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.hint-text {
+  font-family: 'Heebo', sans-serif;
+  font-size: 14px;
+  color: var(--magen-text, #e8edf5);
+  font-weight: 400;
+}
+
+.magen-welcome-enter {
+  display: inline-block;
+  font-family: 'Heebo', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #0088cc 0%, #00a6ff 50%, #33bbff 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 14px 48px;
+  cursor: pointer;
+  letter-spacing: 2px;
+  box-shadow:
+    0 0 20px rgba(0, 166, 255, 0.4),
+    0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  animation: magen-btn-glow 2s ease-in-out infinite;
+}
+
+@keyframes magen-btn-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(0, 166, 255, 0.4),
+      0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(0, 166, 255, 0.6),
+      0 0 60px rgba(0, 166, 255, 0.2),
+      0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.magen-welcome-enter:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 40px rgba(0, 166, 255, 0.6),
+    0 0 80px rgba(0, 166, 255, 0.3),
+    0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.magen-welcome-enter:active {
+  transform: translateY(0);
+}
