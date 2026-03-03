@@ -223,6 +223,9 @@ export interface StoredLiveChannels {
   displayNameOverrides?: Record<string, string>;
 }
 
+// Bump this when default channel list changes to force localStorage refresh
+const CHANNEL_LIST_VERSION = 2;
+
 const DEFAULT_STORED: StoredLiveChannels = {
   order: DEFAULT_LIVE_CHANNELS.map((c) => c.id),
 };
@@ -280,6 +283,12 @@ export const BUILTIN_IDS = new Set([
 
 export function loadChannelsFromStorage(): LiveChannel[] {
   const stored = loadFromStorage<StoredLiveChannels>(STORAGE_KEYS.liveChannels, DEFAULT_STORED);
+  // Reset stale channel list when defaults change (version bump)
+  const storedVersion = (stored as unknown as Record<string, unknown>).v as number | undefined;
+  if (storedVersion !== CHANNEL_LIST_VERSION) {
+    try { localStorage.removeItem(STORAGE_KEYS.liveChannels); } catch {}
+    return [...DEFAULT_LIVE_CHANNELS];
+  }
   const order = stored.order?.length ? stored.order : DEFAULT_STORED.order;
   const channelMap = new Map<string, LiveChannel>();
   for (const c of FULL_LIVE_CHANNELS) channelMap.set(c.id, { ...c });
@@ -313,7 +322,7 @@ export function saveChannelsToStorage(channels: LiveChannel[]): void {
       displayNameOverrides[c.id] = c.name;
     }
   }
-  saveToStorage(STORAGE_KEYS.liveChannels, { order, custom, displayNameOverrides });
+  saveToStorage(STORAGE_KEYS.liveChannels, { order, custom, displayNameOverrides, v: CHANNEL_LIST_VERSION });
 }
 
 export class LiveNewsPanel extends Panel {
