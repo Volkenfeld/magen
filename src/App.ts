@@ -156,6 +156,21 @@ export class App {
       }
     }
 
+    // One-time migration: enable new magen map layers for existing users
+    if (currentVariant === 'magen') {
+      const MAGEN_LAYERS_MIGRATION_KEY = 'magen-layers-v2.6';
+      if (!localStorage.getItem(MAGEN_LAYERS_MIGRATION_KEY)) {
+        const layerUpgrades: (keyof MapLayers)[] = ['flights', 'liveFlights', 'satellites'];
+        for (const layer of layerUpgrades) {
+          if (mapLayers[layer] === false && defaultLayers[layer] === true) {
+            mapLayers[layer] = true;
+          }
+        }
+        localStorage.setItem(MAGEN_LAYERS_MIGRATION_KEY, 'done');
+        console.log('[App] Magen: enabled new map layers (flights, liveFlights, satellites)');
+      }
+    }
+
     // One-time migration: clear stale panel ordering and sizing state
     const LAYOUT_RESET_MIGRATION_KEY = 'worldmonitor-layout-reset-v2.5';
     if (!localStorage.getItem(LAYOUT_RESET_MIGRATION_KEY)) {
