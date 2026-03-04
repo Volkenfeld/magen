@@ -11,7 +11,8 @@ export default createRelayHandler({
   timeout: 12000,
   onlyOk: true,
   cacheHeaders: () => ({
-    'Cache-Control': 'public, max-age=60, s-maxage=300, stale-while-revalidate=120, stale-if-error=900',
+    // Short cache for near-real-time alert delivery (Tzevaadom feeds relay instantly)
+    'Cache-Control': 'public, max-age=5, s-maxage=10, stale-while-revalidate=5, stale-if-error=30',
   }),
   fallback: (_req, corsHeaders) => new Response(JSON.stringify({
     configured: false,

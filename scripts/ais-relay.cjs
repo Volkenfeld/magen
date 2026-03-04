@@ -82,6 +82,37 @@ const OREF_ENABLED = !!OREF_PROXY_AUTH;
 const RELAY_OREF_RATE_LIMIT_MAX = Number.isFinite(Number(process.env.RELAY_OREF_RATE_LIMIT_MAX))
   ? Number(process.env.RELAY_OREF_RATE_LIMIT_MAX) : 600;
 
+// Tzevaadom (Tzeva Adom / Red Alert) -- real-time WebSocket for OREF alerts
+// No API key needed. Uses Origin header for access. Supplements OREF HTTP polling.
+const TZEVAADOM_WS_URL = 'wss://ws.tzevaadom.co.il/socket?platform=WEB';
+const TZEVAADOM_ORIGIN = 'https://www.tzevaadom.co.il';
+const TZEVAADOM_HEARTBEAT_SEC = 45;
+const TZEVAADOM_ENABLED = process.env.TZEVAADOM_DISABLED !== 'true'; // enabled by default
+const TZEVAADOM_RECONNECT_BASE_MS = 5000;
+const TZEVAADOM_RECONNECT_MAX_MS = 120000;
+const TZEVAADOM_THREAT_TITLES = {
+  0: 'ירי רקטות וטילים',
+  1: 'אירוע חומרים מסוכנים',
+  2: 'חדירת מחבלים',
+  3: 'רעידת אדמה',
+  4: 'חשש לצונאמי',
+  5: 'חדירת כלי טיס עוין',
+  6: 'חשש לאירוע רדיולוגי',
+  7: 'חשש לאירוע כימי',
+  8: 'התרעות פיקוד העורף',
+};
+const TZEVAADOM_THREAT_TO_OREF_CAT = {
+  0: '1',  // rockets/missiles
+  1: '4',  // hazardous materials
+  2: '6',  // terrorist infiltration
+  3: '3',  // earthquake
+  4: '5',  // tsunami
+  5: '2',  // hostile aircraft (UAV)
+  6: '9',  // radiological
+  7: '10', // chemical
+  8: '7',  // general HFC alert
+};
+
 if (IS_PRODUCTION_RELAY && !RELAY_SHARED_SECRET && !ALLOW_UNAUTHENTICATED_RELAY) {
   console.error('[Relay] Error: RELAY_SHARED_SECRET is required in production');
   console.error('[Relay] Set RELAY_SHARED_SECRET on Railway and Vercel to secure relay endpoints');
@@ -765,6 +796,247 @@ async function startOrefPollLoop() {
     orefFetchAlerts().catch(e => console.warn('[Relay] OREF poll error:', e?.message || e));
   }, OREF_POLL_INTERVAL_MS).unref?.();
   console.log(`[Relay] OREF poll loop started (interval ${OREF_POLL_INTERVAL_MS}ms)`);
+}
+
+// ─────────────────────────────────────────────────────────────
+// Tzevaadom WebSocket — real-time OREF alert push
+// Connects to ws.tzevaadom.co.il, converts alerts to OREF format,
+// and merges into orefState for instant delivery to frontend.
+// ─────────────────────────────────────────────────────────────
+
+const tzevaadomState = {
+  ws: null,
+  connected: false,
+  reconnectAttempts: 0,
+  reconnectTimer: null,
+  lastMessageAt: 0,
+  alertCount: 0,
+  lastError: null,
+};
+
+// Deduplicate alerts received from both Tzevaadom and OREF polling.
+// Key: notificationId, Value: timestamp (ms). Expires after 10 minutes.
+const tzevaadomSeenIds = new Map();
+const TZEVAADOM_DEDUP_TTL = 10 * 60 * 1000;
+
+function tzevaadomCleanSeenIds() {
+  const cutoff = Date.now() - TZEVAADOM_DEDUP_TTL;
+  for (const [id, ts] of tzevaadomSeenIds) {
+    if (ts < cutoff) tzevaadomSeenIds.delete(id);
+  }
+}
+
+function tzevaadomAlertToOref(msg) {
+  // Convert Tzevaadom ALERT message to OREF alert format
+  const data = msg.data;
+  if (!data || data.isDrill) return null;
+
+  const threat = Number(data.threat);
+  const title = TZEVAADOM_THREAT_TITLES[threat] || 'התרעה';
+  const cat = TZEVAADOM_THREAT_TO_OREF_CAT[threat] || '1';
+  const cities = Array.isArray(data.cities) ? data.cities : [];
+  const time = Number(data.time);
+  const alertDate = new Date(time * 1000).toISOString().replace('T', ' ').replace(/\.\d+Z$/, '');
+  const id = `tza-${data.notificationId || Date.now()}`;
+
+  return {
+    id,
+    cat,
+    title,
+    data: cities,
+    desc: '',
+    alertDate,
+  };
+}
+
+function tzevaadomSystemMsgToOref(msg) {
+  // Convert Tzevaadom SYSTEM_MESSAGE to OREF alert format
+  const data = msg.data;
+  if (!data) return null;
+
+  const instructionType = data.instructionType;
+  const isPreAlert = instructionType === 0;
+  const isEnd = instructionType === 1;
+  if (!isPreAlert && !isEnd) return null;
+
+  const title = isPreAlert
+    ? 'בדקות הקרובות צפויות להתקבל התרעות באזורך'
+    : 'הארוע הסתיים';
+  const cat = isPreAlert ? '0' : '99';  // 0=pre-alert, 99=end
+  const desc = data.bodyEn || data.bodyHe || '';
+  const time = Number(data.time);
+  const alertDate = new Date(time * 1000).toISOString().replace('T', ' ').replace(/\.\d+Z$/, '');
+  const id = `tza-sys-${data.notificationId || Date.now()}`;
+
+  // Use city names from citiesIds if available (numeric IDs, not names)
+  // For now, we extract area info from the body text
+  const cities = [];
+
+  return {
+    id,
+    cat,
+    title,
+    data: cities,
+    desc,
+    alertDate,
+  };
+}
+
+function tzevaadomMergeAlert(alert) {
+  if (!alert || !alert.id) return false;
+
+  // Deduplicate
+  if (tzevaadomSeenIds.has(alert.id)) return false;
+  tzevaadomSeenIds.set(alert.id, Date.now());
+
+  // Check if this alert is already in orefState (from OREF polling)
+  // Match by cities + time proximity (within 60 seconds)
+  const alertTime = new Date(alert.alertDate.replace(' ', 'T') + 'Z').getTime();
+  const isDuplicate = orefState.lastAlerts.some(existing => {
+    const existingTime = new Date(existing.alertDate.replace(' ', 'T') + 'Z').getTime();
+    if (Math.abs(existingTime - alertTime) > 60000) return false;
+    // Same category and overlapping cities
+    if (existing.cat !== alert.cat) return false;
+    const overlap = alert.data.some(city => existing.data.includes(city));
+    return overlap;
+  });
+
+  if (isDuplicate) return false;
+
+  // Add to current alerts
+  orefState.lastAlerts.push(alert);
+  orefState.lastAlertsJson = JSON.stringify(orefState.lastAlerts);
+  orefState.lastPollAt = Date.now();
+
+  // Add to history
+  orefState.history.push({
+    alerts: [alert],
+    timestamp: new Date().toISOString(),
+  });
+  orefState._persistVersion++;
+
+  // Update counts
+  const cutoff24h = Date.now() - 24 * 60 * 60 * 1000;
+  orefState.historyCount24h = orefState.history
+    .filter(h => new Date(h.timestamp).getTime() > cutoff24h)
+    .reduce((sum, h) => sum + h.alerts.reduce((s, a) => s + (Array.isArray(a.data) ? a.data.length : 1), 0), 0);
+  orefState.totalHistoryCount = orefState.history.reduce((sum, h) => {
+    return sum + h.alerts.reduce((s, a) => s + (Array.isArray(a.data) ? a.data.length : 1), 0);
+  }, 0);
+
+  // Persist to Redis
+  orefPersistHistory().catch(() => {});
+
+  return true;
+}
+
+function tzevaadomOnMessage(raw) {
+  try {
+    const msg = JSON.parse(raw);
+    tzevaadomState.lastMessageAt = Date.now();
+
+    if (msg.type === 'ALERT') {
+      const alert = tzevaadomAlertToOref(msg);
+      if (alert && tzevaadomMergeAlert(alert)) {
+        tzevaadomState.alertCount++;
+        console.log(`[Relay] Tzevaadom ALERT: ${alert.title} in ${alert.data.join(', ')} (threat=${msg.data.threat})`);
+      }
+    } else if (msg.type === 'SYSTEM_MESSAGE') {
+      const alert = tzevaadomSystemMsgToOref(msg);
+      if (alert && alert.data.length > 0 && tzevaadomMergeAlert(alert)) {
+        tzevaadomState.alertCount++;
+        console.log(`[Relay] Tzevaadom SYSTEM: ${alert.desc || alert.title}`);
+      }
+    }
+    // Ignore other message types silently
+  } catch (err) {
+    console.warn('[Relay] Tzevaadom message parse error:', err.message);
+  }
+}
+
+function tzevaadomConnect() {
+  if (tzevaadomState.ws) {
+    try { tzevaadomState.ws.terminate(); } catch {}
+    tzevaadomState.ws = null;
+  }
+
+  try {
+    const ws = new WebSocket(TZEVAADOM_WS_URL, {
+      headers: {
+        Origin: TZEVAADOM_ORIGIN,
+        Referer: TZEVAADOM_ORIGIN,
+        tzofar: crypto.randomBytes(16).toString('hex'),
+      },
+      handshakeTimeout: 15000,
+    });
+
+    ws.on('open', () => {
+      tzevaadomState.connected = true;
+      tzevaadomState.reconnectAttempts = 0;
+      tzevaadomState.lastError = null;
+      console.log('[Relay] Tzevaadom WebSocket connected');
+    });
+
+    ws.on('message', (data) => {
+      tzevaadomOnMessage(data.toString());
+    });
+
+    ws.on('close', (code, reason) => {
+      tzevaadomState.connected = false;
+      tzevaadomState.ws = null;
+      const reasonStr = reason ? reason.toString() : '';
+      console.log(`[Relay] Tzevaadom WebSocket closed (code=${code}${reasonStr ? ' ' + reasonStr : ''})`);
+      tzevaadomScheduleReconnect();
+    });
+
+    ws.on('error', (err) => {
+      tzevaadomState.lastError = err.message;
+      console.warn('[Relay] Tzevaadom WebSocket error:', err.message);
+    });
+
+    // Periodic ping to keep connection alive
+    const pingInterval = setInterval(() => {
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.ping();
+      } else {
+        clearInterval(pingInterval);
+      }
+    }, TZEVAADOM_HEARTBEAT_SEC * 1000);
+
+    ws.on('close', () => clearInterval(pingInterval));
+
+    tzevaadomState.ws = ws;
+  } catch (err) {
+    tzevaadomState.lastError = err.message;
+    console.warn('[Relay] Tzevaadom connect error:', err.message);
+    tzevaadomScheduleReconnect();
+  }
+}
+
+function tzevaadomScheduleReconnect() {
+  if (tzevaadomState.reconnectTimer) return;
+  tzevaadomState.reconnectAttempts++;
+  const delay = Math.min(
+    TZEVAADOM_RECONNECT_BASE_MS * Math.pow(1.5, tzevaadomState.reconnectAttempts - 1),
+    TZEVAADOM_RECONNECT_MAX_MS,
+  );
+  console.log(`[Relay] Tzevaadom reconnecting in ${(delay / 1000).toFixed(1)}s (attempt ${tzevaadomState.reconnectAttempts})`);
+  tzevaadomState.reconnectTimer = setTimeout(() => {
+    tzevaadomState.reconnectTimer = null;
+    tzevaadomConnect();
+  }, delay);
+}
+
+function startTzevaadomWs() {
+  if (!TZEVAADOM_ENABLED) {
+    console.log('[Relay] Tzevaadom disabled (TZEVAADOM_DISABLED=true)');
+    return;
+  }
+  console.log('[Relay] Starting Tzevaadom WebSocket (real-time OREF alerts)');
+  tzevaadomConnect();
+
+  // Periodic cleanup of seen IDs
+  setInterval(tzevaadomCleanSeenIds, 60000).unref?.();
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -3928,6 +4200,14 @@ const server = http.createServer(async (req, res) => {
         redisEnabled: UPSTASH_ENABLED,
         bootstrapSource: orefState.bootstrapSource,
       },
+      tzevaadom: {
+        enabled: TZEVAADOM_ENABLED,
+        connected: tzevaadomState.connected,
+        alertCount: tzevaadomState.alertCount,
+        reconnectAttempts: tzevaadomState.reconnectAttempts,
+        lastMessageAt: tzevaadomState.lastMessageAt ? new Date(tzevaadomState.lastMessageAt).toISOString() : null,
+        hasError: !!tzevaadomState.lastError,
+      },
       memory: {
         rss: `${(mem.rss / 1024 / 1024).toFixed(0)}MB`,
         heapUsed: `${(mem.heapUsed / 1024 / 1024).toFixed(0)}MB`,
@@ -4354,23 +4634,31 @@ const server = http.createServer(async (req, res) => {
       }
     }
   } else if (pathname === '/oref/alerts') {
+    const isConfigured = OREF_ENABLED || tzevaadomState.connected;
     sendCompressed(req, res, 200, {
       'Content-Type': 'application/json',
-      'Cache-Control': 'public, max-age=5, s-maxage=5, stale-while-revalidate=3',
+      'Cache-Control': tzevaadomState.connected
+        ? 'public, max-age=3, s-maxage=3, stale-while-revalidate=2'
+        : 'public, max-age=5, s-maxage=5, stale-while-revalidate=3',
     }, JSON.stringify({
-      configured: OREF_ENABLED,
+      configured: isConfigured,
       alerts: orefState.lastAlerts || [],
       historyCount24h: orefState.historyCount24h,
       totalHistoryCount: orefState.totalHistoryCount,
       timestamp: orefState.lastPollAt ? new Date(orefState.lastPollAt).toISOString() : new Date().toISOString(),
-      ...(orefState.lastError ? { error: orefState.lastError } : {}),
+      ...(orefState.lastError && !tzevaadomState.connected ? { error: orefState.lastError } : {}),
+      tzevaadom: {
+        connected: tzevaadomState.connected,
+        alertCount: tzevaadomState.alertCount,
+        lastMessageAt: tzevaadomState.lastMessageAt || null,
+      },
     }));
   } else if (pathname === '/oref/history') {
     sendCompressed(req, res, 200, {
       'Content-Type': 'application/json',
       'Cache-Control': 'public, max-age=30, s-maxage=30, stale-while-revalidate=10',
     }, JSON.stringify({
-      configured: OREF_ENABLED,
+      configured: OREF_ENABLED || tzevaadomState.connected,
       history: orefState.history || [],
       historyCount24h: orefState.historyCount24h,
       totalHistoryCount: orefState.totalHistoryCount,
@@ -4502,6 +4790,7 @@ server.listen(PORT, () => {
   console.log(`[Relay] WebSocket relay on port ${PORT}`);
   startTelegramPollLoop();
   startOrefPollLoop();
+  startTzevaadomWs();
   startUcdpSeedLoop();
   startMarketDataSeedLoop();
   startAviationSeedLoop();

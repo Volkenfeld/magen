@@ -10,6 +10,12 @@ export interface OrefAlert {
   alertDate: string;
 }
 
+export interface TzevaadomStatus {
+  connected: boolean;
+  alertCount: number;
+  lastMessageAt: string | null;
+}
+
 export interface OrefAlertsResponse {
   configured: boolean;
   alerts: OrefAlert[];
@@ -17,6 +23,7 @@ export interface OrefAlertsResponse {
   totalHistoryCount?: number;
   timestamp: string;
   error?: string;
+  tzevaadom?: TzevaadomStatus;
 }
 
 export interface OrefHistoryEntry {
@@ -37,6 +44,7 @@ let lastFetchAt = 0;
 const CACHE_TTL = 8_000;
 let pollingLoop: SmartPollLoopHandle | null = null;
 let updateCallbacks: Array<(data: OrefAlertsResponse) => void> = [];
+let tzevaadomConnected = false;
 
 let locationTranslator: ((s: string) => string) | null = null;
 let locationMapPromise: Promise<void> | null = null;
@@ -247,6 +255,11 @@ export async function fetchOrefAlerts(options: { signal?: AbortSignal } = {}): P
     cachedResponse = data;
     lastFetchAt = now;
 
+    // Track Tzevaadom real-time status for adaptive polling
+    if (data.tzevaadom) {
+      tzevaadomConnected = data.tzevaadom.connected;
+    }
+
     if (data.alerts.length) {
       translateAlerts(data.alerts).then((didTranslate) => {
         if (didTranslate) {
@@ -296,14 +309,20 @@ export function onOrefAlertsUpdate(cb: (data: OrefAlertsResponse) => void): void
   updateCallbacks.push(cb);
 }
 
+export function isTzevaadomConnected(): boolean {
+  return tzevaadomConnected;
+}
+
 export function startOrefPolling(): void {
   if (pollingLoop?.isActive()) return;
+  // When Tzevaadom real-time WebSocket is active on the relay,
+  // poll faster (15s) to pick up instant alerts. Otherwise 2 minutes.
   pollingLoop = startSmartPollLoop(async ({ signal }) => {
     const data = await fetchOrefAlerts({ signal });
     for (const cb of updateCallbacks) cb(data);
   }, {
-    intervalMs: 120_000,
-    // 2m -> 20m while hidden; restore with immediate refresh when visible.
+    intervalMs: tzevaadomConnected ? 15_000 : 120_000,
+    // 2m/15s -> 20m/2.5m while hidden; restore with immediate refresh when visible.
     hiddenMultiplier: 10,
     refreshOnVisible: true,
     runImmediately: false,
