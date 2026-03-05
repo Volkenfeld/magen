@@ -3538,3 +3538,174 @@ html[data-variant="magen"] {
 [data-variant="magen"] .viz-tone-marker {
   box-shadow: 0 0 6px currentColor;
 }
+
+/* ==========================================================
+   42. Navbar Fixes (S78 Task #11)
+   Vertical centering, logo clickable, button alignment,
+   hide-map button reduction.
+   ========================================================== */
+
+/* Logo as link: remove underline, keep styling */
+[data-variant="magen"] a.logo {
+  text-decoration: none;
+  color: #e8edf5;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+[data-variant="magen"] a.logo:hover {
+  text-shadow: 0 0 25px rgba(0, 204, 255, 0.5);
+}
+
+/* Ensure all header children are vertically centered */
+[data-variant="magen"] .header {
+  align-items: center;
+}
+
+[data-variant="magen"] .header-left,
+[data-variant="magen"] .header-right {
+  align-items: center;
+  display: flex;
+}
+
+/* Location selector: smaller, inline with header flow */
+[data-variant="magen"] .location-selector {
+  font-size: 10px;
+  padding: 2px 6px;
+  min-height: 26px;
+  min-width: auto;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--magen-text-dim);
+}
+
+[data-variant="magen"] .location-selector .loc-icon {
+  font-size: 12px;
+}
+
+[data-variant="magen"] .location-selector .loc-text {
+  font-size: 9px;
+  letter-spacing: 0.3px;
+}
+
+/* Map collapse button: smaller, more subtle */
+[data-variant="magen"] .map-collapse-btn {
+  font-size: 10px;
+  padding: 2px 8px;
+  min-height: 24px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: var(--magen-text-dim);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* Settings mount: ensure vertical alignment */
+[data-variant="magen"] #unifiedSettingsMount {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ==========================================================
+   43. Translation Icon: Near-Invisible (S78 Task #12)
+   Minimal A/aleph glyph, barely visible until hover.
+   ========================================================== */
+
+[data-variant="magen"] .item-translate-btn {
+  opacity: 0.2 !important;
+  font-size: 8px !important;
+  padding: 0 2px !important;
+  line-height: 1;
+}
+
+[data-variant="magen"] .item-translate-btn:hover {
+  opacity: 0.6 !important;
+}
+
+/* ==========================================================
+   44. Webcam Panel: Match Live News Styling (S78 Task #14)
+   Button sizes, colors, and toolbar layout matching
+   the Live News channel button treatment.
+   ========================================================== */
+
+/* Webcam region buttons: match live news channel buttons */
+[data-variant="magen"] .webcam-region-btn,
+[data-variant="magen"] .webcam-view-btn {
+  padding: 3px 6px;
+  font-size: 9px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--magen-text-dim);
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+[data-variant="magen"] .webcam-region-btn:hover,
+[data-variant="magen"] .webcam-view-btn:hover {
+  color: #fff;
+  background: rgba(0, 166, 255, 0.15);
+  border-color: rgba(0, 166, 255, 0.5);
+}
+
+[data-variant="magen"] .webcam-region-btn.active {
+  color: #fff !important;
+  background: rgba(0, 166, 255, 0.3) !important;
+  border-color: var(--magen-accent) !important;
+  text-shadow: 0 0 8px rgba(0, 204, 255, 0.3);
+}
+
+[data-variant="magen"] .webcam-view-btn.active {
+  color: #fff !important;
+  background: rgba(0, 166, 255, 0.3) !important;
+  border-color: var(--magen-accent) !important;
+}
+
+/* Webcam switcher buttons: same treatment */
+[data-variant="magen"] .webcam-feed-btn {
+  padding: 3px 6px;
+  font-size: 9px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--magen-text-dim);
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+[data-variant="magen"] .webcam-feed-btn:hover {
+  color: #fff;
+  background: rgba(0, 166, 255, 0.15);
+  border-color: rgba(0, 166, 255, 0.5);
+}
+
+[data-variant="magen"] .webcam-feed-btn.active {
+  color: #fff !important;
+  background: rgba(0, 166, 255, 0.3) !important;
+  border-color: var(--magen-accent) !important;
+  text-shadow: 0 0 8px rgba(0, 204, 255, 0.3);
+}
+
+/* Webcam toolbar: match Live News toolbar styling */
+[data-variant="magen"] .webcam-toolbar {
+  background: rgba(5, 6, 8, 0.6);
+  border-bottom: 1px solid rgba(0, 166, 255, 0.08);
+  padding: 4px 8px;
+}
+
+/* Webcam switcher bar: same as toolbar */
+[data-variant="magen"] .webcam-switcher {
+  background: rgba(5, 6, 8, 0.6);
+  border-top: 1px solid rgba(0, 166, 255, 0.08);
+  padding: 4px 8px;
+}
+
+/* Webcam content: disable internal scrolling */
+[data-variant="magen"] .webcam-content {
+  overflow: hidden !important;
+}

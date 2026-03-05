@@ -390,6 +390,12 @@ canvas,
   font-size: 14px;
   letter-spacing: 2px;
   color: var(--accent);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a.logo:hover {
+  opacity: 0.85;
 }
 
 .version {
