@@ -38,16 +38,20 @@ export class SatelliteFiresPanel extends Panel {
       return;
     }
 
+    const maxFrp = Math.max(...this.stats.map(s => s.totalFrp), 1);
+
     const rows = this.stats.map(s => {
       const frpStr = s.totalFrp >= 1000
         ? `${(s.totalFrp / 1000).toFixed(1)}k`
         : Math.round(s.totalFrp).toLocaleString();
       const highClass = s.highIntensityCount > 0 ? ' fires-high' : '';
+      const frpPct = Math.min(100, (s.totalFrp / maxFrp) * 100);
+      const frpColor = s.highIntensityCount > 0 ? 'var(--semantic-critical)' : 'var(--semantic-high)';
       return `<tr class="fire-row${highClass}">
         <td class="fire-region">${escapeHtml(s.region)}</td>
         <td class="fire-count">${s.fireCount}</td>
         <td class="fire-hi">${s.highIntensityCount}</td>
-        <td class="fire-frp">${frpStr}</td>
+        <td class="fire-frp">${frpStr}<div class="fire-intensity-bar"><div class="fire-intensity-fill" style="width:${frpPct.toFixed(1)}%;background:${frpColor}"></div></div></td>
       </tr>`;
     }).join('');
 

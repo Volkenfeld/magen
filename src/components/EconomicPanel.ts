@@ -2,12 +2,13 @@ import { Panel } from './Panel';
 import type { FredSeries, OilAnalytics, BisData } from '@/services/economic';
 import { t } from '@/services/i18n';
 import type { SpendingSummary } from '@/services/usa-spending';
-import { getChangeClass, formatChange, formatOilValue, getTrendIndicator, getTrendColor } from '@/services/economic';
+import { formatChange, formatOilValue, getTrendIndicator, getTrendColor } from '@/services/economic';
 import { formatAwardAmount, getAwardTypeIcon } from '@/services/usa-spending';
 import { escapeHtml } from '@/utils/sanitize';
 import { isFeatureAvailable } from '@/services/runtime-config';
 import { isDesktopRuntime } from '@/services/runtime';
 import { getCSSColor } from '@/utils';
+import { gaugeBar } from '@/utils/sparkline';
 
 type TabId = 'indicators' | 'oil' | 'spending' | 'centralBanks';
 
@@ -128,6 +129,11 @@ export class EconomicPanel extends Panel {
     }
   }
 
+  private getChangeBadgeClass(change: number | null): string {
+    if (change === null || change === 0) return 'neutral';
+    return change > 0 ? 'positive' : 'negative';
+  }
+
   private renderIndicators(): string {
     if (this.fredData.length === 0) {
       if (isDesktopRuntime() && !isFeatureAvailable('economicFred')) {
@@ -139,21 +145,24 @@ export class EconomicPanel extends Panel {
     return `
       <div class="economic-indicators">
         ${this.fredData.map(series => {
-      const changeClass = getChangeClass(series.change);
       const changeStr = formatChange(series.change, series.unit);
       const arrow = series.change !== null
         ? (series.change > 0 ? '▲' : series.change < 0 ? '▼' : '–')
         : '';
+      const badgeClass = this.getChangeBadgeClass(series.change);
+      const borderColor = series.change !== null
+        ? (series.change > 0 ? 'var(--semantic-normal)' : series.change < 0 ? 'var(--semantic-critical)' : 'var(--border)')
+        : 'var(--border)';
 
       return `
-            <div class="economic-indicator" data-series="${escapeHtml(series.id)}">
+            <div class="economic-indicator econ-indicator-enhanced" data-series="${escapeHtml(series.id)}" style="border-left-color:${borderColor}">
               <div class="indicator-header">
                 <span class="indicator-name">${escapeHtml(series.name)}</span>
                 <span class="indicator-id">${escapeHtml(series.id)}</span>
               </div>
               <div class="indicator-value">
                 <span class="value">${escapeHtml(String(series.value !== null ? series.value : 'N/A'))}${escapeHtml(series.unit)}</span>
-                <span class="change ${escapeHtml(changeClass)}">${escapeHtml(arrow)} ${escapeHtml(changeStr)}</span>
+                <span class="econ-change-badge ${escapeHtml(badgeClass)}">${escapeHtml(arrow)} ${escapeHtml(changeStr)}</span>
               </div>
               <div class="indicator-date">${escapeHtml(series.date)}</div>
             </div>
@@ -244,8 +253,9 @@ export class EconomicPanel extends Panel {
     const redColor = getCSSColor('--semantic-critical');
     const neutralColor = getCSSColor('--text-dim');
 
-    // Policy Rates — sorted by rate descending
+    // Policy Rates -- sorted by rate descending
     const sortedRates = [...this.bisData.policyRates].sort((a, b) => b.rate - a.rate);
+    const maxRate = Math.max(...sortedRates.map(r => r.rate), 20);
     const policyHtml = `
       <div class="bis-section">
         <div class="bis-section-title">${t('components.economic.policyRate')}</div>
@@ -255,16 +265,19 @@ export class EconomicPanel extends Panel {
       const color = diff < 0 ? greenColor : diff > 0 ? redColor : neutralColor;
       const label = diff < 0 ? t('components.economic.cut') : diff > 0 ? t('components.economic.hike') : t('components.economic.hold');
       const arrow = diff < 0 ? '▼' : diff > 0 ? '▲' : '–';
+      const badgeClass = diff < 0 ? 'positive' : diff > 0 ? 'negative' : 'neutral';
+      const borderColor = diff < 0 ? greenColor : diff > 0 ? redColor : 'var(--border)';
       return `
-              <div class="economic-indicator">
+              <div class="economic-indicator econ-indicator-enhanced" style="border-left-color:${escapeHtml(borderColor)}">
                 <div class="indicator-header">
                   <span class="indicator-name">${escapeHtml(r.centralBank)}</span>
                   <span class="indicator-id">${escapeHtml(r.countryCode)}</span>
                 </div>
                 <div class="indicator-value">
                   <span class="value">${escapeHtml(String(r.rate))}%</span>
-                  <span class="change" style="color: ${escapeHtml(color)}">${escapeHtml(arrow)} ${escapeHtml(label)}</span>
+                  <span class="econ-change-badge ${escapeHtml(badgeClass)}">${escapeHtml(arrow)} ${escapeHtml(label)}</span>
                 </div>
+                ${gaugeBar(r.rate, maxRate, color, 4)}
                 <div class="indicator-date">${escapeHtml(r.date)}</div>
               </div>`;
     }).join('')}

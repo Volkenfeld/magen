@@ -7,6 +7,7 @@ import { isDesktopRuntime } from '@/services/runtime';
 import { t } from '../services/i18n';
 import type { NewsItem, DeductContextDetail } from '@/types';
 import { buildNewsContext } from '@/utils/news-context';
+import { stackedBar } from '@/utils/sparkline';
 
 export class StrategicPosturePanel extends Panel {
   private postures: TheaterPostureSummary[] = [];
@@ -434,6 +435,7 @@ export class StrategicPosturePanel extends Panel {
           ${hasAir ? `<div class="posture-force-row"><span class="posture-domain">${t('components.strategicPosture.domains.air')}</span><div class="posture-stats">${airChips.join('')}</div></div>` : ''}
           ${hasNaval ? `<div class="posture-force-row"><span class="posture-domain">${t('components.strategicPosture.domains.sea')}</span><div class="posture-stats">${navalChips.join('')}</div></div>` : ''}
         </div>
+        ${this.renderForceComposition(p)}
 
         <div class="posture-footer">
           ${p.strikeCapable ? `<span class="posture-strike">⚡ ${t('components.strategicPosture.strike')}</span>` : ''}
@@ -443,6 +445,20 @@ export class StrategicPosturePanel extends Panel {
         </div>
       </div>
     `;
+  }
+
+  private renderForceComposition(p: TheaterPostureSummary): string {
+    const segments: Array<{value: number; color: string; label?: string}> = [];
+    if (p.fighters > 0) segments.push({ value: p.fighters, color: 'var(--semantic-critical)', label: 'Fighters' });
+    if (p.bombers > 0) segments.push({ value: p.bombers, color: 'var(--semantic-high)', label: 'Bombers' });
+    if (p.tankers > 0) segments.push({ value: p.tankers, color: 'var(--semantic-elevated)', label: 'Tankers' });
+    if (p.awacs > 0) segments.push({ value: p.awacs, color: 'var(--semantic-info)', label: 'AWACS' });
+    if (p.reconnaissance > 0) segments.push({ value: p.reconnaissance, color: 'var(--semantic-low)', label: 'Recon' });
+    if (p.drones > 0) segments.push({ value: p.drones, color: '#9966ff', label: 'Drones' });
+    if (p.transport > 0) segments.push({ value: p.transport, color: 'var(--text-dim)', label: 'Transport' });
+    if (p.totalVessels > 0) segments.push({ value: p.totalVessels, color: '#00bbcc', label: 'Naval' });
+    if (segments.length < 2) return '';
+    return `<div class="posture-composition">${stackedBar(segments, 6)}</div>`;
   }
 
   private render(): void {

@@ -1,7 +1,7 @@
 import { Panel } from './Panel';
 import { sanitizeUrl } from '@/utils/sanitize';
 import { t } from '@/services/i18n';
-import { h, replaceChildren } from '@/utils/dom-utils';
+import { h, replaceChildren, rawHtml } from '@/utils/dom-utils';
 import {
   getIntelTopics,
   fetchTopicIntelligence,
@@ -11,6 +11,7 @@ import {
   type IntelTopic,
   type TopicIntelligence,
 } from '@/services/gdelt-intel';
+import { toneIndicator } from '@/utils/sparkline';
 
 export class GdeltIntelPanel extends Panel {
   private activeTopic: IntelTopic = getIntelTopics()[0]!;
@@ -116,16 +117,25 @@ export class GdeltIntelPanel extends Panel {
     const timeAgo = formatArticleDate(article.date);
     const toneClass = article.tone ? (article.tone < -2 ? 'tone-negative' : article.tone > 2 ? 'tone-positive' : '') : '';
 
+    const headerChildren: Array<Node | string> = [
+      h('span', { className: 'article-source' }, domain),
+    ];
+
+    // Add tone indicator if tone data available
+    if (article.tone != null) {
+      const toneHtml = toneIndicator(article.tone);
+      headerChildren.push(rawHtml(toneHtml));
+    }
+
+    headerChildren.push(h('span', { className: 'article-time' }, timeAgo));
+
     return h('a', {
       href: sanitizeUrl(article.url),
       target: '_blank',
       rel: 'noopener',
       className: `gdelt-intel-article ${toneClass}`.trim(),
     },
-      h('div', { className: 'article-header' },
-        h('span', { className: 'article-source' }, domain),
-        h('span', { className: 'article-time' }, timeAgo),
-      ),
+      h('div', { className: 'article-header' }, ...headerChildren),
       h('div', { className: 'article-title' }, article.title),
     );
   }
