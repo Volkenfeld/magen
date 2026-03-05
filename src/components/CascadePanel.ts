@@ -32,7 +32,7 @@ export class CascadePanel extends Panel {
   }
 
   private async init(): Promise<void> {
-    this.showLoading();
+    this.showSkeleton(7);
     try {
       this.graph = buildDependencyGraph();
       const stats = getGraphStats();

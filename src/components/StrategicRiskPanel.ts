@@ -46,7 +46,7 @@ export class StrategicRiskPanel extends Panel {
   }
 
   private async init(): Promise<void> {
-    this.showLoading();
+    this.showSkeleton(6);
     try {
       // Subscribe to data freshness changes - debounce to avoid excessive recalculations
       let refreshTimeout: ReturnType<typeof setTimeout> | null = null;

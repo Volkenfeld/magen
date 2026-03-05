@@ -104,7 +104,7 @@ export class CIIPanel extends Panel {
       console.log('[CIIPanel] Focal points ready, calculating scores...');
     }
 
-    this.showLoading();
+    this.showSkeleton(8);
 
     try {
       const localScores = calculateCII();

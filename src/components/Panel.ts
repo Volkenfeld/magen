@@ -631,6 +631,18 @@ export class Panel {
     );
   }
 
+  /** Show skeleton shimmer lines as loading placeholder (data-dense panels) */
+  public showSkeleton(rows = 5): void {
+    const lines: HTMLElement[] = [];
+    for (let i = 0; i < rows; i++) {
+      const widthClass = i === 0 ? 'tall' : (i % 3 === 0 ? 'short' : i % 3 === 1 ? 'medium' : '');
+      lines.push(h('div', { className: `skeleton-line ${widthClass}`.trim() }));
+    }
+    replaceChildren(this.content,
+      h('div', { style: 'padding: 12px 10px;' }, ...lines),
+    );
+  }
+
   public showError(message = t('common.failedToLoad')): void {
     replaceChildren(this.content, h('div', { className: 'error-message' }, message));
   }
@@ -707,7 +719,12 @@ export class Panel {
 
     this.pendingContentHtml = null;
     if (this.content.innerHTML !== html) {
+      this.content.style.opacity = '0.6';
       this.content.innerHTML = html;
+      requestAnimationFrame(() => {
+        this.content.style.transition = 'opacity 0.2s ease';
+        this.content.style.opacity = '1';
+      });
     }
   }
 
