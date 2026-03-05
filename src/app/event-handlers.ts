@@ -238,8 +238,9 @@ export class EventHandlerManager implements AppModule {
     if (!this.ctx.isDesktopApp && fullscreenBtn) {
       fullscreenBtn.addEventListener('click', () => this.toggleFullscreen());
       this.boundFullscreenHandler = () => {
-        fullscreenBtn.textContent = document.fullscreenElement ? '\u26F6' : '\u26F6';
         fullscreenBtn.classList.toggle('active', !!document.fullscreenElement);
+        // Also clear CSS fullscreen if native exits
+        if (!document.fullscreenElement) document.body.classList.remove('css-fullscreen');
       };
       document.addEventListener('fullscreenchange', this.boundFullscreenHandler);
     }
@@ -516,16 +517,28 @@ export class EventHandlerManager implements AppModule {
   }
 
   toggleFullscreen(): void {
+    // Try native Fullscreen API first
     if (document.fullscreenElement) {
       try { void document.exitFullscreen()?.catch(() => { }); } catch { }
-    } else {
-      const el = document.documentElement as HTMLElement & { webkitRequestFullscreen?: () => void };
-      if (el.requestFullscreen) {
-        try { void el.requestFullscreen()?.catch(() => { }); } catch { }
-      } else if (el.webkitRequestFullscreen) {
-        try { el.webkitRequestFullscreen(); } catch { }
-      }
+      return;
     }
+    const el = document.documentElement as HTMLElement & { webkitRequestFullscreen?: () => void };
+    let nativeWorked = false;
+    if (el.requestFullscreen) {
+      try { el.requestFullscreen().catch(() => { this.toggleCssFullscreen(); }); nativeWorked = true; } catch { }
+    } else if (el.webkitRequestFullscreen) {
+      try { el.webkitRequestFullscreen(); nativeWorked = true; } catch { }
+    }
+    // Fallback for iPad/iOS where Fullscreen API is not supported
+    if (!nativeWorked) {
+      this.toggleCssFullscreen();
+    }
+  }
+
+  private toggleCssFullscreen(): void {
+    const isActive = document.body.classList.toggle('css-fullscreen');
+    const btn = document.getElementById('fullscreenBtn');
+    if (btn) btn.classList.toggle('active', isActive);
   }
 
   updateHeaderThemeIcon(): void {
