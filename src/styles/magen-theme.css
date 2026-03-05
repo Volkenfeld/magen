@@ -842,11 +842,17 @@ html[data-variant="magen"] {
   height: 12px;
   border-radius: 50%;
   flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(0, 204, 102, 0.5);
 }
 
 [data-variant="magen"] .status-text {
   font-size: var(--magen-font-size-sm);
   font-weight: 600;
+}
+
+/* Table row hover: magen accent inset */
+[data-variant="magen"] tr:hover td {
+  box-shadow: inset 3px 0 0 var(--magen-accent);
 }
 
 
@@ -857,6 +863,29 @@ html[data-variant="magen"] {
 [data-variant="magen"] .panel-loading-text {
   font-size: var(--magen-font-size-base);
   letter-spacing: 0.05em;
+}
+
+/* Magen skeleton: uses accent colors */
+[data-variant="magen"] .skeleton-line,
+[data-variant="magen"] .skeleton-block,
+[data-variant="magen"] .skeleton-circle,
+[data-variant="magen"] .intel-skeleton {
+  background: linear-gradient(90deg, rgba(0, 166, 255, 0.05) 25%, rgba(0, 166, 255, 0.12) 50%, rgba(0, 166, 255, 0.05) 75%);
+  background-size: 200% 100%;
+}
+
+/* Magen panel loading radar: use accent color */
+[data-variant="magen"] .panel-loading-radar {
+  border-color: rgba(0, 166, 255, 0.3);
+}
+
+[data-variant="magen"] .panel-radar-sweep {
+  background: linear-gradient(90deg, transparent, var(--magen-accent));
+}
+
+[data-variant="magen"] .panel-radar-dot {
+  background: var(--magen-accent);
+  box-shadow: 0 0 10px var(--magen-accent);
 }
 
 
@@ -3374,4 +3403,69 @@ html[data-variant="magen"] {
 
 .magen-welcome-enter:active {
   transform: translateY(0);
+}
+
+
+/* ==========================================================
+   41. Quality Polish (S78) -- Micro-interactions & Glow
+   Applied LAST to override all previous panel/badge styles.
+   ========================================================== */
+
+/* Panel hover: enhanced elevation with subtle accent glow */
+[data-variant="magen"] .panel:hover {
+  border-color: rgba(100, 140, 200, 0.25);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(100, 140, 200, 0.1),
+    0 0 1px rgba(0, 166, 255, 0.15);
+}
+
+/* Live data badge: glow effect */
+[data-variant="magen"] .panel-data-badge.live {
+  box-shadow: 0 0 8px rgba(0, 204, 102, 0.2);
+  animation: magen-live-badge-glow 3s ease-in-out infinite;
+}
+
+@keyframes magen-live-badge-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(0, 204, 102, 0.2); }
+  50% { box-shadow: 0 0 14px rgba(0, 204, 102, 0.35); }
+}
+
+/* OREF alerts: enhanced danger glow */
+[data-variant="magen"] .oref-danger {
+  box-shadow: inset 0 0 24px rgba(255, 51, 68, 0.1);
+}
+
+[data-variant="magen"] .oref-alert-row {
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+[data-variant="magen"] .oref-alert-row:hover {
+  background: rgba(255, 51, 68, 0.08);
+  box-shadow: 0 2px 10px rgba(255, 51, 68, 0.15);
+}
+
+/* News/intel cards: subtle hover glow */
+[data-variant="magen"] .telegram-intel-item:hover,
+[data-variant="magen"] .intel-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Signal items: hover feedback */
+[data-variant="magen"] .signal-item:hover {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Skeleton shimmer: magen accent tint */
+[data-variant="magen"] .skeleton-line,
+[data-variant="magen"] .skeleton-block,
+[data-variant="magen"] .skeleton-circle {
+  background: linear-gradient(90deg, rgba(0, 166, 255, 0.04) 25%, rgba(0, 166, 255, 0.1) 50%, rgba(0, 166, 255, 0.04) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+/* Content fade-in on update */
+[data-variant="magen"] .panel-content {
+  transition: opacity 0.2s ease, max-height 0.3s ease;
 }

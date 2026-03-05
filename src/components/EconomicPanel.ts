@@ -53,7 +53,7 @@ export class EconomicPanel extends Panel {
 
   public setLoading(loading: boolean): void {
     if (loading) {
-      this.showLoading();
+      this.showSkeleton(5);
     }
   }
 

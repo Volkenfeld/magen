@@ -65,7 +65,7 @@ export class GdeltIntelPanel extends Panel {
   }
 
   private async loadActiveTopic(): Promise<void> {
-    this.showLoading();
+    this.showSkeleton(6);
 
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
