@@ -3394,9 +3394,8 @@ export class DeckGLMap {
         case 'globe':
           try { (this.maplibreMap as any).setProjection({ type: 'globe' }); } catch {}
           this.maplibreMap.easeTo({ pitch: 0, bearing: 0, zoom: 1.5, duration: 600 });
-          try {
-            (this.maplibreMap as any).setTerrain({ source: 'terrain-dem', exaggeration: 1.3 });
-          } catch {}
+          // No terrain in globe mode -- exaggeration causes deck.gl layer offset from sphere
+          try { (this.maplibreMap as any).setTerrain(null); } catch {}
           break;
       }
     } else {

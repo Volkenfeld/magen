@@ -1157,17 +1157,22 @@ html[data-variant="magen"] {
 [data-variant="magen"] .magen-view-btn {
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 3px;
+  border-radius: 4px;
   color: var(--magen-text-dim);
-  font-size: 9px;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 700;
   letter-spacing: 0.3px;
-  padding: 3px 5px;
+  padding: 0;
   cursor: pointer;
   transition: all 0.15s ease;
-  min-width: 22px;
-  min-height: 22px;
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  min-height: 26px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 [data-variant="magen"] .magen-view-btn:hover {
@@ -1853,18 +1858,17 @@ html[data-variant="magen"] {
     0 0 1px rgba(0, 166, 255, 0.2);
 }
 
-/* ---- Panel Content: Capped height to prevent scroll trapping ---- */
+/* ---- Panel Content: no scroll trapping, full content visible ---- */
 [data-variant="magen"] .panel-content {
-  max-height: 220px;
-  overflow-y: auto;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
+  max-height: none;
+  overflow: visible;
 }
 
-[data-variant="magen"] .panel.panel-collapsed .panel-content {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  padding: 0;
+/* ---- Collapsed panels: instant hide ---- */
+[data-variant="magen"] .panel.panel-collapsed .panel-content,
+[data-variant="magen"] .panel.panel-collapsed .webcam-toolbar,
+[data-variant="magen"] .panel.panel-collapsed .live-news-toolbar {
+  display: none;
 }
 
 /* ---- Panel Header: Subtle Gradient Bar + Clickable ---- */
@@ -2475,21 +2479,33 @@ html[data-variant="magen"] {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
 }
 
+[data-variant="magen"] .time-slider .time-options {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
 [data-variant="magen"] .time-slider-label {
   font-size: 9px;
   letter-spacing: 0.5px;
   color: #e8edf5;
   font-weight: 600;
+  display: none;
 }
 
 [data-variant="magen"] .time-btn {
-  padding: 3px 5px;
-  font-size: 9px;
-  font-weight: 600;
+  padding: 0;
+  font-size: 10px;
+  font-weight: 700;
   color: #e8edf5;
-  border-radius: 3px;
-  min-height: 22px;
-  min-width: 22px;
+  border-radius: 4px;
+  width: 26px;
+  height: 26px;
+  min-height: 26px;
+  min-width: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 [data-variant="magen"] .time-btn.active {
@@ -3708,4 +3724,80 @@ html[data-variant="magen"] {
 /* Webcam content: disable internal scrolling */
 [data-variant="magen"] .webcam-content {
   overflow: hidden !important;
+}
+
+/* ==========================================================
+   45. Full-Page Broadcast Layout (S78 Task #18)
+   Live News and Webcams fill available space, no internal scroll.
+   ========================================================== */
+
+/* Live News: video container takes all available space */
+[data-variant="magen"] .panel[data-panel="live-news"] .panel-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden !important;
+}
+
+[data-variant="magen"] .live-player-wrapper,
+[data-variant="magen"] .live-news-player {
+  flex: 1;
+  min-height: 200px;
+}
+
+[data-variant="magen"] .live-news-player iframe,
+[data-variant="magen"] .live-news-player video {
+  width: 100%;
+  height: 100%;
+}
+
+/* Live News switcher: compact, no overflow */
+[data-variant="magen"] .live-news-switcher {
+  overflow: hidden !important;
+  flex-wrap: wrap;
+}
+
+/* Webcams: video fills space */
+[data-variant="magen"] .panel[data-panel="live-webcams"] .panel-content {
+  flex: 1;
+  overflow: hidden !important;
+}
+
+[data-variant="magen"] .webcam-grid {
+  flex: 1;
+  min-height: 180px;
+}
+
+[data-variant="magen"] .webcam-single {
+  flex: 1;
+  min-height: 200px;
+}
+
+/* ==========================================================
+   46. Map Controls: No Overlap (S78 Task #17)
+   View modes left, zoom top-right, time bottom-right.
+   Ensure nothing overlaps.
+   ========================================================== */
+
+/* Zoom controls: top-right, above time slider */
+[data-variant="magen"] .deckgl-controls {
+  position: absolute;
+  top: 8px;
+  right: 6px;
+  z-index: 130;
+}
+
+/* Time slider: bottom-right (not center-right) to avoid zoom overlap */
+[data-variant="magen"] .time-slider {
+  top: auto !important;
+  bottom: 40px !important;
+  right: 6px !important;
+  transform: none !important;
+}
+
+/* View modes: center-left */
+[data-variant="magen"] .magen-view-modes {
+  top: 50%;
+  left: 6px;
+  transform: translateY(-50%);
 }
