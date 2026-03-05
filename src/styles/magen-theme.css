@@ -1820,6 +1820,13 @@ html[data-variant="magen"] {
   transition: all 0.2s ease;
 }
 
+[data-variant="magen"] .map-pin-btn.active {
+  background: rgba(0, 166, 255, 0.2);
+  border-color: rgba(0, 166, 255, 0.5);
+  color: var(--magen-accent);
+  box-shadow: 0 0 6px rgba(0, 166, 255, 0.3);
+}
+
 [data-variant="magen"] .map-pin-btn:hover {
   background: rgba(0, 166, 255, 0.15);
   border-color: rgba(0, 166, 255, 0.4);
@@ -3868,4 +3875,48 @@ html[data-variant="magen"] {
 [data-variant="magen"] .oref-emergency-sep {
   color: rgba(255, 255, 255, 0.3);
   margin: 0 4px;
+}
+
+/* ==========================================================
+   CSS Fullscreen Fallback (iPad/iOS where Fullscreen API fails)
+   ========================================================== */
+body.css-fullscreen {
+  overflow: hidden;
+}
+
+body.css-fullscreen .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
+
+body.css-fullscreen .main-content {
+  position: fixed;
+  top: 38px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9998;
+  overflow-y: auto;
+}
+
+body.css-fullscreen .fullscreen-btn {
+  color: var(--magen-accent, #00a6ff);
+}
+
+/* Fullscreen button: use SVG icon instead of Unicode character */
+[data-variant="magen"] .fullscreen-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-variant="magen"] .fullscreen-btn svg {
+  stroke: currentColor;
+}
+
+[data-variant="magen"] .fullscreen-btn.active svg {
+  stroke: var(--magen-accent, #00a6ff);
 }
