@@ -181,15 +181,23 @@ export const OPTIONAL_CHANNEL_REGIONS: { key: string; labelKey: string; channelI
 
 // Magen variant: Israeli + Middle East channels first
 const MAGEN_LIVE_CHANNELS: LiveChannel[] = [
+  // Israeli channels first
   { id: 'kan-11', name: 'Kan 11', handle: '@kan11', fallbackVideoId: 'gCNeDWCI0vo', hlsUrl: 'https://kancdn.medonecdn.net/livehls/oil/kancdn-live/live/kan11/live.livx/playlist.m3u8' },
   { id: 'reshet-13', name: 'Reshet 13', handle: '@reshet13', fallbackVideoId: 'gCNeDWCI0vo', hlsUrl: 'https://d2xg1g9o5vns8m.cloudfront.net/out/v1/0855d703f7d5436fae6a9c7ce8ca5075/index.m3u8' },
   { id: 'now14', name: 'NOW 14', handle: '@now14', fallbackVideoId: 'MZ1XwkGcGV8' },
   { id: 'i24news', name: 'i24NEWS', handle: '@i24news_en', fallbackVideoId: '1cVlyzQJwXE' },
-  { id: 'aljazeera', name: 'AlJazeera', handle: '@AlJazeeraEnglish', fallbackVideoId: 'gCNeDWCI0vo', useFallbackOnly: true },
-  { id: 'alarabiya', name: 'AlArabiya', handle: '@AlArabiya', fallbackVideoId: 'n7eQejkXbnM', useFallbackOnly: true },
   { id: 'n12', name: 'N12', handle: '@makoil9756', fallbackVideoId: 'Kb1kY7VQvYQ' },
   { id: 'knesset', name: 'Knesset', handle: '@KnessetTV', fallbackVideoId: 'a99c7Qr75sk' },
+  // US/UK/International
+  { id: 'cnn', name: 'CNN', handle: '@CNN', fallbackVideoId: 'w_Ma8oQLmSM' },
+  { id: 'bbc-news', name: 'BBC News', handle: '@BBCNews', fallbackVideoId: 'bjgQzJzCZKs' },
+  { id: 'sky', name: 'Sky News', handle: '@SkyNews', fallbackVideoId: 'uvviIF4725I' },
+  { id: 'fox-news', name: 'Fox News', handle: '@FoxNews', fallbackVideoId: 'QaftgYkG-ek' },
   { id: 'france24-en', name: 'France24', handle: '@France24_en', fallbackVideoId: 'Ap-UM1O9RBU' },
+  // Middle East
+  { id: 'aljazeera', name: 'AlJazeera', handle: '@AlJazeeraEnglish', fallbackVideoId: 'gCNeDWCI0vo', useFallbackOnly: true },
+  { id: 'alarabiya', name: 'AlArabiya', handle: '@AlArabiya', fallbackVideoId: 'n7eQejkXbnM', useFallbackOnly: true },
+  { id: 'iran-intl', name: 'Iran Intl', handle: '@IranIntl' },
 ];
 
 const DEFAULT_LIVE_CHANNELS = SITE_VARIANT === 'magen' ? MAGEN_LIVE_CHANNELS : SITE_VARIANT === 'tech' ? TECH_LIVE_CHANNELS : SITE_VARIANT === 'happy' ? [] : FULL_LIVE_CHANNELS;

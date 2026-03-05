@@ -23,27 +23,27 @@
 
 :root[data-variant="magen"],
 :root[data-variant="magen"][data-theme="dark"] {
-  /* ---- Core palette ---- */
-  --magen-bg: #0a0e14;
-  --magen-surface: #131a24;
-  --magen-card: #1a2332;
+  /* ---- Core palette (S78: darker bg, brighter indicators) ---- */
+  --magen-bg: #050608;
+  --magen-surface: #0a0e14;
+  --magen-card: #10151c;
   --magen-text: #e8edf5;
   --magen-text-secondary: #8899aa;
-  --magen-accent: #00a6ff;
-  --magen-alert: #ff3344;
-  --magen-warning: #ffaa00;
-  --magen-success: #00cc66;
-  --magen-border: #2a3544;
+  --magen-accent: #00ccff;
+  --magen-alert: #ff2244;
+  --magen-warning: #ffcc00;
+  --magen-success: #00ff77;
+  --magen-border: #1a2530;
 
   /* ---- Derived tokens ---- */
-  --magen-text-dim: #778899;
-  --magen-accent-hover: #33b8ff;
-  --magen-accent-muted: rgba(0, 166, 255, 0.15);
-  --magen-alert-muted: rgba(255, 51, 68, 0.12);
-  --magen-warning-muted: rgba(255, 170, 0, 0.12);
-  --magen-success-muted: rgba(0, 204, 102, 0.12);
-  --magen-card-hover: #1f2b3d;
-  --magen-card-active: #243348;
+  --magen-text-dim: #667788;
+  --magen-accent-hover: #44ddff;
+  --magen-accent-muted: rgba(0, 204, 255, 0.12);
+  --magen-alert-muted: rgba(255, 34, 68, 0.12);
+  --magen-warning-muted: rgba(255, 204, 0, 0.12);
+  --magen-success-muted: rgba(0, 255, 119, 0.10);
+  --magen-card-hover: #151c28;
+  --magen-card-active: #1a2233;
   --magen-focus-ring: 0 0 0 3px rgba(0, 166, 255, 0.5);
 
   /* ---- Typography ---- */
@@ -75,14 +75,14 @@
 
   /* ---- Map base overrides for main.css variables ---- */
   --bg: var(--magen-bg);
-  --bg-secondary: #0e1319;
+  --bg-secondary: #080a0e;
   --surface: var(--magen-surface);
   --surface-hover: var(--magen-card-hover);
   --surface-active: var(--magen-card-active);
 
   --border: var(--magen-border);
-  --border-strong: #3d4f63;
-  --border-subtle: #1e2a38;
+  --border-strong: #2d3d50;
+  --border-subtle: #111820;
 
   --text: var(--magen-text);
   --text-secondary: #b0bcc8;
@@ -104,29 +104,29 @@
   --scrollbar-thumb: var(--magen-scrollbar-thumb);
   --scrollbar-thumb-hover: var(--magen-scrollbar-thumb-hover);
 
-  --input-bg: #111822;
+  --input-bg: #0a0f16;
 
   --panel-bg: var(--magen-card);
   --panel-border: var(--magen-border);
   --panel-radius: 8px;
 
-  --map-bg: #060a10;
-  --map-grid: #0f1f30;
-  --map-country: #0c1820;
-  --map-stroke: #1a3548;
+  --map-bg: #030508;
+  --map-grid: #0a1520;
+  --map-country: #081018;
+  --map-stroke: #122840;
 
-  /* ---- Semantic / severity ---- */
+  /* ---- Semantic / severity (S78: more vivid against darker bg) ---- */
   --semantic-critical: var(--magen-alert);
-  --semantic-high: #ff8800;
+  --semantic-high: #ff9922;
   --semantic-elevated: var(--magen-warning);
   --semantic-normal: var(--magen-success);
   --semantic-low: var(--magen-accent);
-  --semantic-info: #5599dd;
-  --semantic-positive: #44ee88;
+  --semantic-info: #55aaff;
+  --semantic-positive: #44ff88;
 
   --threat-critical: var(--magen-alert);
-  --threat-high: #ff6622;
-  --threat-medium: #eebb00;
+  --threat-high: #ff7733;
+  --threat-medium: #ffdd00;
   --threat-low: var(--magen-success);
   --threat-info: var(--magen-accent);
 
@@ -1137,32 +1137,36 @@ html[data-variant="magen"] {
 /* ---- View Modes: compact bar at bottom-left ---- */
 [data-variant="magen"] .magen-view-modes {
   position: absolute;
-  bottom: 8px;
-  left: 8px;
-  z-index: 120;
+  top: 50%;
+  left: 6px;
+  bottom: auto;
+  transform: translateY(-50%);
+  z-index: 130;
   display: flex;
+  flex-direction: column;
   gap: 1px;
-  background: rgba(10, 14, 20, 0.9);
+  background: rgba(5, 6, 8, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 166, 255, 0.15);
+  border: 1px solid rgba(0, 204, 255, 0.12);
   border-radius: 6px;
   padding: 2px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
 }
 
 [data-variant="magen"] .magen-view-btn {
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 3px;
   color: var(--magen-text-dim);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.3px;
-  padding: 4px 7px;
+  padding: 3px 5px;
   cursor: pointer;
   transition: all 0.15s ease;
-  min-width: 28px;
+  min-width: 22px;
+  min-height: 22px;
   text-align: center;
 }
 
@@ -1178,23 +1182,24 @@ html[data-variant="magen"] {
   box-shadow: 0 0 6px rgba(0, 166, 255, 0.2);
 }
 
-/* ---- Layer toggles: compact horizontal bar at bottom-right ---- */
+/* ---- Layer toggles: compact horizontal bar at bottom ---- */
 [data-variant="magen"] .deckgl-layer-toggles {
   position: absolute !important;
-  bottom: 8px !important;
-  right: 8px !important;
-  left: auto !important;
+  bottom: 6px !important;
+  left: 50% !important;
+  right: auto !important;
   top: auto !important;
-  max-width: 55% !important;
+  transform: translateX(-50%) !important;
+  max-width: 80% !important;
   max-height: none !important;
-  background: rgba(10, 14, 20, 0.9) !important;
+  background: rgba(5, 6, 8, 0.92) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(0, 166, 255, 0.15) !important;
+  border: 1px solid rgba(0, 204, 255, 0.12) !important;
   border-radius: 6px !important;
   padding: 2px 4px !important;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5) !important;
-  z-index: 120 !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6) !important;
+  z-index: 140 !important;
 }
 
 [data-variant="magen"] .deckgl-layer-toggles .toggle-header {
@@ -2455,14 +2460,19 @@ html[data-variant="magen"] {
 
 /* ---- Time Slider: same size as map controls, move to bottom ---- */
 [data-variant="magen"] .time-slider {
-  top: auto;
-  bottom: 8px;
+  top: 50%;
+  bottom: auto;
   left: auto;
-  right: 8px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  gap: 4px;
-  z-index: 112;
+  right: 6px;
+  transform: translateY(-50%);
+  padding: 4px;
+  border-radius: 6px;
+  gap: 2px;
+  z-index: 130;
+  flex-direction: column;
+  background: rgba(5, 6, 8, 0.92);
+  border: 1px solid rgba(0, 204, 255, 0.12);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
 }
 
 [data-variant="magen"] .time-slider-label {
@@ -2486,14 +2496,8 @@ html[data-variant="magen"] {
   font-weight: 700;
 }
 
-/* ---- Layer Toggles: Full map height, spaced rows ---- */
-[data-variant="magen"] .deckgl-layer-toggles {
-  max-width: 220px;
-  top: 8px;
-  bottom: 8px;
-  max-height: none;
-  height: auto;
-}
+/* ---- Layer Toggles: centered at bottom (S78 override) ---- */
+/* Note: primary layer-toggles positioning is in section above */
 
 [data-variant="magen"] .deckgl-layer-toggles .toggle-header {
   padding: 6px 10px;
@@ -2644,10 +2648,10 @@ html[data-variant="magen"] {
   font-weight: 600;
 }
 
-/* ---- Live News Channel Buttons: HIGH CONTRAST ---- */
+/* ---- Live News Channel Buttons: compact, high contrast ---- */
 [data-variant="magen"] .live-channel-btn {
-  padding: 5px 10px;
-  font-size: 11px;
+  padding: 3px 6px;
+  font-size: 9px;
   font-weight: 700;
   color: #8899aa;
   min-height: 0;
