@@ -27,9 +27,51 @@ export class OrefSirensPanel extends Panel {
     this.showLoading(t('components.orefSirens.checking'));
   }
 
+  private renderSafetyInstructions(): string {
+    return `
+      <div class="oref-safety-section">
+        <div class="oref-safety-title">${t('components.orefSirens.safetyTitle')}</div>
+        <div class="oref-safety-rules">
+          <div class="oref-safety-rule">
+            <span class="oref-safety-icon">🚨</span>
+            <span>${t('components.orefSirens.safetyRule1')}</span>
+          </div>
+          <div class="oref-safety-rule">
+            <span class="oref-safety-icon">🏠</span>
+            <span>${t('components.orefSirens.safetyRule2')}</span>
+          </div>
+          <div class="oref-safety-rule">
+            <span class="oref-safety-icon">⏱️</span>
+            <span>${t('components.orefSirens.safetyRule3')}</span>
+          </div>
+          <div class="oref-safety-rule">
+            <span class="oref-safety-icon">🛡️</span>
+            <span>${t('components.orefSirens.safetyRule4')}</span>
+          </div>
+        </div>
+        <div class="oref-emergency-numbers">
+          <span class="oref-emergency-label">${t('components.orefSirens.emergencyLabel')}</span>
+          <span class="oref-emergency-num">104</span> ${t('components.orefSirens.homeCommand')}
+          <span class="oref-emergency-sep">|</span>
+          <span class="oref-emergency-num">100</span> ${t('components.orefSirens.police')}
+          <span class="oref-emergency-sep">|</span>
+          <span class="oref-emergency-num">101</span> ${t('components.orefSirens.ambulance')}
+        </div>
+      </div>
+    `;
+  }
+
   public setData(data: OrefAlertsResponse): void {
     if (!data.configured) {
-      this.setContent(`<div class="panel-empty">${t('components.orefSirens.notConfigured')}</div>`);
+      this.setContent(`
+        <div class="oref-panel-content">
+          <div class="oref-status oref-ok">
+            <span class="oref-status-icon">&#x2705;</span>
+            <span>${t('components.orefSirens.noAlerts')}</span>
+          </div>
+          ${this.renderSafetyInstructions()}
+        </div>
+      `);
       this.setCount(0);
       return;
     }
@@ -142,6 +184,7 @@ export class OrefSirensPanel extends Panel {
             <span>${t('components.orefSirens.noAlerts')}</span>
           </div>
           ${historyHtml}
+          ${this.renderSafetyInstructions()}
         </div>
       `);
       return;
@@ -167,6 +210,7 @@ export class OrefSirensPanel extends Panel {
         </div>
         <div class="oref-list">${alertRows}</div>
         ${historyHtml}
+        ${this.renderSafetyInstructions()}
       </div>
     `);
   }
