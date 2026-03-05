@@ -3469,3 +3469,68 @@ html[data-variant="magen"] {
 [data-variant="magen"] .panel-content {
   transition: opacity 0.2s ease, max-height 0.3s ease;
 }
+
+/* ============================================================
+   42. Data Visualization Enhancements (S78b)
+   ============================================================ */
+
+/* CII arc gauge glow */
+[data-variant="magen"] .viz-arc circle:last-of-type {
+  filter: drop-shadow(0 0 3px currentColor);
+}
+
+/* CII country card enhanced */
+[data-variant="magen"] .cii-country {
+  background: var(--darken-medium);
+  border-radius: 6px;
+  padding: 8px;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+[data-variant="magen"] .cii-country:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Component bar fill glow in magen */
+[data-variant="magen"] .cii-component-fill {
+  box-shadow: 0 0 4px rgba(var(--accent-rgb, 0, 166, 255), 0.2);
+}
+
+/* Economic indicator enhanced cards */
+[data-variant="magen"] .econ-indicator-enhanced {
+  transition: box-shadow 0.2s ease, border-left-color 0.2s ease;
+}
+
+[data-variant="magen"] .econ-indicator-enhanced:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Gauge bar fill animation on load */
+[data-variant="magen"] .viz-gauge-fill {
+  animation: gauge-fill-in 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes gauge-fill-in {
+  from { width: 0 !important; }
+}
+
+/* Fire intensity bars glow */
+[data-variant="magen"] .fire-intensity-fill {
+  box-shadow: 0 0 4px rgba(255, 136, 0, 0.3);
+}
+
+/* Posture composition bar */
+[data-variant="magen"] .posture-composition {
+  margin-top: 6px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border);
+}
+
+/* Tone indicator enhanced contrast */
+[data-variant="magen"] .viz-tone-track {
+  opacity: 0.8;
+}
+
+[data-variant="magen"] .viz-tone-marker {
+  box-shadow: 0 0 6px currentColor;
+}
