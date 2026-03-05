@@ -3801,3 +3801,71 @@ html[data-variant="magen"] {
   left: 6px;
   transform: translateY(-50%);
 }
+
+/* ==========================================================
+   OREF Safety Instructions
+   ========================================================== */
+[data-variant="magen"] .oref-safety-section {
+  margin-top: 12px;
+  padding: 10px;
+  background: rgba(255, 165, 0, 0.08);
+  border: 1px solid rgba(255, 165, 0, 0.25);
+  border-radius: 6px;
+}
+
+[data-variant="magen"] .oref-safety-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #f0a030;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+[data-variant="magen"] .oref-safety-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+[data-variant="magen"] .oref-safety-rule {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.4;
+}
+
+[data-variant="magen"] .oref-safety-icon {
+  flex-shrink: 0;
+  font-size: 12px;
+}
+
+[data-variant="magen"] .oref-emergency-numbers {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+[data-variant="magen"] .oref-emergency-label {
+  font-weight: 700;
+  color: #e04040;
+  margin-right: 6px;
+}
+
+[data-variant="magen"] .oref-emergency-num {
+  font-weight: 700;
+  color: #fff;
+  background: rgba(224, 64, 64, 0.3);
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin: 0 2px;
+}
+
+[data-variant="magen"] .oref-emergency-sep {
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0 4px;
+}

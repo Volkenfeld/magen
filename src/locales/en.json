@@ -1248,7 +1248,16 @@
       "historyCount": "{{count}} alerts in last 24h",
       "historySummary": "{{count}} alerts in 24h — {{waves}} waves",
       "loadingHistory": "Loading history...",
-      "infoTooltip": "<strong>Israel Sirens</strong><br>Real-time rocket and missile siren alerts from Israel Home Front Command.<br><br>Data is polled every 10 seconds. A pulsing red indicator means active sirens are sounding."
+      "infoTooltip": "<strong>Israel Sirens</strong><br>Real-time rocket and missile siren alerts from Israel Home Front Command.<br><br>Data is polled every 10 seconds. A pulsing red indicator means active sirens are sounding.",
+      "safetyTitle": "Home Front Command Safety Instructions",
+      "safetyRule1": "When you hear a siren, enter the nearest shelter immediately",
+      "safetyRule2": "Stay in the shelter for 10 minutes after the last siren",
+      "safetyRule3": "If no shelter is available, lie face down and cover your head",
+      "safetyRule4": "Stay away from windows, outer walls, and open areas",
+      "emergencyLabel": "Emergency:",
+      "homeCommand": "Home Front Command",
+      "police": "Police",
+      "ambulance": "Ambulance"
     },
     "satelliteFires": {
       "noData": "No fire data available",
