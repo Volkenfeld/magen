@@ -686,6 +686,48 @@ export class MapContainer {
     return this.isMobile;
   }
 
+  /** Get the underlying canvas for VR mode */
+  public getCanvas(): HTMLCanvasElement | null {
+    if (this.useDeckGL) {
+      return this.deckGLMap?.getCanvas() ?? null;
+    }
+    return null; // SVG map has no canvas
+  }
+
+  /** Get the container element */
+  public getContainer(): HTMLElement {
+    return this.container;
+  }
+
+  /** Initialize VR mode (lazy-loaded) */
+  public async initVRMode(): Promise<void> {
+    if (!this.useDeckGL) return;
+    const canvas = this.getCanvas();
+    if (!canvas) return;
+
+    const { VRMode } = await import('../vr/VRMode');
+    const supported = await VRMode.isSupported();
+    if (!supported) {
+      console.log('[MapContainer] WebXR VR not supported in this browser');
+      return;
+    }
+
+    const vrMode = new VRMode({
+      mapCanvas: canvas,
+      container: this.container,
+      onVRStart: () => {
+        console.log('[MapContainer] VR session started');
+        this.deckGLMap?.setRenderPaused(false); // keep rendering for texture capture
+      },
+      onVREnd: () => {
+        console.log('[MapContainer] VR session ended');
+      },
+    });
+
+    const vrButton = vrMode.createVRButton();
+    this.container.appendChild(vrButton);
+  }
+
   public destroy(): void {
     this.resizeObserver?.disconnect();
     if (this.useDeckGL) {

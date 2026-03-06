@@ -1187,6 +1187,47 @@ html[data-variant="magen"] {
   box-shadow: 0 0 6px rgba(0, 166, 255, 0.2);
 }
 
+/* ---- VR Button (Three.js VRButton override) ---- */
+[data-variant="magen"] .magen-vr-button,
+[data-variant="magen"] #VRButton {
+  position: absolute !important;
+  bottom: 60px !important;
+  right: 12px !important;
+  left: auto !important;
+  top: auto !important;
+  z-index: 140 !important;
+  background: rgba(5, 6, 8, 0.92) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(0, 204, 255, 0.25) !important;
+  border-radius: 6px !important;
+  color: rgba(0, 204, 255, 0.9) !important;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  padding: 8px 16px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6), 0 0 8px rgba(0, 204, 255, 0.1) !important;
+  width: auto !important;
+  min-width: 0 !important;
+}
+
+[data-variant="magen"] .magen-vr-button:hover,
+[data-variant="magen"] #VRButton:hover {
+  background: rgba(0, 166, 255, 0.2) !important;
+  border-color: rgba(0, 204, 255, 0.5) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6), 0 0 16px rgba(0, 204, 255, 0.25) !important;
+}
+
+[data-variant="magen"] .vr-not-supported {
+  opacity: 0.3 !important;
+  cursor: not-allowed !important;
+}
+
 /* ---- Layer toggles: compact horizontal bar at bottom ---- */
 [data-variant="magen"] .deckgl-layer-toggles {
   position: absolute !important;
