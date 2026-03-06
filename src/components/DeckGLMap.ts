@@ -4887,6 +4887,16 @@ export class DeckGLMap {
     } catch { /* layers may not be ready */ }
   }
 
+  /** Get the MapLibre WebGL canvas element (used by VR mode) */
+  public getCanvas(): HTMLCanvasElement | null {
+    return this.maplibreMap?.getCanvas() ?? null;
+  }
+
+  /** Get the container element */
+  public getContainer(): HTMLElement {
+    return this.container;
+  }
+
   public destroy(): void {
     this.debouncedRebuildLayers.cancel();
     this.debouncedFetchBases.cancel();

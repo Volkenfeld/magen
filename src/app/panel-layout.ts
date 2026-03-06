@@ -464,6 +464,13 @@ export class PanelLayoutManager implements AppModule {
     this.ctx.map.initEscalationGetters();
     this.ctx.currentTimeRange = this.ctx.map.getTimeRange();
 
+    // Initialize VR mode for Magen variant (lazy-loaded, non-blocking)
+    if (SITE_VARIANT === 'magen') {
+      this.ctx.map.initVRMode().catch(() => {
+        // VR not supported or initialization failed silently
+      });
+    }
+
     const politicsPanel = new NewsPanel('politics', t('panels.politics'));
     this.attachRelatedAssetHandlers(politicsPanel);
     this.ctx.newsPanels['politics'] = politicsPanel;
