@@ -930,6 +930,7 @@ function tzevaadomMergeAlert(alert) {
 }
 
 function tzevaadomOnMessage(raw) {
+  if (!raw || !raw.trim()) return; // server keepalive (empty frame)
   try {
     const msg = JSON.parse(raw);
     tzevaadomState.lastMessageAt = Date.now();
