@@ -39,7 +39,7 @@ export class CreditsPanel extends Panel {
             AGPL v3
           </a>
           &mdash;
-          <a href="https://github.com/magen-app/magen" target="_blank" rel="noopener"
+          <a href="https://github.com/Volkenfeld/magen" target="_blank" rel="noopener"
              style="color: var(--magen-accent, #00a6ff); text-decoration: none;">
             ${escapeHtml(t('magen.credits.sourceCode') || 'Source Code')}
           </a>
