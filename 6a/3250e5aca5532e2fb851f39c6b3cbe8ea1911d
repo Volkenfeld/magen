@@ -1,0 +1,19 @@
+.gitignore
+  s_012b72a0fd612d::t_d271f3c6998fc5 47-49
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6a3250e5aca5532e2fb851f39c6b3cbe8ea1911d",
+  "prompts": {},
+  "sessions": {
+    "s_012b72a0fd612d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "53b69df5-23c5-4bce-a089-7256ddf15bcf",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Volkenfeld <volkenfeld@users.noreply.github.com>"
+    }
+  }
+}
