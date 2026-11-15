@@ -4788,7 +4788,8 @@ function connectUpstream() {
 
 const wss = new WebSocketServer({ server });
 
-server.listen(PORT, () => {
+// 2026-11-14 (Kamino box A audit): loopback only; cloudflared (relay.volkenfeld.com) and the local fallback use localhost.
+server.listen(PORT, process.env.HOST || "127.0.0.1", () => {
   console.log(`[Relay] WebSocket relay on port ${PORT}`);
   startTelegramPollLoop();
   startOrefPollLoop();
